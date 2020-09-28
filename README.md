@@ -1,4 +1,4 @@
-# Session ID - Session Title
+# DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite
 
 ## Description
 
