@@ -68,6 +68,9 @@ stages:
       credentialsId: '<NAME OF YOUR CEDENTIAL>'
 ```
 
+   You can get the "your org name", "your space name" and "apiEndpoint" values from your Cloud Cockpit in your account:
+![Cockpit](./images/CP_API_Endpoint.png) 
+
 6. Replace the placeholders with the values of the target space in the Cloud Foundry environment to which you want to deploy.
 
 7. Commit the changes to `GitHub`.
