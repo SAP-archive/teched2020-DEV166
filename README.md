@@ -2,15 +2,17 @@
 
 ## Description
 
-This repository contains the material for the SAP TechEd 2020 session called Session ID - Session Title.  
+This repository contains the material for the SAP TechEd 2020 session called DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite.  
 
 ## Overview
 
-This session introduces attendees to...
+This session introduces attendees to an end-to-end flow to build an extension using best practices from SAP Cloud Platform Extension Suite.
 
 ## Requirements
 
-The requirements to follow the exercises in this repository are...
+The requirements to follow the exercises in this repository are:
+- Get a free trial account on SAP Cloud Platform; see this [tutorial](https://developers.sap.com/tutorials/hcp-create-trial-account.html).
+- Set Up SAP Business Application Studio for development; see this [tutorial](https://developers.sap.com/tutorials/appstudio-onboarding.html).
 
 ## Exercises
 
