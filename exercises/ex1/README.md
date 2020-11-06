@@ -15,13 +15,13 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
 ```
 cd <myDirectory>
 ```
-4. Create an initial CAP project by executing the command `cds init`. It creates the project in a new folder called ```cpapp```.
+4. Create an initial CAP project by executing the command `cds init`. It creates the project in a new folder called ```RiskManagement```.
 ```
-cds init cpapp
+cds init RiskManagement
 ```
 5.  Enter the project folder.
 ```
-cd cpapp
+cd RiskManagement
 ```
 6. Open the project in VS Code.
 ```
