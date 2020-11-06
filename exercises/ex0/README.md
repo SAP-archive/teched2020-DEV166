@@ -53,6 +53,10 @@ Once your dev space has status running, click on the development space name to o
 
 ![enter dev space](../ex0/images/00_00_0060.png)
 
+You should now see such a screen:
+
+![bas](../ex0/images/00_00_0070.png)
+
 ## Summary
 
 With the setup procedure done, you now have completed:
