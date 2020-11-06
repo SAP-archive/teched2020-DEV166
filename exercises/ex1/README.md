@@ -5,6 +5,8 @@ In this exercise, we will create an application based on a data model and servic
 
 ## Exercise 1.1 Create a CAP-Based Service
 
+## ###############################################################
+
 In this part, you create a new CAP-based service, which exposes the OData V4 protocol. To do so, you use CAP's tooling `cds init` and `cds watch` in a terminal.
 
 ### Create and Initialize the Project
@@ -175,68 +177,10 @@ As always `cds watch` has noticed the change.
 ![risksdata](../ex1/images/01_01_0100.png)
 
 
-And that's it: You’ve now got a full blown OData service, which complies to the OData standard and supports the respective queries without having to code anything but the data model and exposing the service itself.
+You’ve now got a full blown OData service, which complies to the OData standard and supports the respective queries without having to code anything but the data model and exposing the service itself.
 
 *Note:* The service is completely exposed without any authentication or authorization check. you extend the service later with such checks.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## ###############################################################
-
-## Exercise 1.1 Sub Exercise 1 Description
-
-After completing these steps you will have created...
-
-1. Click here.
-<br>![](/exercises/ex1/images/01_01_0010.png)
-
-2.	Insert this line of code.
-```abap
-response->set_text( |Hello World! | ). 
-```
-
-
-
-## Exercise 1.2 Sub Exercise 2 Description
-
-After completing these steps you will have...
-
-1.	Enter this code.
-```abap
-DATA(lt_params) = request->get_form_fields(  ).
-READ TABLE lt_params REFERENCE INTO DATA(lr_params) WITH KEY name = 'cmd'.
-  IF sy-subrc <> 0.
-    response->set_status( i_code = 400
-                     i_reason = 'Bad request').
-    RETURN.
-  ENDIF.
-
-```
-
-2.	Click here.
-<br>![](/exercises/ex1/images/01_02_0010.png)
-
-
-## Summary
-
-You've now ...
-
-Continue to - [Exercise 2 - Exercise 2 Description](../ex2/README.md)
+Continue to - [Exercise 2](../ex2/README.md)
 
