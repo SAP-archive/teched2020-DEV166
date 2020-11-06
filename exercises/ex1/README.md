@@ -2,10 +2,9 @@
 
 In this exercise, we will create an application based on a data model and service created using the Cloud Application Programming Model (CAP) and a UI based on Fiori elements (FE) which in turn is based on UI5.
 
+## ###############################################################
 
 ## Exercise 1.1 Create a CAP-Based Service
-
-## ###############################################################
 
 In this part, you create a new CAP-based service, which exposes the OData V4 protocol. To do so, you use CAP's tooling `cds init` and `cds watch` in a terminal.
 
