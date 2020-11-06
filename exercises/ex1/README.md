@@ -180,6 +180,166 @@ You’ve now got a full blown OData service, which complies to the OData standar
 
 *Note:* The service is completely exposed without any authentication or authorization check. you extend the service later with such checks.
 
+## ###############################################################
+
+## Create an SAP Fiori Elements-Based Application
+
+An Fiori elements (FE) app is an application that leverages SAPUI5, its controls, and its model view controller (MVC) concepts. As opposed to a plain UI5 or freestyle UI5 app, where one has all the views and controllers as part of one's projects, most of the code of an FE app is outside of the project, managed centrally be the FE team. The code inside one's project only references these central components, which take care of creating the UI according to the latest SAP Fiori design guidelines and cover all the controller logic for you out of the box. The UI can be influenced by OData annotations. They determine, for example, which properties of an OData service make up the columns of a table, which displays the content of the service.
+
+### Generate the UI with an SAP Fiori Elements Template
+
+1. In Bussines Application Studio, invoke the Command Pallete (```View -> Command Palette``` or ```Cmd+Shift+P```) and choose ```Fiori: Open Application Generator```.
+
+  	![appgen](../ex1/images/01_02_0010.png)
+
+2. Choose `SAP Fiori Elements Application` and press **Next**
+
+  	![Feapp](../ex1/images/01_02_0020.png)
+
+
+3. Choose `List Report Object Page` and press **Next**
+
+   	![Feapp](../ex1/images/01_02_0030.png)
+
+
+4. In the next dialog, choose **Use a local CAP Project** and point to the folder of your current ```RiskManagement``` project. Select the ``RiskService`` as the OData service and click **Next**
+
+   	![Feapp](../ex1/images/01_02_0040.png)
+
+5.	Choose ```Risks``` as the main entity and click **Next**
+
+   	![Feapp](../ex1/images/01_02_0050.png)
+
+6. Enter "risks" as the module name and the description for the application. Enter "Risks" as the application title and "ns" as the namespace. Press **Next**
+
+    ![Feapp](../ex1/images/01_02_0060.png)
+
+
+
+
+
+
+
+
+11. Check whether the "Your app will be generated in this folder" path points to the ```app``` folder within your project.
+
+12. Generate the application.
+
+The application is now generated and after a couple of seconds you can see it in the ```app``` folder of your project. It contains a ```risks``` and a ```webapp``` folder with a ```Component.js``` file, which is characteristic for a UI5 app. However, the code there’s minimal and it basically inherits its logic from the ```sap/fe/core/AppComponent```.
+
+## Modify the UI with OData Annotations
+
+1. If it's not still running from the previous chapter, execute ```cds watch``` in a VS Code terminal and switch to http://localhost:4004 in your browser.
+
+    You can now see that ```cds watch``` has discovered an HTML page in your app folder:
+
+   	![Index HTML Page](markdown/images/feapp.png "Index HTML Page")
+
+2. Click on the link ([/risks/webapp/index.html](http://localhost:4004/risks/webapp/index.html)) for the HTML page. On the launch page that now comes up, click on the ```Risks``` tile. You can now see an application with empty content.
+
+	![Index HTML Page](markdown/images/feappempty.png "Index HTML Page")
+
+	The content of your application is empty because the generated FE app still misses an important part of the settings it needs to run properly in spite of it already being bound to our CAP-based OData service: It’s missing UI annotations.
+
+3. To add the OData annotations, copy the file `risks-service-ui.cds` from `templates/cap/fiori-elements-app/srv` to the `srv` folder of your app.
+
+	As in the steps before, ```cds watch``` has noticed the new file and compiled the service again, so now it contains the additional annotations.
+
+4. In the browser, reload the page of the empty FE app. Click Go.
+
+	It now shows a work list with some columns and the data from the service.
+
+   	![Fiori elements Work List](markdown/images/feappworklist.png "Fiori elements Work List")
+
+	!!! error "If the work list doesn't show, you might have to clear your cache." 
+
+You’ve now already finished a full blown service and a full blown UI application on top running locally.
+
+## Check the Annotation Files
+
+Let's have a look at the new cds file and the annotations in there. At the beginning we see:
+
+```javascript
+using RiskService from './risk-service';
+
+annotate RiskService.Risks with {
+	title       @title: 'Title';
+	prio        @title: 'Priority';
+	descr       @title: 'Description';
+	miti        @title: 'Mitigation';
+	//bp          @title: 'Business Partner';
+	impact      @title: 'Impact';
+}
+```
+
+It's referring to the definitions of the earlier cds file that exposes the service and its ```risks``` and mitigations ```entites```. Then it annotates the ```risk``` entity with a number of texts. These should be in a translatable file normally but for now we keep them here. These texts are used as labels in form fields and column headers by FE.
+
+Next up:
+
+```javascript
+annotate RiskService.Risks with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: 'Risk',
+			TypeNamePlural: 'Risks'
+		},
+		SelectionFields: [prio],
+		LineItem: [
+			{Value: title},
+			{Value: miti_ID},
+			{Value: owner},
+			// {Value: bp_BusinessPartner},
+			{
+				Value: prio,
+				Criticality: criticality
+			},
+			{
+				Value: impact,
+				Criticality: criticality
+			}
+		],
+		Facets: [
+			{$Type: 'UI.ReferenceFacet', Label: 'Main', Target: '@UI.FieldGroup#Main'}
+		],
+		FieldGroup#Main: {
+			Data: [
+				{Value: title},
+				{Value: miti_ID},
+				{Value: descr},
+				{Value: owner},
+				{
+					Value: prio,
+					Criticality: criticality
+				},
+				// {Value: bp_BusinessPartner},
+				{
+					Value: impact,
+					Criticality: criticality
+				}
+			]
+		}
+	},
+) {
+
+};
+```
+
+This defines the content of the work list page and the object page, which one navigates to when clicking on a line in the work list.
+
+The ```SelectionFields``` section defines which of the properties are exposed as search fields in the header bar above the list, in this case ```prio``` is the only explicit search field.
+
+From the ```LineItem``` section all the columns and their order of the work list are derived. While in most cases the columns are defined by ```Value:``` followed by the property name of the entity, in the case of ```prio```and ```impact``` there’s also ```Criticality```, which for now you can neglect but keep in mind in case you go to the later modules. It currently adds a diamond icon ( &#x20df; ) right left of the fields. You can just ignore it.
+
+Next up the ```Facets``` section. In this case, it defines the content of the object page. It contains only a single facet, a ```ReferenceFacet```, of the field group ```FieldGroup#Main```. This field group just shows up as a form. The properties of the ```Data``` array within ```FieldGroup#Main``` determine the fields in the form:
+
+![Fiori elements Object Page](markdown/images/feappobjectpage.png "Fiori elements Object Page")
+
+!!! error "@todo: Criticality fields can’t be edited currently: https://support.wdf.sap.corp/sap/support/message/2080218339"
+
+!!! error "@todo: Enter GUID Popup on create: https://support.wdf.sap.corp/sap/support/message/2080272521"
+
+The result of these steps can be found [here](https://github.tools.sap/CPES/CPAppDevelopment/tree/cap/fiori-elements-app).
+
 
 Continue to - [Exercise 2](../ex2/README.md)
 
