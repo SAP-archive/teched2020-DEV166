@@ -210,26 +210,20 @@ An Fiori elements (FE) app is an application that leverages SAPUI5, its controls
 
    	![Feapp](../ex1/images/01_02_0050.png)
 
-6. Enter "risks" as the module name and the description for the application. Enter "Risks" as the application title and "ns" as the namespace. Press **Next**
+6. Enter "risks" as the module name. Enter "Risks" as the application title and the description for the application, as well as "ns" as the namespace. Press **Next**
 
     ![Feapp](../ex1/images/01_02_0060.png)
 
+7. Check whether the "Your app will be generated in this folder" path points to the ```app``` folder within your project.   TODO
 
-
-
-
-
-
-
-11. Check whether the "Your app will be generated in this folder" path points to the ```app``` folder within your project.
-
-12. Generate the application.
+8. Generate the application.  TODO
 
 The application is now generated and after a couple of seconds you can see it in the ```app``` folder of your project. It contains a ```risks``` and a ```webapp``` folder with a ```Component.js``` file, which is characteristic for a UI5 app. However, the code there’s minimal and it basically inherits its logic from the ```sap/fe/core/AppComponent```.
 
-## Modify the UI with OData Annotations
 
-1. If it's not still running from the previous chapter, execute ```cds watch``` in a VS Code terminal and switch to http://localhost:4004 in your browser.
+### Modify the UI with OData Annotations
+
+1. If it's not still running from the previous chapter, execute ```cds watch``` in a terminal and press on the **Open in New Tab** button in the right lower corner. If it is still running from the last chapter it is enough to refresh the brower page were it is running.
 
     You can now see that ```cds watch``` has discovered an HTML page in your app folder:
 
@@ -241,7 +235,150 @@ The application is now generated and after a couple of seconds you can see it in
 
 	The content of your application is empty because the generated FE app still misses an important part of the settings it needs to run properly in spite of it already being bound to our CAP-based OData service: It’s missing UI annotations.
 
-3. To add the OData annotations, copy the file `risks-service-ui.cds` from `templates/cap/fiori-elements-app/srv` to the `srv` folder of your app.
+3. To add the OData annotations, n the project, go to folder **srv**, representing the service, press the right mouse button and select **New File** in the menu
+
+4. Enter **risks-service-ui.cds** as a name.
+
+5. Click on the new file in the explorer, an editor opens
+
+6. Enter the following lines into the editor
+
+```javascript
+using RiskService from './risk-service';
+
+annotate RiskService.Risks with {
+  title       @title: 'Title';
+  owner       @title: 'Owner';
+  prio        @title: 'Priority';
+  descr       @title: 'Description';   
+  miti        @title: 'Mitigation'; 
+  //bp          @title: 'Business Partner';   
+  impact      @title: 'Impact'; 
+}
+
+annotate RiskService.Mitigations with {
+	ID @(
+		UI.Hidden,
+		Common: {
+		Text: description
+		}
+	);    
+	description  @title: 'Description';   
+	owner        @title: 'Owner'; 
+	timeline     @title: 'Timeline';   
+	risks        @title: 'Risks'; 
+}
+
+annotate RiskService.Risks with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: 'Risk',
+			TypeNamePlural: 'Risks'
+		},
+		SelectionFields: [prio],
+		LineItem: [
+			{Value: title},
+			{Value: miti_ID},
+            {Value: owner},
+			//{Value: bp_BusinessPartner},
+			{
+				Value: prio,
+				Criticality: criticality 
+			}
+			,
+			{
+				Value: impact,
+				Criticality: criticality
+			}
+		],
+		Facets: [
+			{$Type: 'UI.ReferenceFacet', Label: 'Main', Target: '@UI.FieldGroup#Main'}
+		],
+		FieldGroup#Main: {
+			Data: [
+				{Value: title},
+				{Value: miti_ID},
+				{Value: descr},
+                {Value: owner},
+				{
+					Value: prio,
+					Criticality: criticality
+				},
+				//{Value: bp_BusinessPartner},
+				{
+					Value: impact,
+					Criticality: criticality
+				}			
+			]
+		}		
+	},
+) {
+
+}; 
+
+annotate RiskService.Risks with {
+	miti @(	
+		Common: {
+			//show text, not id for mitigation in the context of risks
+			Text: miti.description  , TextArrangement: #TextOnly,
+			ValueList: {
+				Label: 'Mitigations',
+				CollectionPath: 'Mitigations',
+				Parameters: [
+					{ $Type: 'Common.ValueListParameterInOut', 
+						LocalDataProperty: miti_ID, 
+						ValueListProperty: 'ID' 
+					},
+					{ $Type: 'Common.ValueListParameterDisplayOnly', 
+						ValueListProperty: 'description' 
+					}                                      
+				]
+			}
+		},
+		UI.MultiLineText: IsActiveEntity
+	);
+  /*
+	bp @(	
+		Common: {
+			Text: bp.LastName  , TextArrangement: #TextOnly,
+			ValueList: {
+				Label: 'Business Partners',
+				CollectionPath: 'BusinessPartners',
+				Parameters: [
+					{ $Type: 'Common.ValueListParameterInOut', 
+						LocalDataProperty: bp_BusinessPartner, 
+						ValueListProperty: 'BusinessPartner' 
+					},
+					{ $Type: 'Common.ValueListParameterDisplayOnly', 
+						ValueListProperty: 'LastName' 
+					},
+					{ $Type: 'Common.ValueListParameterDisplayOnly', 
+						ValueListProperty: 'FirstName' 
+					}      					                                   
+				]
+			}
+		}
+	)	
+  */
+}
+
+/*
+annotate RiskService.BusinessPartners with {
+	BusinessPartner @(
+		UI.Hidden,
+		Common: {
+		Text: LastName
+		}
+	);   
+	LastName    @title: 'Last Name';  
+	FirstName   @title: 'First Name';   
+}
+*/
+```
+
+
+
+7. Save the file
 
 	As in the steps before, ```cds watch``` has noticed the new file and compiled the service again, so now it contains the additional annotations.
 
@@ -251,11 +388,10 @@ The application is now generated and after a couple of seconds you can see it in
 
    	![Fiori elements Work List](markdown/images/feappworklist.png "Fiori elements Work List")
 
-	!!! error "If the work list doesn't show, you might have to clear your cache." 
 
 You’ve now already finished a full blown service and a full blown UI application on top running locally.
 
-## Check the Annotation Files
+### Check the Annotation Files
 
 Let's have a look at the new cds file and the annotations in there. At the beginning we see:
 
@@ -334,11 +470,75 @@ Next up the ```Facets``` section. In this case, it defines the content of the ob
 
 ![Fiori elements Object Page](markdown/images/feappobjectpage.png "Fiori elements Object Page")
 
-!!! error "@todo: Criticality fields can’t be edited currently: https://support.wdf.sap.corp/sap/support/message/2080218339"
+## ###############################################################
 
-!!! error "@todo: Enter GUID Popup on create: https://support.wdf.sap.corp/sap/support/message/2080272521"
+## Add Business Logic to Your Application
 
-The result of these steps can be found [here](https://github.tools.sap/CPES/CPAppDevelopment/tree/cap/fiori-elements-app).
+In this chapter, you add some custom code to the CAP service, that changes, depending on the value of the property ```impact```, the value of the property ```criticality```, which in turn is used in OData annotations to control the color of some of the cells in the table of our work list page.
+
+### Add Custom Code
+
+1. In the project, go to folder **srv**, representing the service, press the right mouse button and select **New File** in the menu
+2. Enter **risk-service.js** as a name.
+3. Click on the new file in the explorer, an editor opens
+4. Enter the following lines into the editor
+
+```javascript
+/**
+ * Implementation for Risk Management service defined in ./risk-service.cds
+ */
+module.exports = async (srv) => {
+    srv.after('READ', 'Risks', (risks) => {
+
+        risks.forEach((risk) => {
+            if (risk.impact >= 100000) {
+                risk.criticality = 1;
+            } else {
+                risk.criticality = 2;
+            }
+        });
+    });
+}
+```
+
+5. Save the file
+6. In the browser, reload the page of the Fiori Elements app.
+
+	It now shows our work list with the columns ```Priority``` and ```Impact``` with color and an icon, depending on the amount in ```impact```.
+
+	![Fiori Elements Work List](markdown/images/feappcriticality.png "Fiori Elements Work List")
+
+### Explanation of the Custom Code
+
+Because your file is called ```risks-service.js``` and therefore has the same name as your service definition file ```risks-service.cds```, CAP automatically treats it as a handler file for the service defined in there. CAP exposes several [events](https://github.wdf.sap.corp/pages/cap/node.js/api#cds-event-handlers) and you can easily write handlers like the above.
+
+In this case, the event ```after``` is triggered after a `READ` was carried out for our ```Risks``` entity. In your custom handler you get all the data, in this case all the risks that were read according to the query. You can loop over each of them and if needed adjust the data of the response. In this case, you change the value of the ```criticality``` when the ```impact``` is bigger than 100000. The new values for ```criticality``` are then part of the response to the read request.
+
+So, this affects the service's response, but how does this translate into a changed UI? For this, you have to go back to the annotations you created in chapter 3 where you find your ```srv/risks-service-ui.cds``` file. There you had the two columns ```prio``` and ```impact``` annotated with an additional ```Criticality``` annotation. This annotation points to the ```criticality``` property of your service (*Note:* `Criticality` with an upper case `C` is the annotation, while the property name `criticality` could also be called different opposed to the annotation). As you now set different values in your custom handler for ```criticality```, the Fiori Elements application translates these into icons and colors, which you can see in the UI.
+
+```javascript
+annotate RiskService.Risks with @(
+	UI: {
+		...
+		...
+		LineItem: [
+			...
+			...
+			{
+				Value: prio,
+				Criticality: criticality
+			},
+			{
+				Value: impact,
+				Criticality: criticality
+			}
+		],
+```
+
+You can find more about the possible values of the ```Criticality``` annotation [here](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md#CriticalityType). This however is just one of the many sections of the OData Annotation vocabularies for [UI](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md) and [Common](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/Common.md) usage.
+
+
+
 
 
 Continue to - [Exercise 2](../ex2/README.md)
