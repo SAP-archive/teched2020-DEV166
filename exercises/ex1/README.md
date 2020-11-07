@@ -182,7 +182,7 @@ You’ve now got a full blown OData service, which complies to the OData standar
 
 ## ###############################################################
 
-## Create an SAP Fiori Elements-Based Application
+## Exercise 1.2 Create an SAP Fiori Elements-Based Application
 
 An Fiori elements (FE) app is an application that leverages SAPUI5, its controls, and its model view controller (MVC) concepts. As opposed to a plain UI5 or freestyle UI5 app, where one has all the views and controllers as part of one's projects, most of the code of an FE app is outside of the project, managed centrally be the FE team. The code inside one's project only references these central components, which take care of creating the UI according to the latest SAP Fiori design guidelines and cover all the controller logic for you out of the box. The UI can be influenced by OData annotations. They determine, for example, which properties of an OData service make up the columns of a table, which displays the content of the service.
 
@@ -472,7 +472,7 @@ Next up the ```Facets``` section. In this case, it defines the content of the ob
 
 ## ###############################################################
 
-## Add Business Logic to Your Application
+## Exercise 1.3 Add Business Logic to Your Application
 
 In this chapter, you add some custom code to the CAP service, that changes, depending on the value of the property ```impact```, the value of the property ```criticality```, which in turn is used in OData annotations to control the color of some of the cells in the table of our work list page.
 
@@ -536,6 +536,212 @@ annotate RiskService.Risks with @(
 ```
 
 You can find more about the possible values of the ```Criticality``` annotation [here](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md#CriticalityType). This however is just one of the many sections of the OData Annotation vocabularies for [UI](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md) and [Common](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/Common.md) usage.
+
+
+## ###############################################################
+
+## Exercise 1.4 Add the Consumption of an External Service Exposed by SAP API Business Hub to Your Service
+
+
+In this chapter, you extend your CAP service with the consumption of an external Business Partner service. You get its definition from SAP's SAP API Business Hub. First, work with local data and later on get the data directly from the external SAP S/4HANA system.  TODO
+
+### Get the Business Partner EDMX File
+
+1. Open the [SAP API Business Hub](https://api.sap.com/) page in your browser.
+2. Type "business partner" into the page's search field and carry out the search.
+3. On the left side, expand ```Products``` and mark ```SAP S/4 HANA Cloud```.
+4. In the result list, choose on ```Business Partner (A2X)```.
+5. Choose the ```Details``` tab.
+
+    ![API Details](../ex1/images/01_04_0010.png)
+
+6. Choose the ```Download Specification``` button.
+7. Choose the ```EDMX``` option from the list (if you’re asked to log on, log on).
+
+    If you’re using Chrome as a browser, you now see the downloaded file in the footer bar:
+    ![API EDMX](../ex1/images/01_04_0020.png)
+
+
+### Add the EDMX File to the Project and Add Local Data
+
+1. Make sure in your VS Code ```cds watch``` is still running.
+2. Drag the ```API_BUSINESS_PARTNER.edmx``` file from your browser's download area/folder onto your VS Code workplace and drop it into the ```srv``` folder of your ```cpapp``` app.
+
+    CAP has noticed the new file and automatically created a new ```external``` folder under ```srv``` and in it added a new ```API_BUSINESS_PARTNER.csn``` file. ([CSN](https://github.wdf.sap.corp/pages/cap/cds/csn) being a compact representation of CDS)
+
+
+3. In your project, open the ```db/schema.cds``` file again and uncomment these parts of the file:
+
+    <!-- cpes-file db/schema.cds -->
+```text hl_lines="20-21 23-27"
+namespace sap.ui.riskmanagement;
+using { managed } from '@sap/cds/common';
+  entity Risks : managed {
+    key ID      : UUID  @(Core.Computed : true);
+    title       : String(100);
+    prio        : String(5);
+    descr       : String;
+    miti        : Association to Mitigations;
+    impact      : Integer;
+    //bp          : Association to BusinessPartners;
+    criticality : Integer;
+  }
+  entity Mitigations : managed {
+    key ID       : UUID  @(Core.Computed : true);
+    description  : String;
+    owner        : String;
+    timeline     : String;
+    risks        : Association to many Risks on risks.miti = $self;
+  }
+  // using an external service from
+  using {  API_BUSINESS_PARTNER as external } from '../srv/external/API_BUSINESS_PARTNER.csn';
+
+  entity BusinessPartners as projection on external.A_BusinessPartner {
+    key BusinessPartner,
+    LastName,
+    FirstName
+  }
+```
+
+    With this code, you create a so-called projection for your new service. Of the many entities and properties in these entities, that are defined in the ```API_BUSINESS_PARTNER``` service, you just look at one of the entities (```A_BusinessPartner```) and just three of its properties: ```BusinessPartner```, ```LastName```, and ```FirstName```, so your projection is using a subset of everything the original service has to offer.
+
+4. Open the ```srv/risk-service.cds``` file.
+
+5. Uncomment the ```entity BusinessPartner``` line.
+
+    <!-- cpes-file srv/risk-service.cds -->
+```text hl_lines="8-8"
+using { sap.ui.riskmanagement as my } from '../db/schema';
+@path: 'service/risk'
+service RiskService {
+  entity Risks as projection on my.Risks;
+    annotate Risks with @odata.draft.enabled;
+  entity Mitigations as projection on my.Mitigations;
+    annotate Mitigations with @odata.draft.enabled;
+  entity BusinessPartners as projection on my.BusinessPartners;
+}
+```
+
+6. In your browser, open http://localhost:4004/.
+
+    The browser now shows a ```BusinessPartner```service next to the ```Mitigations``` and ```Risks```
+    ![Business Partner Service](markdown/images/businesspartnerservice.png "Business Partner Service")
+
+    At this point, you've a new service exposed with a definition based on the original edmx file. However, it doesn't have any connectivity to a backend and thus, there’s no data yet. Like with your own entities ```risks``` and ```mitigations``` you start with using local data first.
+
+7. Copy the folder `data` from `templates/cap/api-hub/srv/external` to the `srv/external` folder of your app. If VS Code asks you whether to copy the folder confirm.
+
+    The folder contains a csv file ```API_BUSINESS_PARTNER-A_BusinessPartner.csv``` with some business partner data.
+
+8. In your browser, open the ```BusinessPartners``` link to see the data.
+
+    ![Business Partner Data](markdown/images/bpdata.png "Business Partner Data")
+
+    In the next step, you change the code, so the data is fetched from the actual service in an SAP S/4HANA Cloud system.
+
+9. Open the ```srv/risk-service.js``` file within the ```cpapp``` folder in your VS Code workplace.
+
+10. Uncomment the following lines at the end of the file:
+
+    <!-- cpes-file srv/risk-service.js -->
+```js hl_lines="18-21"
+/**
+ * Implementation for Risk Management service defined in ./risk-service.cds
+ */
+module.exports = async (srv) => {
+    srv.after('READ', 'Risks', (risks) => {
+        risks.forEach((risk) => {
+            if (risk.impact >= 100000) {
+                risk.criticality = 1;
+            } else {
+                risk.criticality = 2;
+            }
+        });
+    });
+    // srv.on('READ', 'Risks', (req, next) => {
+    //     req.query.SELECT.columns = req.query.SELECT.columns.filter(({ expand, ref }) => !(expand && ref[0] === 'bp'));
+    //     return next();
+    // });
+    const BupaService = await cds.connect.to('API_BUSINESS_PARTNER');
+    srv.on('READ', srv.entities.BusinessPartners, async (req) => {
+        return await BupaService.tx(req).run(req.query);
+    });
+}
+```
+
+    Like in the example in the chapter [Add Business Logic to Your Application](CAP_Business_Logic.md), you've now created a custom handler of your service. This time it's called ```on``` the ```READ``` event of your ```BusinessPartner``` service, so whenever there’s a request for business partner data, this handler is called.
+
+    Now, as you've seen before, in normal cases CAP would now get the data from your own DB and your local data in it. Until then it had no indication that the service is actually from somewhere else. You've given CAP an EDMX file with a definition but not where it comes from and where the data is to be retrieved from. So, in your new handler, you tell CAP that it should get the data from the ```A_BusinessPartner``` entity of the original service that you imported. As a next step, you need to tell CAP where to get the data from and how to connect to the corresponding system. You need a file that defines the connection to the system.
+
+
+## Connect to an SAP S/4HANA System
+
+
+1. Copy the file `default-env.json` from `templates/cap/api-hub` to the `cpapp` folder.
+
+    ```json
+    {
+        "VCAP_SERVICES": {
+          "s4-hana-cloud": [
+            {
+              "label": "s4-hana-cloud",
+              "provider": null,
+              "plan": "api-access",
+              "name": "cap-api098",
+              "tags": ["s4-hana-cloud"],
+              "instance_name": "cap-api098",
+              "binding_name": null,
+              "credentials": {
+                "Type": "HTTP",
+                "XFSystemName": "S/4HANA 300098",
+                "User": "C4CA3AFBDAD1429B99871646FE6C2EF8",
+                "Authentication": "BasicAuthentication",
+                "WebIDEEnabled": "true",
+                "ProxyType": "Internet",
+                "URL": "https://my300098-api.s4hana.ondemand.com/sap/opu/odata/sap/API_BUSINESS_PARTNER",
+                "Name": "cap-api098",
+                "Password": "EbeKDAPdawkMnVXcTlK3thmxWYCAjXn~ZUQwAhrr"
+              },
+              "syslog_drain_url": null,
+              "volume_mounts": []
+            }
+          ]
+        }
+      }
+    ```
+
+    This file is unlike the other files you've used in the tutorial. As opposed to the others it's not something that a developer would create with a simple text editor. This file would be normally created by the Cloud SDK (TODO: Explain how to get there!). It's used to provide [environment variables for Cloud Foundry](https://github.wdf.sap.corp/cloud-native-blueprints/service-template) and contains a destination called ```cap-api098```, that defines the URL and the credentials for the SAP S/4HANA system. Don't worry, you don't need to understand all its properties at this point.
+
+    In the following step, you need to tell CAP that it should use the destination ```cap-api098```, when accessing the business partner service.
+
+2. Open the ```package.json``` file in the ```cpapp``` folder.
+
+3. Locate the ```cds/requires/API_BUSINESS_PARTNER``` object and replace it with the following code.
+
+    ```JSON hl_lines="5-8"
+    "cds": {
+        "requires": {
+          "API_BUSINESS_PARTNER": {
+            "kind": "odata",
+            "model": "srv/external/API_BUSINESS_PARTNER",
+            "credentials": {
+              "destination": "cap-api098"
+            }
+      }
+    }
+    ```
+
+    With this code, you add the ```credentials```part with the destination.
+
+4. Navigate to http://localhost:4004/service/risk/BusinessPartners.
+
+    You now see much more data that is retrieved directly from the SAP S/4HANA system.
+
+    ![Business Partner Data](markdown/images/bpdatas4.png "Business Partner Data")
+
+
+
+
 
 
 
