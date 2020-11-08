@@ -146,10 +146,10 @@ In this part we add data to the service. It is local data that is stored in a lo
 6. Enter the following lines into the editor
 
 ```csv
-ID;createdAt;createdBy;title;prio;descr;miti_id;impact
-20466922-7d57-4e76-b14c-e53fd97dcb11;2019-10-24;tim.back@sap.com;CFR non-compliance ;3;Recent restructuring might violate CFR code 71;20466921-7d57-4e76-b14c-e53fd97dcb11;10000
-20466922-7d57-4e76-b14c-e53fd97dcb12;2019-10-24;tim.back@sap.com;SLA violation with possible termination cause;2;Repeated SAL violation on service delivery for two successive quarters;20466921-7d57-4e76-b14c-e53fd97dcb12;90000
-20466922-7d57-4e76-b14c-e53fd97dcb13;2019-10-24;tim.back@sap.com;Shipment violating export control;1;Violation of export and trade control with unauthorized downloads;20466921-7d57-4e76-b14c-e53fd97dcb13;200000
+ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact
+20466922-7d57-4e76-b14c-e53fd97dcb11;2019-10-24;tim.back@sap.com;CFR non-compliance;Fred Fish;3;Recent restructuring might violate CFR code 71;20466921-7d57-4e76-b14c-e53fd97dcb11;10000
+20466922-7d57-4e76-b14c-e53fd97dcb12;2019-10-24;tim.back@sap.com;SLA violation with possible termination cause;George Gung;2;Repeated SAL violation on service delivery for two successive quarters;20466921-7d57-4e76-b14c-e53fd97dcb12;90000
+20466922-7d57-4e76-b14c-e53fd97dcb13;2019-10-24;tim.back@sap.com;Shipment violating export control;Herbert Hunter;1;Violation of export and trade control with unauthorized downloads;20466921-7d57-4e76-b14c-e53fd97dcb13;200000
 ```
 7. Save the file
 38 On the **data** folder,press the right mouse button and select **New File** in the menu
@@ -575,12 +575,7 @@ using { managed } from '@sap/cds/common';
     descr       : String;
     miti        : Association to Mitigations;
     impact      : Integer;
-  ```
-  ```diff
-  - //bp          @title: 'Business Partner';   
-  + bp          @title: 'Business Partner';  
-  ```
-  ```javascript
+    //bp          @title: 'Business Partner';   
     criticality : Integer;
   }
   entity Mitigations : managed {
@@ -684,6 +679,170 @@ module.exports = async (srv) => {
     You've now created a custom handler of your service. This time it's called ```on``` the ```READ``` event of your ```BusinessPartner``` service, so whenever there’s a request for business partner data, this handler is called.
 
     Now, as you've seen before, in normal cases CAP would now get the data from your own DB and your local data in it. Until then it had no indication that the service is actually from somewhere else. You've given CAP an EDMX file with a definition but not where it comes from and where the data is to be retrieved from. So, in your new handler, you tell CAP that it should get the data from the ```A_BusinessPartner``` entity of the original service that you imported. 
+
+
+## ###############################################################
+
+## Exercise 1.4 Consume the External Service in Your UI Application
+
+In this chapter, you incorporate the external service into the UI application.
+
+1. Open the ```db/schema.cds``` file.
+2. Uncomment the ```bp``` property.
+
+```javascript
+namespace sap.ui.riskmanagement;
+using { managed } from '@sap/cds/common';
+  entity Risks : managed {
+    key ID      : UUID  @(Core.Computed : true);
+    title       : String(100);
+    prio        : String(5);
+    descr       : String;
+    miti        : Association to Mitigations;
+    impact      : Integer;
+  ```
+  ```diff
+  - //bp          @title: 'Business Partner';   
+  + bp          @title: 'Business Partner';  
+  ```
+  ```javascript
+    criticality : Integer;
+  }
+  entity Mitigations : managed {
+    key ID       : UUID  @(Core.Computed : true);
+    description  : String;
+    owner        : String;
+    timeline     : String;
+    risks        : Association to many Risks on risks.miti = $self;
+  }
+  // using an external service from S/4
+  using {  API_BUSINESS_PARTNER as external } from '../srv/external/API_BUSINESS_PARTNER.csn';
+  entity BusinessPartners as projection on external.A_BusinessPartner {
+    key BusinessPartner,
+    LastName,
+    FirstName
+  }
+```
+
+	As you got a new property in your entity, you need to add data for this property in the local data file that you've created before for the ```risk``` entity.
+
+
+
+3. Open the ```srv/risk-service.js``` file within the ```cpapp``` folder in your VS Code workplace.
+
+4. Uncomment the following lines in the file:
+
+    <!-- cpes-file srv/risk-service.js -->
+```js hl_lines="14-17"
+/**
+ * Implementation for Risk Management service defined in ./risk-service.cds
+ */
+module.exports = async (srv) => {
+    srv.after('READ', 'Risks', (risks) => {
+        risks.forEach((risk) => {
+            if (risk.impact >= 100000) {
+                risk.criticality = 1;
+            } else {
+                risk.criticality = 2;
+            }
+        });
+    });
+    srv.on('READ', 'Risks', (req, next) => {
+        req.query.SELECT.columns = req.query.SELECT.columns.filter(({ expand, ref }) => !(expand && ref[0] === 'bp'));
+        return next();
+    });
+
+    const BupaService = await cds.connect.to('API_BUSINESS_PARTNER');
+    srv.on('READ', srv.entities.BusinessPartners, async (req) => {
+        return await BupaService.tx(req).run(req.query);
+    });
+}
+```
+
+5. Opem the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder.
+6. Replace the content with the new content below which additionally includes the BP data
+
+```csv
+ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact;bp_BusinessPartner
+20466922-7d57-4e76-b14c-e53fd97dcb11;2019-10-24;tim.back@sap.com;CFR non-compliance;Fred Fish;3;Recent restructuring might violate CFR code 71;20466921-7d57-4e76-b14c-e53fd97dcb11;10000;1004155
+20466922-7d57-4e76-b14c-e53fd97dcb12;2019-10-24;tim.back@sap.com;SLA violation with possible termination cause;George Gung;2;Repeated SAL violation on service delivery for two successive quarters;20466921-7d57-4e76-b14c-e53fd97dcb12;90000;1004161
+20466922-7d57-4e76-b14c-e53fd97dcb13;2019-10-24;tim.back@sap.com;Shipment violating export control;Herbert Hunter;1;Violation of export and trade control with unauthorized downloads;20466921-7d57-4e76-b14c-e53fd97dcb13;200000;1004100
+```
+
+  If you check the content of the file, you see numbers like ```1004155``` at the end of the lines, representing business partners.
+
+
+### Add the Business Partner Field to the UI
+
+Now, you also introduce the business partner field in the UI. For this you need to do several things:
+
+- You add a label for the columns in the result list table as well as in the object page by adding a title annotation.
+- You add the business partner as a line item to include it as a column in the result list.
+- You add the business partner as a field to a field group, which makes it appear in a form on the object page.
+
+All this happens in the cds file that has all the UI annotations.
+
+1. Open the ```srv/risks-service-ui.cds``` file..
+2. Uncomment the following parts:
+
+```javascript 
+	using RiskService from './risk-service';
+
+	annotate RiskService.Risks with {
+		...
+```
+```diff
+-     //bp          @title: 'Business Partner';
++     bp          @title: 'Business Partner';
+```
+```javascript
+      ...
+	}
+
+
+	annotate RiskService.Risks with @(
+		UI: {
+			...
+			LineItem: [
+				...
+```
+```diff
+-       //{Value: bp_BusinessPartner},
++				{Value: bp_BusinessPartner},
+```
+```javascript
+				...
+			],
+			...
+			FieldGroup#Main: {
+				Data: [
+					...
+```
+```diff
++         //{Value: bp_BusinessPartner},
+-					{Value: bp_BusinessPartner},
+```
+```javascript
+					...
+				]
+			}
+		},
+	) {
+
+	};
+```
+
+3. In your browser, choose the link [/risks/webapp/index.html](http://localhost:4004/risks/webapp/index.html) for the HTML page.
+
+4. On the launch page that now comes up, choose the **Risks** tile and then Click Go.
+
+	You now see the ```Risks``` application with the business partner in both the result list and the object page, which is loaded when you choose on one of the rows in the table:
+
+	![Business Partner Data](markdown/images/bpinriskstable.png "Business Partner Data")
+
+	![Business Partner Data](markdown/images/bpinriskobjectpage.png "Business Partner Data")
+
+
 
 
 Continue to - [Exercise 2](../ex2/README.md)
