@@ -73,7 +73,7 @@ using { managed } from '@sap/cds/common';
 
     This creates 2 entities in the namespace **sap.ui.riskmanagement**, **Risks**, and **Mitigations**. Each of them have a key called **ID** and several other properties. a Risk has a mitigation and therefore, the property **miti** has an association to exactly one Mitigation. A Mitigation in turn can be used for many Risks, so it has a "too many" association. They key is automatically filled by CAP, which is exposed to the user of the service with the annotation `@(Core.Computed : true)`.
 
-    At this point, you can neglect the commented property **bp** (as well as the other commented lines further down in the file). All the commented lines are later used and uncommented when you introduce a reference to a Business Partner entity. For now you don't need it, though.
+    At this point, you can neglect the commented property **bp** (as well as the other commented lines further down in the file and in subsequent files and chapters). All the commented lines are later used and uncommented when you introduce a reference to a Business Partner entity. For now you don't need it, though.
 
     The screen now looks like this:
 
@@ -462,6 +462,46 @@ Next up the ```Facets``` section. In this case, it defines the content of the ob
 
 ![FeappObjectPage](../ex1/images/01_02_0090.png)
 
+The last part is the most complicated one:
+```js
+annotate RiskService.Risks with {
+	miti @(	
+		Common: {
+			//show text, not id for mitigation in the context of risks
+			Text: miti.description  , TextArrangement: #TextOnly,
+			ValueList: {
+				Label: 'Mitigations',
+				CollectionPath: 'Mitigations',
+				Parameters: [
+					{ $Type: 'Common.ValueListParameterInOut', 
+						LocalDataProperty: miti_ID, 
+						ValueListProperty: 'ID' 
+					},
+					{ $Type: 'Common.ValueListParameterDisplayOnly', 
+						ValueListProperty: 'description' 
+					}                                      
+				]
+			}
+		},
+		UI.MultiLineText: IsActiveEntity
+	);
+}
+```
+
+Without these lines, we would see the id of the mitigations from the ```miti``` field, in both the list and the object page:
+
+![mitinoanno](../ex1/images/01_02_0100.png)
+
+![mitinoanno2](../ex1/images/01_02_0110.png)
+
+By introducing the annotations for the ```miti``` property, instead of just displaying the original value of ```miti```, i.e. the id, the UI shows its ```description``` property.
+The subsequent part ```ValueList``` introduces a value help for ```miti``` that you can see on the object page in its edit mode. the value help takes the id as an input parameter and again displays the ```description``` parameter
+
+![mitianno](../ex1/images/01_02_0120.png)
+
+![mitianno2](../ex1/images/01_02_0130.png)
+
+
 ## ###############################################################
 
 ## Exercise 1.3 Add Business Logic to Your Application
@@ -545,13 +585,13 @@ In this chapter, you extend your CAP service with the consumption of an external
 4. In the result list, choose on ```Business Partner (A2X)```.
 5. Choose the ```Details``` tab.
 
-    ![API Details](../ex1/images/01_04_0010.png)
+    ![API Details](../ex1/images/01_03_0030.png)
 
 6. Choose the ```Download Specification``` button.
 7. Choose the ```EDMX``` option from the list (if you’re asked to log on, log on).
 
     If you’re using Chrome as a browser, you now see the downloaded file in the footer bar:
-    ![API EDMX](../ex1/images/01_04_0020.png)
+    ![API EDMX](../ex1/images/01_03_0040.png)
 
 
 ### Add the EDMX File to the Project and Add Local Data
@@ -622,7 +662,7 @@ service RiskService {
 
     The browser now shows a ```BusinessPartner```service next to the ```Mitigations``` and ```Risks```
 
-    ![BPService](../ex1/images/01_04_0030.png)
+    ![BPService](../ex1/images/01_03_0050.png)
 
     At this point, you've a new service exposed with a definition based on the original edmx file. However, it doesn't have any connectivity to a backend and thus, there’s no data yet. Like with your own entities ```risks``` and ```mitigations``` you create some local data.
 
@@ -641,15 +681,10 @@ BusinessPartner;LastName;FirstName
 ``` 
 
 13. Save the file
-14. In your browser, open the ```BusinessPartners``` link to see the data.
 
-    ![API EDMX](../ex1/images/01_03_0020.png)
+14. Open the ```srv/risk-service.js``` file.
 
-    In the next step, you change the code, so the data is fetched from the actual service in an SAP S/4HANA Cloud system.
-
-15. Open the ```srv/risk-service.js``` file.
-
-16. Add the following lines at the end of the file:
+15. Add the following lines at the end of the file:
 
 ```javascript
 /**
@@ -667,6 +702,7 @@ module.exports = async (srv) => {
     });
 ```
 ```diff
++
 +    const BupaService = await cds.connect.to('API_BUSINESS_PARTNER');
 +    srv.on('READ', srv.entities.BusinessPartners, async (req) => {
 +        return await BupaService.tx(req).run(req.query);
@@ -676,9 +712,19 @@ module.exports = async (srv) => {
 }
 ```
 
-    You've now created a custom handler of your service. This time it's called ```on``` the ```READ``` event of your ```BusinessPartner``` service, so whenever there’s a request for business partner data, this handler is called.
+You've now created a custom handler for your service. This time it called ```on``` for the ```READ``` event. 
 
-    Now, as you've seen before, in normal cases CAP would now get the data from your own DB and your local data in it. Until then it had no indication that the service is actually from somewhere else. You've given CAP an EDMX file with a definition but not where it comes from and where the data is to be retrieved from. So, in your new handler, you tell CAP that it should get the data from the ```A_BusinessPartner``` entity of the original service that you imported. 
+It is invoked when your ```BusinessPartner``` service is called for a read, so whenever there’s a request for business partner data, this handler is called. It makes sure the request for the business partner is directed to the external business partner service.
+
+16. Save the file
+
+17. In your browser, open the ```BusinessPartners``` link to see the data.
+
+    ![API EDMX](../ex1/images/01_03_0020.png)
+
+    In the next step, you change the code, so the data is fetched from the actual service in an SAP S/4HANA Cloud system.
+
+
 
 
 ## ###############################################################
@@ -727,40 +773,8 @@ using { managed } from '@sap/cds/common';
 	As you got a new property in your entity, you need to add data for this property in the local data file that you've created before for the ```risk``` entity.
 
 
-
-3. Open the ```srv/risk-service.js``` file within the ```cpapp``` folder in your VS Code workplace.
-
-4. Uncomment the following lines in the file:
-
-    <!-- cpes-file srv/risk-service.js -->
-```js hl_lines="14-17"
-/**
- * Implementation for Risk Management service defined in ./risk-service.cds
- */
-module.exports = async (srv) => {
-    srv.after('READ', 'Risks', (risks) => {
-        risks.forEach((risk) => {
-            if (risk.impact >= 100000) {
-                risk.criticality = 1;
-            } else {
-                risk.criticality = 2;
-            }
-        });
-    });
-    srv.on('READ', 'Risks', (req, next) => {
-        req.query.SELECT.columns = req.query.SELECT.columns.filter(({ expand, ref }) => !(expand && ref[0] === 'bp'));
-        return next();
-    });
-
-    const BupaService = await cds.connect.to('API_BUSINESS_PARTNER');
-    srv.on('READ', srv.entities.BusinessPartners, async (req) => {
-        return await BupaService.tx(req).run(req.query);
-    });
-}
-```
-
-5. Opem the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder.
-6. Replace the content with the new content below which additionally includes the BP data
+3. Opem the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder.
+4. Replace the content with the new content below which additionally includes the BP data
 
 ```csv
 ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact;bp_BusinessPartner
@@ -768,6 +782,8 @@ ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact;bp_BusinessPartner
 20466922-7d57-4e76-b14c-e53fd97dcb12;2019-10-24;tim.back@sap.com;SLA violation with possible termination cause;George Gung;2;Repeated SAL violation on service delivery for two successive quarters;20466921-7d57-4e76-b14c-e53fd97dcb12;90000;1004161
 20466922-7d57-4e76-b14c-e53fd97dcb13;2019-10-24;tim.back@sap.com;Shipment violating export control;Herbert Hunter;1;Violation of export and trade control with unauthorized downloads;20466921-7d57-4e76-b14c-e53fd97dcb13;200000;1004100
 ```
+
+5. Save the file
 
   If you check the content of the file, you see numbers like ```1004155``` at the end of the lines, representing business partners.
 
@@ -830,17 +846,160 @@ All this happens in the cds file that has all the UI annotations.
 	) {
 
 	};
+
+
+annotate RiskService.Risks with {
+	miti @(	
+		Common: {
+			//show text, not id for mitigation in the context of risks
+			Text: miti.description  , TextArrangement: #TextOnly,
+			ValueList: {
+				Label: 'Mitigations',
+				CollectionPath: 'Mitigations',
+				Parameters: [
+					{ $Type: 'Common.ValueListParameterInOut', 
+						LocalDataProperty: miti_ID, 
+						ValueListProperty: 'ID' 
+					},
+					{ $Type: 'Common.ValueListParameterDisplayOnly', 
+						ValueListProperty: 'description' 
+					}                                      
+				]
+			}
+		},
+		UI.MultiLineText: IsActiveEntity
+	);
+```
+```diff
+-  /*
+```
+```js
+	bp @(	
+		Common: {
+			Text: bp.LastName  , TextArrangement: #TextOnly,
+			ValueList: {
+				Label: 'Business Partners',
+				CollectionPath: 'BusinessPartners',
+				Parameters: [
+					{ $Type: 'Common.ValueListParameterInOut', 
+						LocalDataProperty: bp_BusinessPartner, 
+						ValueListProperty: 'BusinessPartner' 
+					},
+					{ $Type: 'Common.ValueListParameterDisplayOnly', 
+						ValueListProperty: 'LastName' 
+					},
+					{ $Type: 'Common.ValueListParameterDisplayOnly', 
+						ValueListProperty: 'FirstName' 
+					}      					                                   
+				]
+			}
+		}
+	)	
+```
+```diff
+-  */
+-
+-/*
+```
+```js
+annotate RiskService.BusinessPartners with {
+	BusinessPartner @(
+		UI.Hidden,
+		Common: {
+		Text: LastName
+		}
+	);   
+	LastName    @title: 'Last Name';  
+	FirstName   @title: 'First Name';   
+}
+```
+```diff
+-*/
+````
+```js
+}
 ```
 
-3. In your browser, choose the link [/risks/webapp/index.html](http://localhost:4004/risks/webapp/index.html) for the HTML page.
+What does this mean? The first parts that are getting rid of the comments are easy: They just enable the title and add the business partner first as a column to the list and then as a field to the object page, just like other columns and fields were added before. 
 
-4. On the launch page that now comes up, choose the **Risks** tile and then Click Go.
+The larger part of new annotations activates the same qualitites for the ```bp``` field as it happened before in exercise 1.2 for the ```miti``` field: Instead of showing the id of the business partner, its ```LastName```property is displayed. The ```ValueList``` part introduces a value list for the business partner and shows it last and first name in it.
+
+
+3. Save the file
+4. Open the ```srv/risk-service.js``` file.
+5. Add the following lines to the file:
+
+```js
+module.exports = async (srv) => {
+    srv.after('READ', 'Risks', (risks) => {
+
+        risks.forEach((risk) => {
+            if (risk.impact >= 100000) {
+                risk.criticality = 1;
+            } else {
+                risk.criticality = 2;
+            }
+        });
+    });
+
+    const BupaService = await cds.connect.to('API_BUSINESS_PARTNER');
+    srv.on('READ', srv.entities.BusinessPartners, async (req) => {
+        return await BupaService.tx(req).run(req.query);
+    });
+```
+```diff
++
++    srv.on('READ', 'Risks', async (req, next) => {
++        /*
++        Check whether the request want an "expand" of the business partner
++        As this is not possible, the risk entity and the business partner entity are in different systems (Cloud Platform and S/4 HANA Cloud),
++        if there is such an expand, remove it
++        */
++        const expandIndex = req.query.SELECT.columns.findIndex(({ expand, ref }) => expand && ref[0] === 'bp');
++        console.log(req.query.SELECT.columns)
++        if (expandIndex < 0) return next();
++
++        req.query.SELECT.columns.splice(expandIndex, 1);
++        if (!req.query.SELECT.columns.find( column => column.ref.find( ref => ref == "bp_BusinessPartner" ))) {
++            req.query.SELECT.columns.push({ ref: ["bp_BusinessPartner"] });
++        }
++        
++        /*
++        Instead of carrying out the expand, issue a separate request for each business partner
++        This code could be optimized, instead of having n requests for n business partners, just on bulk request could be created
++        */
++        const res = await next();
++        await Promise.all( 
++            res.map( async risk => {
++                const bp = await BupaService
++                    .tx(req)
++                    .run(SELECT.one(srv.entities.BusinessPartners).where({ BusinessPartner: risk.bp_BusinessPartner })
++                    .columns([ "BusinessPartner", "LastName", "FirstName" ]));
++                risk.bp = bp;
++                console.dir(risk.bp)
++            }
++        ));
++        return res;
++    });
+```
+```js
+}
+```
+
+Again you have now added a custom handler, this on is called ```on``` a ```READ``` of the ```Risks``` service. It checks whether the request includes a so-called expand for business partners. This is a request that is issued by the UI when the list should be filled. While it mostly contains columns that directly belong to the ```Risks``` entity, it also contains the business partner. As we have seen in the annotation file, instead of showing the id of the business partner, the last name of the business partner will be shown. This data is in the business partner and not in the risks entity. Therefore, the UI wants to exand, i.e. for each risk the corresponing business partner is also read.
+
+However, there is an issue with this: The ```Risk``` entity is from the Cloud Platform, the busines partner however, is potentially from a remote S/4 HANA Cloud system, in such a case the expand cannot be carried out. Because of this, we need to remove the expand from the request. Instead the code issues separate requests for each business parnter directly to the business partner service. As the code stands, for each risk there is a separate request for a business partner. This is not optimal, it would be better if all the business partners were fetched in a bulk request. You can make this change on your own if you like!
+
+6. Save the file
+7. In your tab with the application, go back to the **index.html** page and press refresh 
+
+8. On the launch page that now comes up, choose the **Risks** tile and then Click Go.
 
 	You now see the ```Risks``` application with the business partner in both the result list and the object page, which is loaded when you choose on one of the rows in the table:
 
-	![Business Partner Data](markdown/images/bpinriskstable.png "Business Partner Data")
+	![Business Partner Data](../ex1/images/01_04_0010.png "Business Partner Data")
 
-	![Business Partner Data](markdown/images/bpinriskobjectpage.png "Business Partner Data")
+	![Business Partner Data](../ex1/images/01_04_0020.png "Business Partner Data")
 
 
 
