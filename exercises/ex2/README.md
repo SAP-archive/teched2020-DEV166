@@ -1,238 +1,179 @@
-# Exercise 2 - Connect Your Project to SAP Cloud Platform Continuous Integration and Delivery 
+# Exercise 2  Prepare for Cloud Platform Deployment
 
-In this exercise, we will create a project in a public GitHub repository in which to store your source code, enable SAP Cloud Platform Continuous Integration and Delivery, and configure and run a predefined continuous integration and delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes.
+Up to this point, the whole application, its data model, its service and its UI application was running locally in you Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on you laptop / PC with extensions for Microsoft's Visual Code. 
 
-## Exercise 2.1 Create a GitHub Repository
+In this exercise, we will prepare the application for a deployment to the SAP Cloud Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
 
-After completing these steps, you will have created a public GitHub repository, in which you can store the source code of your project. **Note:** For this execise, you need to have a GitHub user.
+## ###############################################################
 
-1. Open and sign in to https://github.com/.
+## Exercise 2.1 Prepare for SAP HANA deployment
 
-2. In the **Repositories** tab, choose **New** to create a new repository.
-![Create Github Repo](./images/GH_newRepository.png)
-   
-3. As **Repository name**, enter *RiskManagment*. Don't check any of the **Initialize this repository with** checkboxes.
+While the locally running application uses an in memory SQLite data base, the deployed version will use SAP HANA. CAP helps you with the creation of the database and the deployment of the test data. At runtime it knows which data base to connect to.
 
-4. Choose **Create repository**.
-![Create Github Repo](./images/GH_createGitRepo.png)
+In order for this to work, please carry out these steps:
 
-5. Copy the HTTPS URL of your newly created GitHub repository.
-![Copy GitHub URL](./images/GH_copyGitHubURL.png)
+1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
+2. In the terminal, run the following, to install the hdb modle and automatically add it as a dependency into the `package.json` file of your project:
 
-
-## Exercise 2.2 Create a Personal Access Token for GitHub
-
-After completing these steps, you will have created a personal access token to authenticate against GitHub.
-
-To create a personal access token, which you can use instead of a password, follow the steps described in [Creating a personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
-
-
-## Exercise 2.3 Connect Your GitHub Repository with Your CAP Project
-
-After completing these steps, you will have added your CAP project sources to your GitHub repository.
-
-1. Log in to your SAP Cloud Platform account.
-
-2. Navigate to your subaccount and choose **Subscriptions**.
-
-3. Search for *Business Application Studio* and choose **Go to Application**.
-![Open Biz App Studio](./images/openBizAppStudio.png)
-As a result, you're prompted to log in through your custom identity provider.
-
-4. Log in to the application using your custom identity provider credentials.
-
-5. Open the previously created workspace with your CAP application.
-
-6. Open a new terminal and navigate to your project root folder.
-![Open Terminal](./images/openTerminal.png)
-
-7. Enter your email address and username. You can use the email address that you've used to register your GitHub account:
-   ```
-   git config --global user.email "you@example.com"
-   git config --global user.name "Your Name"
-   ```
-8. To initialize a GitHub repository and add the project sources to it, execute the following commands:
-    ```
-    git init
-    git add .
-    git commit -m "Push project content to GitHub"
-    ```
-
-9. Now, add your copied GitHub repository URL from exercise 2.1 as remote repository:
-   ```
-   git remote add origin <copied Git repository url.git>
-   ```
-
-10. Push the commit with your project content to this GitHub repository:
-    ```
-    git push -u origin main
-    ```
-
-11. When prompted, enter your GitHub username and password (or your personal access token).
-
-
-## Exercise 2.4 Enable SAP Cloud Platform Continuous Integration and Delivery
-
-After completing these steps, you will have subscribed to SAP Cloud Platform Continuous Integration and Delivery and assigned the *Administrator* role to your user.
-
-
-1. In your SAP Cloud Platform trial account, navigate to the **Subscriptions** tab.
-Here, you can find the Continuous Integration & Delivery service:
-![Service Tile](./images/CICD_ServiceTile.png)
-
-2. Choose the service tile and then choose **Subscribe**.
-![Service Tile](./images/CICD_subscribe_service.png)
-
-3. In your SAP Cloud Platform subaccount, choose **Security** → **Trust Configuration**.
-
-4. Choose the name of your identity provider.
-
-5. Enter your email address.
-
-6. Choose **Show Assignments**.
-If your user is new to your subaccount, choose **Add User** in the confirmation dialog.
-
-7. Choose **Assign Role Collection**.
-
-8. From the drop-down list, choose **CICD Service Administrator**.
-
-
-## Exercise 2.5 Configure Credentials in SAP Cloud Platform Continuous Integration and Delivery
-
-After completing these steps, you will have configured credentials for connecting SAP Cloud Platform Continuous Integration and Delivery to other services.
-
-1. In your SAP Cloud Platform subaccount, choose **Subscriptions**.
-
-2. In the **Extension Suite - Development Efficiency** category, choose **Continuous Integration & Delivery**.
-
-3. Choose **Go to Application**.
-
-4. Use your credentials to log in to the application.
-![CICD](./images/CICD_access.png)
-
-5. If your GitHub repository is private, configure credentials for it, so that the Continuous Integration & Delivery service can connect to it. **Note:** If your GitHub repository isn't private, you can skip this step.
-
-   - In the **Credentials** tab in SAP Cloud Platform Continuous Integration and Delivery, choose **+** *(Create Credentials)*.
-  ![Credentials](./images/CICD_credentials.png)
-   - For **Name**, enter a freely chosen name for your credential, which is unique in your SAP Cloud Platform subaccount. In this example, the name of the credential is *github*.
-
-   - As **Type**, select **Basic Authentication**.
-
-   - For **Username**, enter your Github username.
-
-   - For **Password**, use the personal access token, which you've created in GitHub in exercise 2.2.
-   ![Credentials GitHub](./images/CICD_credentials_github.png)
-
-6. To create credentials for deploying to the SAP Cloud Platform Cloud Foundry environment, go to the **Credentials** tab and choose **+** *(Create Credentials)*.
-![Credentials](./images/CICD_credentials.png)
-
-7. For **Name**, enter a freely chosen name for your credentials, which is unique in your SAP Cloud Platform subaccount. In this example, the name of the credentials is *cfdeploy*.
-
-8. As **Type**, select **Basic Authentication**.
-
-9. For **Username**, enter your username for the SAP Cloud Platform cockpit.
-
-10. For **Password**, use your password for the SAP Cloud Platform cockpit.
-![Credentials GitHub](./images/CICD_credentials_cfdeploy.png)
-
-
-## Exercise 2.6 Configure a CI/CD Job
-
-After completing these steps, you will have configured a job in SAP Cloud Platform Continuous Integration and Delivery.
-
-1. In the **Jobs** tab in SAP Cloud Platform Continuous Integration and Delivery, choose **+** *(Create Job)*.
-![Jobs](./images/CICD_jobs.png)
-
-2. For **Job Name**, enter a freely chosen name for your job, which is unique in your SAP Cloud Platform subaccount. In this example, the name of the job is *RiskManagment*.
-
-3. For **Repository URL**, enter the URL of your GitHub repository.
-
-4. If your GitHub repository is private, for **Repository Credentials**, enter the name of the credentials to access your GitHub Repository, which you've created in exercise 2.5. If your GitHub repository isn't private, leave this field empty.
-
-5. For **Branch**, enter the GitHub branch from which you want to receive push events.
-
-6. As **Pipeline**, choose **sap-cloud-sdk**.
-
-7. Choose **Create**.
-![CAP Job](./images/CICD_CAP_job.png)
-Whenever you create the first job for a GitHub repository, the **Webhook Creation** pop-up appears, which provides you with the data needed to define a webhook in GitHub. Alternatively, you can open the detail view of an existing job in the **Jobs** tab and under **General Information**, choose **Webhook Data**.
-![Webhook](./images/CICD_webhook.png)
-
-8. In your project in GitHub, go to the **Settings** tab.
-
-9. From the navigation pane, choose **Webhooks**.
-
-10. Choose **Add webhook**.
-![Webhook](./images/GH_webhook.png)
-
-11. Enter the **Payload URL**, **Content type**, and **Secret** from the **Webhook Creation** pop-up in SAP Cloud Platform Continuous Integration and Delivery. For all other settings, leave the default values.
-
-12. Choose **Add webhook**.
-![Webhook Details](./images/GH_webhook_details.png)
-
-
-## Exercise 2.7 Configure the Stages of Your CI/CD Pipeline
-
-After completing these steps, you will have configured the stages of your pipeline in SAP Cloud Platform Continuous Integration and Delivery.
-
-1. In the GitHub repository of your project, create a folder named `.pipeline`, which contains a file named `config.yml`. In the `config.yml` file, add the following initial configuration:
-
-```PipelineConfiguration
-# Project configuration
-general:
-
-# Stage configuration
-stages:
-  productionDeployment:
-    cfTargets:
-    - org: '<YOUR ORG NAME>'
-      space: '<YOUR SPACE NAME>'
-      appName: '<NAME OF YOUR APPLICATION>'
-      apiEndpoint: '<YOUR CLOUD FOUNDRY API ENDPOINT>'
-      credentialsId: '<NAME OF YOUR CEDENTIAL>'
+```
+npm install hdb --save
 ```
 
-2. Replace the placeholders with the values of the space in the Cloud Foundry environment to which you want to deploy.
-You can get the values for `<YOUR ORG NAME>`, `<YOUR SPACE NAME>`, and `<YOUR CLOUD FOUNDRY API ENDPOINT>` from your subaccount overview in the SAP Cloud Platform cockpit:
-![Cockpit](./images/CP_API_Endpoint.png) 
+3. In you project, open the `package.json` file and add the following lines:
 
-3. Commit your changes to GitHub.
+```json
+{
+  "name": "cpapp",
+  ...
+  "cds": {
+    "requires": {
+```
+```diff
++      "db": {
++        "kind": "sql"
++      },
+```
+```json
+      "API_BUSINESS_PARTNER": {
+        "kind": "odata",
+        "model": "srv/external/API_BUSINESS_PARTNER",
+        "credentials": {
+          "destination": "cap-api098"
+        }
+      }
+```
+```diff
+-    }
++    },
++    "hana": {
++      "deploy-format": "hdbtable"
++    }
+```
+```json
+  }
+}
+```
 
 
-## Exercise 2.8 Verify the Success of Your Build
+## Exercise 2.2 Prepare User Authentication and Authorization (XSUAA) Setup
 
-After completing these steps, you will have monitored the outcome of your job in SAP Cloud Platform Continuous Integration and Delivery.
+### Enable Authentication Support
 
-1. In the **Jobs** tab in SAP Cloud Platform Continuous Integration and Delivery, select your job and verify that a new tile appears in the **Builds** view. This tile should be marked as running.
-![Job](./images/CICD_running_job.png)
-**Note:** If no new tile appears, trigger the job manually by choosing the *Trigger Build* button.
-![Trigger Job](./images/CICD_trigger_job.png)
+The enable authentication support in CAP for SAP CP, the `xssec` and `xsenv` modules need to be installed. In your project folder carry out:
 
-2. Wait until the job has finished and verify that the build tile is marked as successful.
-![Successful Build](./images/CICD_successful_build.png)
+```bash
+npm i --save  @sap/xssec  @sap/xsenv
+```
+
+### Add UAA service
+
+We need to tell CAP that XSUAA is used. For this open the `package.json` folder in your `cpapp` project and add the following lines:
+
+<!-- cpes-file package.json:$.cds.requires -->
+```json hl_lines="9-12"
+{
+  "name": "cpapp",
+  ...
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sql"
+      },
+      "uaa": {
+        "kind": "xsuaa",
+        "credentials": {}
+      },
+      "API_BUSINESS_PARTNER": {
+        "kind": "odata",
+        "model": "srv/external/API_BUSINESS_PARTNER",
+        "credentials": {
+          "destination": "cap-api098"
+        }
+      }
+    }
+  }
+}
+```
+
+### Roles and Scopes
+
+In the context of Cloud Foundry a single authorization is called scope, for example there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, there could a role "Editor" consisting of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
+
+However, CAP recommends to use roles only and do a one to one mapping. In [Roles and Authorization Checks in CAP](https://github.wdf.sap.corp/pages/cap/guides/authorization#roles) we defined two roles.
+
+### XSUAA Security Configuration
+
+Create the file `xs-security.json` by executing:
+
+```
+cds compile srv --to xsuaa >xs-security.json
+```
+
+The file contains the configuration of the XSUAA (XS User Authentiation and Authorization service).
+
+CAP takes the authorization parts ```@(restrict ... )``` from our service definiton form [here](../../Roles_CAP/#adding-cap-role-cf-scope-restrictions-to-entities) and creates scopes and role templates from it.
+
+For example, it finds the roles `RiskViewer` and `RiskManager` in the `srv/risk-service.cds` file:
+
+```javascript hl_lines="4 8"
+  entity Risks @(restrict : [
+            {
+                grant : [ 'READ' ],
+                to : [ 'RiskViewer' ]
+            },
+            {
+                grant : [ '*' ],
+                to : [ 'RiskManager' ]
+            }
+      ]) as projection on my.Risks;
+```
+
+And created scopes and roles for both:
+
+```json
+{
+  "xsappname": "cpapp",
+  ...
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.RiskViewer",
+      "description": "Risk Viewer"
+    },
+    {
+      "name": "$XSAPPNAME.RiskManager",
+      "description": "Risk Manager"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "RiskViewer",
+      "description": "Risk Viewer",
+      "scope-references": [
+        "$XSAPPNAME.RiskViewer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "RiskManager",
+      "description": "Risk Manager",
+      "scope-references": [
+        "$XSAPPNAME.RiskManager"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    }
+  ]
+}
+```
 
 
-## Exercise 2.9 Access the Deployed Application
 
-After completing these steps, you will have accessed your deployed application trough the SAP Cloud Platform cockpit.
 
-1. In your trial account in the SAP Cloud Platform cockpit, navigate to the **Cloud Foundry** tab and choose **Spaces**.
-![CP Spaces](./images/CP_cloudfoundry.png)
-
-2. Select your space.
-
-3. Verify that the *RiskManagment* application has been deployed and that the `cpapp-approuter` is running.
-![RiskManagment App](./images/RiskManagment_running.png)
-
-4. Choose the `cpapp-approuter`.
-
-5. Choose the link under **Application Routes**.
-![RiskManagment App](./images/RiskManagment_cpapp_running.png)
-
-6. Verify that the deployed application is running and showing its home screen.
-![RiskManagment Home](./images/RiskMngmt_home.png)
-
-## Summary
-
-You've created a project in GitHub to store your source code and successfully configured and run a predefined continuous integration and delivery pipeline that automatically builds, tests and deploys your code changes.
+Continue to - [Exercise 3](../ex3/README.md)
 

@@ -12,7 +12,7 @@ This session introduces attendees to an end-to-end flow to build an extension us
 
 The requirements to follow the exercises in this repository are:
 - Get a free trial account on SAP Cloud Platform; see this [tutorial](https://developers.sap.com/tutorials/hcp-create-trial-account.html).
-- Set Up SAP Business Application Studio for development; see this [tutorial](https://developers.sap.com/tutorials/appstudio-onboarding.html).
+- Set up SAP Business Application Studio for development; see this [tutorial](https://developers.sap.com/tutorials/appstudio-onboarding.html).
 
 ## Exercises
 
@@ -27,16 +27,17 @@ Provide the exercise content here directly in README.md using [markdown](https:/
     - [Exercise 1.5 - Consume the External Service in Your UI Application](exercises/ex1#exercise-15-consume-the-external-service-in-your-ui-application)
     - [Exercise 1.6 - Roles and Authorization Checks In CAP](exercises/ex1#exercise-16--roles-and-authorization-checks-in-cap)
     - [Exercise 1.7 - Prepare for Cloud Platform Deployment](exercises/ex1#exercise-17--prepare-for-cloud-platform-deployment)
-- [Exercise 2 - Connect Your Project to SAP Cloud Platform Continuous Integration and Delivery](exercises/ex2/)
-    - [Exercise 2.1 - Create a GitHub Repository](exercises/ex2#exercise-21-create-a-github-repository)
-    - [Exercise 2.2 - Create a Personal Access Token for GitHub](exercises/ex2#exercise-22-create-a-personal-access-token-for-github)
-    - [Exercise 2.3 - Connect Your GitHub Repository with Your CAP Project](exercises/ex2#exercise-23-connect-your-github-repository-with-your-cap-project)
-    - [Exercise 2.4 - Enable SAP Cloud Platform Continuous Integration and Delivery](exercises/ex2#exercise-24-enable-sap-cloud-platform-continuous-integration-and-delivery)
-    - [Exercise 2.5 - Configure Credentials in SAP Cloud Platform Continuous Integration and Delivery](exercises/ex2#exercise-25-configure-credentials-in-sap-cloud-platform-continuous-integration-and-delivery)
-    - [Exercise 2.6 - Configure a CI/CD Job](exercises/ex2#exercise-26-configure-a-cicd-job)
-    - [Exercise 2.7 - Configure the Stages of Your CI/CD Pipeline](exercises/ex2#exercise-27-configure-the-stages-of-your-cicd-pipeline)
-    - [Exercise 2.8 - Verify the Success of Your Build](exercises/ex2#exercise-28-verify-the-success-of-your-build)
-    - [Exercise 2.9 - Access the Deployed Application](exercises/ex2#exercise-29-access-the-deployed-application)
+    
+- [Exercise 3 - Connect Your Project to SAP Cloud Platform Continuous Integration and Delivery](exercises/ex2/)
+    - [Exercise 3.1 - Create a GitHub Repository](exercises/ex2#exercise-31-create-a-github-repository)
+    - [Exercise 3.2 - Create a Personal Access Token for GitHub](exercises/ex2#exercise-32-create-a-personal-access-token-for-github)
+    - [Exercise 3.3 - Connect Your GitHub Repository with Your CAP Project](exercises/ex2#exercise-33-connect-your-github-repository-with-your-cap-project)
+    - [Exercise 3.4 - Enable SAP Cloud Platform Continuous Integration and Delivery](exercises/ex2#exercise-34-enable-sap-cloud-platform-continuous-integration-and-delivery)
+    - [Exercise 3.5 - Configure Credentials in SAP Cloud Platform Continuous Integration and Delivery](exercises/ex2#exercise-35-configure-credentials-in-sap-cloud-platform-continuous-integration-and-delivery)
+    - [Exercise 3.6 - Configure a CI/CD Job](exercises/ex2#exercise-36-configure-a-cicd-job)
+    - [Exercise 3.7 - Configure the Stages of Your CI/CD Pipeline](exercises/ex2#exercise-37-configure-the-stages-of-your-cicd-pipeline)
+    - [Exercise 3.8 - Verify the Success of Your Build](exercises/ex2#exercise-38-verify-the-success-of-your-build)
+    - [Exercise 3.9 - Access the Deployed Application](exercises/ex2#exercise-39-access-the-deployed-application)
 
 
 ## How to obtain support
