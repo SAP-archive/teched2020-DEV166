@@ -27,8 +27,8 @@ Provide the exercise content here directly in README.md using [markdown](https:/
     - [Exercise 1.5 - Consume the External Service in Your UI Application](exercises/ex1#exercise-15-consume-the-external-service-in-your-ui-application)
     - [Exercise 1.6 - Roles and Authorization Checks In CAP](exercises/ex1#exercise-16--roles-and-authorization-checks-in-cap)
     - [Exercise 1.7 - Prepare for Cloud Platform Deployment](exercises/ex1#exercise-17--prepare-for-cloud-platform-deployment)
-    
-- [Exercise 3 - Connect Your Project to SAP Cloud Platform Continuous Integration and Delivery](exercises/ex2/)
+
+- [Exercise 3 - Connect Your Project to SAP Cloud Platform Continuous Integration and Delivery](exercises/ex3/)
     - [Exercise 3.1 - Create a GitHub Repository](exercises/ex2#exercise-31-create-a-github-repository)
     - [Exercise 3.2 - Create a Personal Access Token for GitHub](exercises/ex2#exercise-32-create-a-personal-access-token-for-github)
     - [Exercise 3.3 - Connect Your GitHub Repository with Your CAP Project](exercises/ex2#exercise-33-connect-your-github-repository-with-your-cap-project)
