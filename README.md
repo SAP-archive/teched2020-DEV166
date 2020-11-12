@@ -23,7 +23,7 @@ Provide the exercise content here directly in README.md using [markdown](https:/
     - [Exercise 1.1 Create a CAP-Based Service](exercises/ex1#exercise-11-create-a-cap-based-service)
     - [Exercise 1.2 Create an SAP Fiori Elements-Based Application](exercises/ex1#exercise-12-create-an-sap-fiori-elements-based-application)
     - [Exercise 1.3 Add Business Logic to Your Application](exercises/ex1#exercise-13-add-business-logic-to-your-applicat)
-    - [Exercise 1.4 Add the Consumption of an External Service Exposed by SAP API - [Business Hub to Your Service](exercises/ex1#exercise-14-add-the-consumption-of-an-external-service-exposed-by-sap-api-business-hub-to-your-service)
+    - [Exercise 1.4 Add the Consumption of an External Service Exposed by SAP API](exercises/ex1#exercise-14-add-the-consumption-of-an-external-service-exposed-by-sap-api-business-hub-to-your-service)
     - [Exercise 1.5 Consume the External Service in Your UI Application](exercises/ex1#exercise-15-consume-the-external-service-in-your-ui-application)
     - [Exercise 1.6  Roles and Authorization Checks In CAP](exercises/ex1#exercise-16--roles-and-authorization-checks-in-cap)
     - [Exercise 1.7  Prepare for Cloud Platform Deployment](exercises/ex1#exercise-17--prepare-for-cloud-platform-deployment)
