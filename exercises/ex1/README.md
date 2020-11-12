@@ -1,4 +1,4 @@
-# Exercise 1 - Exercise 1 Description
+# Exercise 1 - Create a Cloud Application Programming Model service and a Fiori Elements application
 
 In this exercise, we will create an application based on a data model and service created using the Cloud Application Programming Model (CAP) and a UI based on Fiori elements (FE) which in turn is based on UI5.
 
@@ -1139,6 +1139,10 @@ When accessing the `Risks` or the `Mitigations` service in the browser, you get 
 You can now access the Risks application.
 
 Unfortunately, there’s no logout functionality. However, you can use the "Clear Browser Cache" function or simply close all browser windows to get rid of the basic auth login data in the browser.
+
+## ###############################################################
+
+## Exercise 1.7  Prepare for Cloud Platform Deployment
 
 
 
