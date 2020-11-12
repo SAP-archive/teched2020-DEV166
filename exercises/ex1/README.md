@@ -729,7 +729,7 @@ It is invoked when your ```BusinessPartner``` service is called for a read, so w
 
 ## ###############################################################
 
-## Exercise 1.4 Consume the External Service in Your UI Application
+## Exercise 1.5 Consume the External Service in Your UI Application
 
 In this chapter, you incorporate the external service into the UI application.
 
@@ -1000,6 +1000,145 @@ However, there is an issue with this: The ```Risk``` entity is from the Cloud Pl
 	![Business Partner Data](../ex1/images/01_04_0010.png "Business Partner Data")
 
 	![Business Partner Data](../ex1/images/01_04_0020.png "Business Partner Data")
+
+
+
+## ###############################################################
+
+## Exercise 1.6  Roles and Authorization Checks In CAP
+
+In this exercise we will add authorizations to the CAP service, so that only users with the right authorization can view the data or even edit and create data. We will also add a mock user locally to test the funcitonality
+
+### Enable Authentication Support
+
+The enable authentication support in CAP, a node.js module called `passport`  needs to be installed.
+
+1. Navigate to your ```RiskManagement``` folder in a terminal in the Business Application Studio. With your ***cds watch** still running in one terminal, it is the easiest to open another second terminal next to it, by invoking **Terminal** and the **New Terminal** in the menu. Alternatively, you can also suspend **cds watch** in your existing terminal by pressing **CTRL+C**. In both cases you should already be in the ```Riskmanagement```folder
+
+2. Install the ```passport``` module. (the --save part makes sure it’s also added as a dependency to your project's ```package.json```)
+
+    ```bash
+    npm install --save passport
+    ```
+
+### Adding Cap Role Restrictions to Entities
+
+Here we add the authorizations to the ```Risks``` service
+
+1. Open the file ```srv/risk-service.cds```.
+
+2. Change the code in the following way and by this add the  restrictions (`@(...)`) block to your `Risks` and `Mitigations` entities.
+
+```js
+using { sap.ui.riskmanagement as my } from '../db/schema';
+@path: 'service/risk'
+service RiskService {
+```
+```diff
+-  entity Risks as projection on my.Risks;
++  entity Risks @(restrict : [
++            {
++                grant : [ 'READ' ],
++                to : [ 'RiskViewer' ]
++            },
++            {
++                grant : [ '*' ],
++                to : [ 'RiskManager' ]
++            }
++        ]) as projection on my.Risks;
+```
+```js
+    annotate Risks with @odata.draft.enabled;
+```
+```diff
+-  entity Mitigations as projection on my.Mitigations;
++  entity Mitigations @(restrict : [
++            {
++                grant : [ 'READ' ],
++                to : [ 'RiskViewer' ]
++            },
++            {
++                grant : [ '*' ],
++                to : [ 'RiskManager' ]
++            }
++        ]) as projection on my.Mitigations;
+```
+```js
+    annotate Mitigations with @odata.draft.enabled;
+  entity BusinessPartners as projection on my.BusinessPartners;
+}
+```
+
+With this change users that hae the role `RiskViewer` assigned can view ("read") risks and mitigations, and a user with role `RiskManager` can view and change risks and mitigations, they are granted all the authorizations ("*").
+
+### Add Users for Local Testing
+
+Since the authorization checks have been added to the CAP model, they apply not only when deployed to the cloud but also for local testing. Therefore, we need a way to log in to the application locally.
+
+CAP offers a possibility to add local users for testing as part of the `cds` configuration. In this tutorial, we use the `.cdsrc.json` file to add the users.
+
+
+1. In the project, go to the files **.cdsrc.json** and open it for editing
+2. EIn the editor, replace its content with the following lines
+
+```json
+{
+    "[development]": {
+    "auth": {
+      "passport": {
+        "strategy": "mock",
+        "users": {
+          "risk.viewer@tester.sap.com": {
+            "password": "initial",
+            "ID": "riskviewer",
+            "userAttributes": {
+              "email": "risk.viewer@tester.sap.com"
+            },
+            "roles": [
+              "RiskViewer"
+            ]
+          },
+          "risk.manager@tester.sap.com": {
+            "password": "initial",
+            "ID": "riskmanager",
+            "userAttributes": {
+              "email": "risk.manager@tester.sap.com"
+            },
+            "roles": [
+              "RiskManager"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+3. Save the file
+
+    The file defines two users `riskviewer` and `riskmanager`.Let's look at the `riskmanager` example.
+
+
+    The user is defined by an `ID`, which cn be any identifier for a user. The user has an `email`, a `password` parameter, and a `roles` parameter. To log on, the `ID`
+
+### Access the Risk Application with a User and Password
+
+When accessing the `Risks` or the `Mitigations` service in the browser, you get a basic authorisation popup now, asking for your user and password. You can use the two users to log in and see that it works.
+
+1. In the tab with the running application, navigate back to the launchpage, press refresh in the browser. 
+
+2. Choose the **Risks** tile and in the app press **Go**.
+
+3. In the pop up, enter *Username*: `riskmanager`.
+
+4. Enter *Password*: `initial`.
+
+![Authorizations](../ex1/images/01_06_0010.png)
+
+You can now access the Risks application.
+
+Unfortunately, there’s no logout functionality. However, you can use the "Clear Browser Cache" function or simply close all browser windows to get rid of the basic auth login data in the browser.
 
 
 
