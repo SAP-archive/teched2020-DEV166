@@ -1,6 +1,6 @@
 # Exercise 2  Prepare for Cloud Platform Deployment
 
-Up to this point, the whole application, its data model, its service and its UI application was running locally in you Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on you laptop / PC with extensions for Microsoft's Visual Code. 
+Up to this point, the whole application, its data model, its service and its UI application was running locally in your Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on your laptop / PC with extensions for Microsoft's Visual Code. 
 
 In this exercise, we will prepare the application for a deployment to the SAP Cloud Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
 
@@ -10,10 +10,10 @@ In this exercise, we will prepare the application for a deployment to the SAP Cl
 
 While the locally running application uses an in memory SQLite data base, the deployed version will use SAP HANA. CAP helps you with the creation of the database and the deployment of the test data. At runtime it knows which data base to connect to.
 
-In order for this to work, please carry out these steps:
+In order for this to work, please perform these steps:
 
 1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
-2. In the terminal, run the following, to install the hdb modle and automatically add it as a dependency into the `package.json` file of your project:
+2. In the terminal, run the following command to install the hdb module and automatically add it as a dependency into the `package.json` file of your project:
 
 ```
 npm install hdb --save
@@ -63,7 +63,7 @@ npm install hdb --save
 To enable authentication support in CAP for SAP Cloud Platform, the `xssec` and `xsenv` modules need to be installed. 
 
 1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
-2. In the terminal, run the following, to install the hdb modle and automatically add it as a dependency into the `package.json` file of your project:
+2. In the terminal, run the following command to install the hdb module and automatically add it as a dependency into the `package.json` file of your project:
 
 ```bash
 npm i --save  @sap/xssec  @sap/xsenv
@@ -180,9 +180,9 @@ And created scopes and roles for both in the `xs-security.json` file in your pro
 
 ## ###############################################################
 
-## Exercise 2.3 Create a "Multi Target Application" (MTA) file for deplyment
+## Exercise 2.3 Create a "Multi Target Application" (MTA) file for deployment
 
-In this section we will create a a "Multi Target Application" (MTA) file for deplyment. (See also the [documentation](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/latest/en-US/ebb42efc880c4276a5f2294063fae0c3.html)). MTA is a way to create deployments consisting of multiple modules that can be implemented in different technologies. Advantages of this technology are that it comes with a build tool, automatically creates service instances, service keys and destinations, deploys content (HTML5, workflow, ...), and supports [blue-green deployment](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/7c83810c31d842938cbc39c135a2d99f.html).
+In this section we will create a "Multi Target Application" (MTA) file for deplyment. (See also the [documentation](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/latest/en-US/ebb42efc880c4276a5f2294063fae0c3.html)). MTA is a way to create deployments consisting of multiple modules that can be implemented in different technologies. Advantages of this technology are that it comes with a build tool, automatically creates service instances, service keys and destinations, deploys content (HTML5, workflow, ...), and supports [blue-green deployment](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/7c83810c31d842938cbc39c135a2d99f.html).
 
 ### Generate MTA Deployment Descriptor (`mta.yaml`)
 
@@ -238,13 +238,13 @@ The resources are Cloud Foundry service instances, that are automatically create
      hdi-service-name: ${service-name}
 ```
 
-As the app will run on a HANA trial instance, the corresponding HANA service needs to be used.
+As the application will run on a HANA trial instance, the corresponding HANA service needs to be used.
 
 ## ###############################################################
 
 ## Exercise 2.4  Add Authorization and Trust Management Service (XSUAA)
 
-The next step is to add the Authorization and Trust Management service to mta.yaml allow user login, authorization and authentication checks.
+The next step is to add the Authorization and Trust Management service to the `mta.yaml` to allow user login, authorization and authentication checks.
 
 1. In your `mta.yaml` file change the following:
 
@@ -283,7 +283,7 @@ resources:
 +             - $XSAPPNAME.RiskViewer
 ```
 
-The configuration for XSUAA is read from the `xs-security.json` file that was created a step before.
+The configuration for XSUAA is read from the `xs-security.json` file that was created in the step before.
 
 But in the `config` element, values can be added and overwritten.
 
