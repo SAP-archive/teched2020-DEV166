@@ -4,7 +4,7 @@ Welcome to the workshop 'Extend SAP S/4HANA with SAP Cloud Platform Extension Su
 This workshop will guide you step-by-step through the process of 
 - creating new data models and a service using the Cloud Application Programming Model (CAP)
 - integrates a service from the 
-- creating a List Report Object Page application based on Fiori elements (FE) using the new services
+- creating a List Report Object Page application based on Fiori elements (FE) using the new service
 - configuring and running a predefined continuous integration and delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
 
 ## Set up Business Application Studio in an SAP Cloud Platform Trial Account
@@ -14,7 +14,7 @@ If you don't have an SAP Cloud Platform account already, you can create your own
 ### New Trial Users
 
 After having registered your new user, start your trial via [this link](https://account.hanatrial.ondemand.com/register)\
-At first time log in, you'll be asked to select your preferred region.
+At first time log in, you'll be asked to select your preferred region. To be able to perform all exercises in this tutorial, you have to select either Europe (Frankfurt) - AWS or US East (VA) - AWS.
 This will start the set up of your account.
 
 ![Trial Setup](../ex0/images/00_00_0010.png)
@@ -41,7 +41,7 @@ Click on the button **Create Dev Space**.
 
 ![Create Dev Space](../ex0/images/00_00_0030.png)
 
-Enter a name for your dev space and select profile **SAP Fiori**.
+Enter a name for your dev space and select profile **SAP Cloud Business Application**.
 
 ![Select Profile](../ex0/images/00_00_0040.png)
 
