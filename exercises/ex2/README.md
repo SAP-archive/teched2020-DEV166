@@ -23,7 +23,7 @@ npm install hdb --save
 
 ```json
 {
-  "name": "cpapp",
+  "name": "RiskManagement",
   ...
   "cds": {
     "requires": {
@@ -75,7 +75,7 @@ We need to tell CAP that the security component XSUAA (XS User Authentiation and
 
 ```json 
 {
-  "name": "cpapp",
+  "name": "RiskManagement",
   ...
   "cds": {
     "requires": {
@@ -137,7 +137,7 @@ And created scopes and roles for both in the `xs-security.json` file in your pro
 
 ```json
 {
-  "xsappname": "cpapp",
+  "xsappname": "RiskManagement",
   ...
   "scopes": [
     {
@@ -421,7 +421,7 @@ The AppRouter of the previous chapter is also and application, like our CAP serv
 
 ```yaml 
  # -------------------- SIDECAR MODULE ------------------------
- - name: cpapp-db-deployer
+ - name: RiskManagement-db-deployer
  # ------------------------------------------------------------
    type: hdb
    path: gen/db  
@@ -429,8 +429,8 @@ The AppRouter of the previous chapter is also and application, like our CAP serv
      buildpack: nodejs_buildpack
    requires:
     # 'hana' and 'xsuaa' resources extracted from CAP configuration
-    - name: cpapp-db
-    - name: cpapp-uaa
+    - name: RiskManagement-db
+    - name: RiskManagement-uaa
 ```
 ```diff
 +  # --------------------  APPROUTER -----------------------------
