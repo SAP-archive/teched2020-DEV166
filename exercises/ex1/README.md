@@ -229,12 +229,12 @@ The application is now generated and after a couple of seconds you can see it in
 
     ![Feapp](../ex1/images/01_02_0070.png)
 
-    Unfortunately, clicking on the link doesn't get a result yet, as we miss an essential part of a Fiori elements application it needs to run properly in spite of it already being bound to our CAP-based OData service, it is missing UI annotations 
+    Unfortunately, clicking on the link doesn't get a result yet, as we miss an essential part of a Fiori elements application it needs to run properly in spite of it already being bound to our CAP-based OData service, it is missing UI annotations. 
 
 
-2. To add the OData annotations, n the project, go to folder **srv**, representing the service, press the right mouse button and select **New File** in the menu
+2. To add the OData annotations, in the project, go to folder **srv**, representing the service, in the context menu select **New File**.
 
-3. Enter **risks-service-ui.cds** as a name.
+3. Enter **risks-service-ui.cds** as a name
 
 4. Click on the new file in the explorer, an editor opens
 
@@ -510,7 +510,7 @@ In this chapter, you add some custom code to the CAP service, that changes, depe
 
 ### Add Custom Code
 
-1. In the project, go to folder **srv**, representing the service, press the right mouse button and select **New File** in the menu
+1. In the project, go to folder **srv**, representing the service, in the context menu select **New File**.
 2. Enter **risk-service.js** as a name.
 3. Click on the new file in the explorer, an editor opens
 4. Enter the following lines into the editor
@@ -596,8 +596,8 @@ In this chapter, you extend your CAP service with the consumption of an external
 
 ### Add the EDMX File to the Project and Add Local Data
 
-1. Make sure in your VS Code ```cds watch``` is still running.
-2. Drag the ```API_BUSINESS_PARTNER.edmx``` file from your browser's download area/folder onto your VS Code workplace and drop it into the ```srv``` folder of your ```cpapp``` app.
+1. Make sure in your terminal ```cds watch``` is still running.
+2. Drag the ```API_BUSINESS_PARTNER.edmx``` file from your browser's download area/folder onto your Business Application Studio workplace and drop it into the ```srv``` folder of your ```cpapp``` app.
 
     CAP has noticed the new file and automatically created a new ```external``` folder under ```srv``` and in it added a new ```API_BUSINESS_PARTNER.csn``` file. ([CSN](https://github.wdf.sap.corp/pages/cap/cds/csn) being a compact representation of CDS)
 
@@ -664,11 +664,11 @@ service RiskService {
 
     ![BPService](../ex1/images/01_03_0050.png)
 
-    At this point, you've a new service exposed with a definition based on the original edmx file. However, it doesn't have any connectivity to a backend and thus, there’s no data yet. Like with your own entities ```risks``` and ```mitigations``` you create some local data.
+    At this point, you have a new service exposed with a definition based on the original ```edmx``` file. However, it doesn't have any connectivity to a backend and thus, there’s no data yet. Like with your own entities ```risks``` and ```mitigations``` you create some local data.
 
-7. In the project, go to folder **srv/external**, press the right mouse button and select **New Folder** in the menu
+7. In the project, go to folder **srv/external**, in the context menu, select **New Folder**
 8. Enter **data** as a name.
-9. On the **data** folder,press the right mouse button and select **New File** in the menu
+9. On the **data** folder, in the context menu, select **New File** 
 10. Enter **API_BUSINESS_PARTNER-A_BusinessPartner.csv** as a name.
 11. Click on the new file in the explorer, an editor opens
 12. Enter the following lines into the editor
@@ -773,7 +773,7 @@ using { managed } from '@sap/cds/common';
 	As you got a new property in your entity, you need to add data for this property in the local data file that you've created before for the ```risk``` entity.
 
 
-3. Opem the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder.
+3. Open the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder.
 4. Replace the content with the new content below which additionally includes the BP data
 
 ```csv
@@ -790,7 +790,7 @@ ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact;bp_BusinessPartner
 
 ### Add the Business Partner Field to the UI
 
-Now, you also introduce the business partner field in the UI. For this you need to do several things:
+Now, you also introduce the business partner field in the UI. For this you need to perform the following steps:
 
 - You add a label for the columns in the result list table as well as in the object page by adding a title annotation.
 - You add the business partner as a line item to include it as a column in the result list.
@@ -798,7 +798,7 @@ Now, you also introduce the business partner field in the UI. For this you need 
 
 All this happens in the cds file that has all the UI annotations.
 
-1. Open the ```srv/risks-service-ui.cds``` file..
+1. Open the ```srv/risks-service-ui.cds``` file.
 2. Uncomment the following parts:
 
 ```javascript 
@@ -986,7 +986,7 @@ module.exports = async (srv) => {
 }
 ```
 
-Again you have now added a custom handler, this on is called ```on``` a ```READ``` of the ```Risks``` service. It checks whether the request includes a so-called expand for business partners. This is a request that is issued by the UI when the list should be filled. While it mostly contains columns that directly belong to the ```Risks``` entity, it also contains the business partner. As we have seen in the annotation file, instead of showing the id of the business partner, the last name of the business partner will be shown. This data is in the business partner and not in the risks entity. Therefore, the UI wants to exand, i.e. for each risk the corresponing business partner is also read.
+Again you have now added a custom handler, this one is called ```on``` a ```READ``` of the ```Risks``` service. It checks whether the request includes a so-called expand for business partners. This is a request that is issued by the UI when the list should be filled. While it mostly contains columns that directly belong to the ```Risks``` entity, it also contains the business partner. As we have seen in the annotation file, instead of showing the id of the business partner, the last name of the business partner will be shown. This data is in the business partner and not in the risks entity. Therefore, the UI wants to exand, i.e. for each risk the corresponing business partner is also read.
 
 However, there is an issue with this: The ```Risk``` entity is from the Cloud Platform, the busines partner however, is potentially from a remote S/4 HANA Cloud system, in such a case the expand cannot be carried out. Because of this, we need to remove the expand from the request. Instead the code issues separate requests for each business parnter directly to the business partner service. As the code stands, for each risk there is a separate request for a business partner. This is not optimal, it would be better if all the business partners were fetched in a bulk request. You can make this change on your own if you like!
 
@@ -1011,7 +1011,7 @@ In this exercise we will add authorizations to the CAP service, so that only use
 
 ### Enable Authentication Support
 
-The enable authentication support in CAP, a node.js module called `passport`  needs to be installed.
+The enable authentication support in CAP, a `node.js` module called `passport`  needs to be installed.
 
 1. Navigate to your ```RiskManagement``` folder in a terminal in the Business Application Studio. With your ***cds watch** still running in one terminal, it is the easiest to open another second terminal next to it, by invoking **Terminal** and the **New Terminal** in the menu. Alternatively, you can also suspend **cds watch** in your existing terminal by pressing **CTRL+C**. In both cases you should already be in the ```Riskmanagement```folder
 
@@ -1069,7 +1069,7 @@ service RiskService {
 }
 ```
 
-With this change users that hae the role `RiskViewer` assigned can view ("read") risks and mitigations, and a user with role `RiskManager` can view and change risks and mitigations, they are granted all the authorizations ("*").
+With this change users that have the role `RiskViewer` assigned can view ("read") risks and mitigations, and a user with role `RiskManager` can view and change risks and mitigations, they are granted all the authorizations ("*").
 
 ### Add Users for Local Testing
 
@@ -1079,7 +1079,7 @@ CAP offers a possibility to add local users for testing as part of the `cds` con
 
 
 1. In the project, go to the files **.cdsrc.json** and open it for editing
-2. EIn the editor, replace its content with the following lines
+2. In the editor, replace its content with the following lines
 
 ```json
 {
@@ -1117,10 +1117,10 @@ CAP offers a possibility to add local users for testing as part of the `cds` con
 
 3. Save the file
 
-    The file defines two users `riskviewer` and `riskmanager`.Let's look at the `riskmanager` example.
+    The file defines two users `riskviewer` and `riskmanager`. Let's look at the `riskmanager` example.
 
 
-    The user is defined by an `ID`, which cn be any identifier for a user. The user has an `email`, a `password` parameter, and a `roles` parameter. To log on, the `ID`
+    The user is defined by an `ID`, which can be any identifier for a user. The user has an `email`, a `password` parameter, and a `roles` parameter. To log on, the `ID`
 
 ### Access the Risk Application with a User and Password
 
@@ -1144,24 +1144,24 @@ Unfortunately, there’s no logout functionality. However, you can use the "Clea
 
 ## Exercise 1.7  Prepare for Cloud Platform Deployment
 
-Up to this point, the whole application, its data model, its service and its UI application was running locally in you Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on you laptop / PC with extensions for Microsoft's Visual Code. 
+Up to this point, the whole application, its data model, its service and its UI application was running locally in your Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on your laptop / PC with extensions for Microsoft's Visual Code. 
 
-From this point on, we will prepare the application for a deployment to the SAP Cloud Platform. In [Exercise 2](../ex2/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
+From this point on, we will prepare the application for a deployment to the SAP Cloud Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
 
 ### Prepare for SAP HANA deployment
 
 While the locally running application uses an in memory SQLite data base, the deployed version will use SAP HANA. CAP helps you with the creation of the database and the deployment of the test data. At runtime it knows which data base to connect to.
 
-In order for this to work, please carry out these steps:
+In order for this to work, please perform these steps:
 
 1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
-2. In the terminal, run the following, to install the hdb modle and automatically add it as a dependency into the `package.json` file of your project:
+2. In the terminal, run the following command, to install the hdb module and automatically add it as a dependency into the `package.json` file of your project:
 
 ```
 npm install hdb --save
 ```
 
-3. In you project, open the `package.json` file and add the following lines:
+3. In your project, open the `package.json` file and add the following lines:
 
 ```json
 {
