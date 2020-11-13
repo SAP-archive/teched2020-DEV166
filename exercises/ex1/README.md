@@ -33,14 +33,14 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
 
     The screen now looks like this:
     ![project view](../ex1/images/01_01_0060.png)
-    Cds watch tells you that there’s no model yet that it can serve. You add one in the next steps.
+    `cds watch` tells you that there’s no model yet that it can serve. You add one in the next steps.
 
 ### Add a Data Model to the Project
 
 In this part we create a data model using the Core Data Services (CDS) format from CAP.
 
-1. In the project, go to folder **db**, representing the data model on the data base, press the right mouse button and select **New File** in the menu
-2. Enter **schema.cds*** as a name.
+1. In the project, go to folder **db**, representing the data model on the data base. In the context menu, select **New File**.
+2. Enter **schema.cds** as a name.
 3. Click on the new file in the explorer, an editor opens
 4. Enter the following lines into the editor
 
@@ -71,23 +71,23 @@ using { managed } from '@sap/cds/common';
 
 5. Save the file
 
-    This creates 2 entities in the namespace **sap.ui.riskmanagement**, **Risks**, and **Mitigations**. Each of them have a key called **ID** and several other properties. a Risk has a mitigation and therefore, the property **miti** has an association to exactly one Mitigation. A Mitigation in turn can be used for many Risks, so it has a "too many" association. They key is automatically filled by CAP, which is exposed to the user of the service with the annotation `@(Core.Computed : true)`.
+This creates 2 entities in the namespace **sap.ui.riskmanagement**, **Risks**, and **Mitigations**. Each of them has a key called **ID** and several other properties. A **Risk** has a mitigation and therefore, the property **miti** has an association to exactly one **Mitigation**. A Mitigation in turn can be used for many Risks, so it has a "too many" association. The key is automatically filled by CAP, which is exposed to the user of the service with the annotation `@(Core.Computed : true)`.
 
-    At this point, you can neglect the commented property **bp** (as well as the other commented lines further down in the file and in subsequent files and chapters). All the commented lines are later used and uncommented when you introduce a reference to a Business Partner entity. For now you don't need it, though.
+At this point, you can neglect the commented property **bp** (as well as the other commented lines further down in the file and in subsequent files and chapters). All the commented lines are later used and uncommented when you introduce a reference to a Business Partner entity. For now you don't need it, though.
 
-    The screen now looks like this:
+The screen now looks like this:
 
 ![project view](../ex1/images/01_01_0070.png)
 
 
-    Notice how cds watch reacted to dropping the file. It now tells you that it has a model but there are no service definitions yet and thus it still can’t serve anything. So, you add a service definition.
+Notice how `cds watch` reacted to dropping the file. It now tells you that it has a model but there are no service definitions yet and thus it still can’t serve anything. So, you will add a service definition.
 
 ### Add a Service to the Project
 
 In this part we create a new service with 2 entities, both are projections of the data models that we created in the chapter before.
 
-1. In the project, go to folder **srv**, representing the service, press the right mouse button and select **New File** in the menu
-2. Enter **risk-service.cds*** as a name.
+1. In the project, go to folder **srv**, representing the service. In the context menu, select **New File**.
+2. Enter **risk-service.cds** as a name.
 3. Click on the new file in the explorer, an editor opens
 4. Enter the following lines into the editor
 
@@ -104,14 +104,14 @@ service RiskService {
 }
 ```
 
-  This creates a new service **RiskService** in the namespace **sap.ui.riskmanagement**. This service exposes 2 entities (again just neglect the commented part for the business partner), **Risks**and **Mitigations**, which are both just exposing the entities of the data base schema you’ve created in the step before.
+  This creates a new service **RiskService** in the namespace **sap.ui.riskmanagement**. This service exposes 2 entities (again just neglect the commented part for the business partner), **Risks** and **Mitigations**, which are both just exposing the entities of the data base schema you’ve created in the step before.
 
   If you again look at the terminal, you see that cds watch has noticed the new file and now tells us that it serves something:
 
 ![service](../ex1/images/01_01_0080.png)
 
 5. Press the **Expose and Open** button
-6. If you are asked to enter a name just press return
+6. If you are asked to enter a name - just press return
 
 You now see this screen:
 
@@ -121,7 +121,7 @@ You now see this screen:
 
 The service already exposes a full blown OData metadata document
 
-8. Now click on the **Risks** link.
+8. Now go back and click on the **Risks** link.
 
 This exposes the data for the Risks entity. As there is no data yet, you only see this:
 
@@ -138,9 +138,9 @@ Don't close the window, you will need it again.
  
 In this part we add data to the service. It is local data that is stored in a local data base called SQLite that CAP invokes behind the scences. CAP makes it easy to add such test data to a service, all it needs is a Comma Separated Values file which contains the entities' elements as column headers.
 
-1. In the project, go to folder **db**, , press the right mouse button and select **New Folder** in the menu
+1. In the project, go to folder **db**.  In the context menu, select **New Folder**. 
 2. Enter **data** as a name.
-3. On the **data** folder,press the right mouse button and select **New File** in the menu
+3. On the **data** folder, in the context menu, select **New File**.
 2. Enter **sap.ui.riskmanagement-Risks.csv** as a name.
 5. Click on the new file in the explorer, an editor opens
 6. Enter the following lines into the editor
@@ -152,10 +152,10 @@ ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact
 20466922-7d57-4e76-b14c-e53fd97dcb13;2019-10-24;tim.back@sap.com;Shipment violating export control;Herbert Hunter;1;Violation of export and trade control with unauthorized downloads;20466921-7d57-4e76-b14c-e53fd97dcb13;200000
 ```
 7. Save the file
-38 On the **data** folder,press the right mouse button and select **New File** in the menu
-8. Enter **sap.ui.riskmanagement-Mitigations.csv** as a name.
-9. Click on the new file in the explorer, an editor opens
-10. Enter the following lines into the editor
+8. On the **data** folder, in the context menu, select **New File**.
+9. Enter **sap.ui.riskmanagement-Mitigations.csv** as a name.
+10. Click on the new file in the explorer, an editor opens
+11. Enter the following lines into the editor
 
 ```csv
 ID;createdAt;createdBy;description;owner;timeline
@@ -164,21 +164,21 @@ ID;createdAt;createdBy;description;owner;timeline
 20466921-7d57-4e76-b14c-e53fd97dcb13;2019-10-24;tim.back@sap.com;Embargo violation: investigate source of shipment request, revoke authorization;SFSF Employee with link possible?;29.03.2020
 20466921-7d57-4e76-b14c-e53fd97dcb14;2019-10-24;tim.back@sap.com;Embargo violation: review shipment proceedure and stop delivery until further notice;SFSF Employee with link possible?;01.03.2020
 ```
-11. Save the file
+12. Save the file
 
-The fils have the name of the namespace of the entities in the data model (e.g. **sap.ui.riskmanagement**), followed by a '-' and the name of the entity (e.g. **Risks**). When adhering to this naming convention CAP recognizes the file as data for the data model and automatically adds it to the built in SQLite data base.
+The files have the name of the namespace of the entities in the data model (e.g. **sap.ui.riskmanagement**), followed by a '-' and the name of the entity (e.g. **Risks**). When adhering to this naming convention CAP recognizes the file as data for the data model and automatically adds it to the built in SQLite data base.
 Looking at the contents of the file **sap.ui.riskmanagement-Risks.csv**, the first line contains all the properties from your **Risks** entity. While the other ones are straight forward, consider the **miti_id** property. In your entity, you only have a **miti** property, so where does this come from? **miti** is an association to **Mitigations**, as **Mitigations** could have several key properties, the association on the data base needs to point to all of these, therefore CAP creates a property **<AssocuiationProperty>_<AssociatedEntityKey>** for each key.
 
 As always `cds watch` has noticed the change.
 
-12. Return to the browser window wehere the service is stil shown and press **refresh** in the browser. it will now show values for **Risks**
+12. Return to the browser window where the service is stil shown and press **refresh** in the browser. It will now show values for **Risks**
 
 ![risksdata](../ex1/images/01_01_0100.png)
 
 
 You’ve now got a full blown OData service, which complies to the OData standard and supports the respective queries without having to code anything but the data model and exposing the service itself.
 
-*Note:* The service is completely exposed without any authentication or authorization check. you extend the service later with such checks.
+*Note:* The service is completely exposed without any authentication or authorization check. You will extend the service later with such checks.
 
 ## ###############################################################
 
