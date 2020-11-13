@@ -21,9 +21,9 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
 5. The new workspace will open and it will show the generated 'RiskManagement' project like this:
 ![project view](../ex1/images/01_01_0050.png)
 
-6. In VS Code choose **Terminal -> New Terminal** from its menu.
+6. In Business Application Stuid choose **Terminal -> New Terminal** from its menu.
 
-    A new terminal opens in the lower right part of the VS Code screen.
+    A new terminal opens in the lower right part of the Business Application Studio screen.
 
 7. In the terminal, start a CAP server by typing:
     ```
@@ -596,8 +596,8 @@ In this chapter, you extend your CAP service with the consumption of an external
 
 ### Add the EDMX File to the Project and Add Local Data
 
-1. Make sure in your VS Code ```cds watch``` is still running.
-2. Drag the ```API_BUSINESS_PARTNER.edmx``` file from your browser's download area/folder onto your VS Code workplace and drop it into the ```srv``` folder of your ```cpapp``` app.
+1. Make sure in your Business Application Studi ```cds watch``` is still running.
+2. Drag the ```API_BUSINESS_PARTNER.edmx``` file from your browser's download area/folder onto your Business Application Studio workplace and drop it into the ```srv``` folder of your ```RiskManagement``` app.
 
     CAP has noticed the new file and automatically created a new ```external``` folder under ```srv``` and in it added a new ```API_BUSINESS_PARTNER.csn``` file. ([CSN](https://github.wdf.sap.corp/pages/cap/cds/csn) being a compact representation of CDS)
 
@@ -1165,7 +1165,7 @@ npm install hdb --save
 
 ```json
 {
-  "name": "cpapp",
+  "name": "RiskManagement",
   ...
   "cds": {
     "requires": {
@@ -1193,6 +1193,127 @@ npm install hdb --save
 ```
 ```json
   }
+}
+```
+
+
+## Prepare User Authentication and Authorization (XSUAA) Setup
+
+## Enable Authentication Support
+
+The enable authentication support in CAP for SAP CP, the `xssec` and `xsenv` modules need to be installed. In your project folder carry out:
+
+```bash
+npm i --save  @sap/xssec  @sap/xsenv
+```
+
+## Add UAA service
+
+We need to tell CAP that XSUAA is used. For this open the `package.json` folder in your `RiskManagement` project and add the following lines:
+
+```json 
+{
+  "name": "RiskManagement",
+  ...
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sql"
+      },
+```
+```diff
++      "uaa": {
++        "kind": "xsuaa",
++        "credentials": {}
++      },
+```
+```json
+      "API_BUSINESS_PARTNER": {
+        "kind": "odata",
+        "model": "srv/external/API_BUSINESS_PARTNER",
+        "credentials": {
+          "destination": "cap-api098"
+        }
+      }
+    }
+  }
+}
+```
+
+## Roles and Scopes
+
+In the context of Cloud Foundry a single authorization is called scope, for example there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, there could a role "Editor" consisting of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
+
+However, CAP recommends to use roles only and do a one to one mapping. In [Roles and Authorization Checks in CAP](https://github.wdf.sap.corp/pages/cap/guides/authorization#roles) we defined two roles.
+
+## XSUAA Security Configuration
+
+Create the file `xs-security.json` by executing:
+
+```
+cds compile srv --to xsuaa >xs-security.json
+```
+
+The file contains the configuration of the XSUAA (XS User Authentiation and Authorization service).
+
+CAP takes the authorization parts ```@(restrict ... )``` from our service definiton form [here](../../Roles_CAP/#adding-cap-role-cf-scope-restrictions-to-entities) and creates scopes and role templates from it.
+
+For example, it finds the roles `RiskViewer` and `RiskManager` in the `srv/risk-service.cds` file:
+
+```javascript hl_lines="4 8"
+  entity Risks @(restrict : [
+            {
+                grant : [ 'READ' ],
+                to : [ 'RiskViewer' ]
+            },
+            {
+                grant : [ '*' ],
+                to : [ 'RiskManager' ]
+            }
+      ]) as projection on my.Risks;
+```
+
+And created scopes and roles for both:
+
+```json
+{
+  "xsappname": "RiskManagement",
+  ...
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.RiskViewer",
+      "description": "Risk Viewer"
+    },
+    {
+      "name": "$XSAPPNAME.RiskManager",
+      "description": "Risk Manager"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "RiskViewer",
+      "description": "Risk Viewer",
+      "scope-references": [
+        "$XSAPPNAME.RiskViewer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "RiskManager",
+      "description": "Risk Manager",
+      "scope-references": [
+        "$XSAPPNAME.RiskManager"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    }
+  ]
 }
 ```
 
