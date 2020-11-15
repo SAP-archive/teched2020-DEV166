@@ -31,44 +31,46 @@ To create a personal access token, which you can use instead of a password, foll
 
 After completing these steps, you will have added your CAP project sources to your GitHub repository.
 
-1. Log in to your SAP Cloud Platform account.
+1. If you already have the **Business Application Studio** open from the previous chapters, you can skip the next steps and resume with step 7.
 
-2. Navigate to your subaccount and choose **Subscriptions**.
+2. Log in to your SAP Cloud Platform account.
 
-3. Search for *Business Application Studio* and choose **Go to Application**.
+3. Navigate to your subaccount and choose **Subscriptions**.
+
+4. Search for *Business Application Studio* and choose **Go to Application**.
 ![Open Biz App Studio](./images/openBizAppStudio.png)
 As a result, you're prompted to log in through your custom identity provider.
 
-4. Log in to the application using your custom identity provider credentials.
+5. Log in to the application using your custom identity provider credentials.
 
-5. Open the previously created workspace with your CAP application.
+6. Open the previously created workspace with your CAP application.
 
-6. Open a new terminal and navigate to your project root folder.
+7. Open a new terminal and navigate to your project root folder.
 ![Open Terminal](./images/openTerminal.png)
 
-7. Enter your email address and username. You can use the email address that you've used to register your GitHub account:
+8. Enter your email address and username. You can use the email address that you've used to register your GitHub account:
    ```
    git config --global user.email "you@example.com"
    git config --global user.name "Your Name"
    ```
-8. To initialize a GitHub repository and add the project sources to it, execute the following commands:
+9. To initialize a GitHub repository and add the project sources to it, execute the following commands:
     ```
     git init
     git add .
     git commit -m "Push project content to GitHub"
     ```
 
-9. Now, add your copied GitHub repository URL from exercise 3.1 as remote repository:
+10. Now, add your copied GitHub repository URL from exercise 3.1 as remote repository:
    ```
    git remote add origin <copied Git repository url.git>
    ```
 
-10. Push the commit with your project content to this GitHub repository:
+11. Push the commit with your project content to this GitHub repository:
     ```
     git push -u origin main
     ```
 
-11. When prompted, enter your GitHub username and password (or your personal access token).
+12. When prompted, enter your GitHub username and password (or your personal access token).
 
 
 ## Exercise 3.4 Enable SAP Cloud Platform Continuous Integration and Delivery
