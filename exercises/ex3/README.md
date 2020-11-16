@@ -190,8 +190,11 @@ stages:
 ```
 
 2. Replace the placeholders with the values of the space in the Cloud Foundry environment to which you want to deploy.
+`<NAME OF YOUR APPLICATION>` is `RiskManagement` and `credentialId` is the name of the credntials you have created before for Cloud Platform access, in the example we used `cfdeploy`.
 You can get the values for `<YOUR ORG NAME>`, `<YOUR SPACE NAME>`, and `<YOUR CLOUD FOUNDRY API ENDPOINT>` from your subaccount overview in the SAP Cloud Platform cockpit:
 ![Cockpit](./images/CP_API_Endpoint.png) 
+
+
 
 3. Commit your changes to GitHub.
 
