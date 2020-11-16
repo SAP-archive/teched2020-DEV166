@@ -56,6 +56,7 @@ As a result, you're prompted to log in through your custom identity provider.
     git init
     git add .
     git commit -m "Push project content to GitHub"
+    git branch -M main
     ```
 
 9. Now, add your copied GitHub repository URL from exercise 3.1 as remote repository:
