@@ -181,6 +181,8 @@ After completing these steps, you will have configured the stages of your pipeli
 ```PipelineConfiguration
 # Project configuration
 general:
+  projectName: 'RiskManagement'
+  productiveBranch: 'main'
 
 # Stage configuration
 stages:
