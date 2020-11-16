@@ -58,6 +58,7 @@ As a result, you're prompted to log in through your custom identity provider.
     git init
     git add .
     git commit -m "Push project content to GitHub"
+    git branch -M main
     ```
 
 10. Now, add your copied GitHub repository URL from exercise 3.1 as remote repository:
@@ -177,7 +178,7 @@ Whenever you create the first job for a GitHub repository, the **Webhook Creatio
 
 After completing these steps, you will have configured the stages of your pipeline in SAP Cloud Platform Continuous Integration and Delivery.
 
-1. In the GitHub repository of your project, create a folder named `.pipeline`, which contains a file named `config.yml`. In the `config.yml` file, add the following initial configuration:
+1. Either directly nn the GitHub repository of your project or in your still open project in BAS, create a folder named `.pipeline`, which contains a file named `config.yml`. In the `config.yml` file, add the following initial configuration:
 
 ```PipelineConfiguration
 # Project configuration
@@ -195,11 +196,16 @@ stages:
 ```
 
 2. Replace the placeholders with the values of the space in the Cloud Foundry environment to which you want to deploy.
-You can get the values for `<YOUR ORG NAME>`, `<YOUR SPACE NAME>`, and `<YOUR CLOUD FOUNDRY API ENDPOINT>` from your subaccount overview in the SAP Cloud Platform cockpit:
+You can get the values for `<YOUR ORG NAME>`, `<YOUR SPACE NAME>`, and `<YOUR CLOUD FOUNDRY API ENDPOINT>` from your subaccount overview in the SAP Cloud Platform cockpit. `<NAME OF YOUR APPLICATION>`is `RiskManagement` and `credentialId` is the name of the credntials you have created before for Cloud Platform access, in the example we used `cfdeploy`.
 ![Cockpit](./images/CP_API_Endpoint.png) 
 
-3. Commit your changes to GitHub.
+3. Commit your changes to GitHub., e.g. if you are in BAS by typing into a terminal (you might be prompted for you user and pw/token again)
 
+```bash
+git add -A
+git commit -m "configure CI/CD"
+git push  
+```
 
 ## Exercise 3.8 Verify the Success of Your Build
 
