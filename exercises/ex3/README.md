@@ -11,7 +11,7 @@ After completing these steps, you will have created a public GitHub repository, 
 2. In the **Repositories** tab, choose **New** to create a new repository.
 ![Create Github Repo](./images/GH_newRepository.png)
    
-3. As **Repository name**, enter *RiskManagment*. Don't check any of the **Initialize this repository with** checkboxes.
+3. As **Repository name**, enter *RiskManagement*. Don't tick any of the **Initialize this repository with** checkboxes.
 
 4. Choose **Create repository**.
 ![Create Github Repo](./images/GH_createGitRepo.png)
@@ -31,27 +31,21 @@ To create a personal access token, which you can use instead of a password, foll
 
 After completing these steps, you will have added your CAP project sources to your GitHub repository.
 
-1. Log in to your SAP Cloud Platform account.
+1. Click on the Quick Tool Access icon **SAP Business Application Studio**.
 
-2. Navigate to your subaccount and choose **Subscriptions**.
+![Welcome SCP Trial](../ex0/images/00_00_0020.png)
 
-3. Search for *Business Application Studio* and choose **Go to Application**.
-![Open Biz App Studio](./images/openBizAppStudio.png)
-As a result, you're prompted to log in through your custom identity provider.
+2. Open the previously created workspace with your CAP application.
 
-4. Log in to the application using your custom identity provider credentials.
-
-5. Open the previously created workspace with your CAP application.
-
-6. Open a new terminal and navigate to your project root folder.
+3. Open a new terminal and navigate to your project root folder.
 ![Open Terminal](./images/openTerminal.png)
 
-7. Enter your email address and username. You can use the email address that you've used to register your GitHub account:
+4. Enter your email address and username. You can use the email address that you've used to register your GitHub account:
    ```
    git config --global user.email "you@example.com"
    git config --global user.name "Your Name"
    ```
-8. To initialize a GitHub repository and add the project sources to it, execute the following commands:
+5. To initialize a GitHub repository and add the project sources to it, execute the following commands:
     ```
     git init
     git add .
@@ -59,17 +53,17 @@ As a result, you're prompted to log in through your custom identity provider.
     git branch -M main
     ```
 
-9. Now, add your copied GitHub repository URL from exercise 3.1 as remote repository:
+6. Now, add your copied GitHub repository URL from exercise 3.1 as remote repository:
    ```
    git remote add origin <copied Git repository url.git>
    ```
 
-10. Push the commit with your project content to this GitHub repository:
+7. Push the commit with your project content to this GitHub repository:
     ```
     git push -u origin main
     ```
 
-11. When prompted, enter your GitHub username and password (or your personal access token).
+8. When prompted, enter your GitHub username and the personal access token, created in exercise 3.2.
 
 
 ## Exercise 3.4 Enable SAP Cloud Platform Continuous Integration and Delivery
