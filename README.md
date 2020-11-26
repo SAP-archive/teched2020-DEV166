@@ -11,7 +11,7 @@ This session introduces attendees to an end-to-end flow to build an extension us
 ## Requirements
 
 The requirements to follow the exercises in this repository are:
-- Get a free trial account on SAP Cloud Platform; see this [tutorial](https://developers.sap.com/tutorials/hcp-create-trial-account.html).
+- Get a free trial account on SAP Cloud Platform; see this [tutorial](https://developers.sap.com/tutorials/hcp-create-trial-account.html). Choose Europe (Frankfurt) - AWS or US East (VA) - AWS regions.
 - Set up SAP Business Application Studio for development; see this [tutorial](https://developers.sap.com/tutorials/appstudio-onboarding.html).
 
 ## Exercises
