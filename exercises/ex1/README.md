@@ -794,7 +794,7 @@ using { managed } from '@sap/cds/common';
   }
 ```
 
-	As you got a new property in your entity, you need to add data for this property in the local data file that you've created before for the ```risk``` entity.
+As you got a new property in your entity, you need to add data for this property in the local data file that you've created before for the ```risk``` entity.
 
 
 3. Open the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder.
