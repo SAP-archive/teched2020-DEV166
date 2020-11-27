@@ -594,7 +594,7 @@ In this chapter, you extend your CAP service with the consumption of an external
     ![API Details](../ex1/images/01_03_0030.png)
 
 6. Choose the ```Download Specification``` button.
-7. Choose the ```EDMX``` option from the list (if you’re asked to log on, log on).
+7. Choose the ```EDMX``` option from the list (if you’re asked to log on, log on, it works automatically).
 
     If you’re using Chrome as a browser, you now see the downloaded file in the footer bar:
     ![API EDMX](../ex1/images/01_03_0040.png)
@@ -608,7 +608,19 @@ In this chapter, you extend your CAP service with the consumption of an external
     CAP has noticed the new file and automatically created a new ```external``` folder under ```srv``` and in it added a new ```API_BUSINESS_PARTNER.csn``` file. ([CSN](https://github.wdf.sap.corp/pages/cap/cds/csn) being a compact representation of CDS)
 
 
-3. In your project, open the ```db/schema.cds``` file again and change these parts of the file:
+3. In your project, open the ```db/schema.cds``` file again and change the parts of the file as indicated below. From now on the exercises will mark code blocks that need to be inserted with a (not to be copied) line
+
+***//### BEGIN OF INSERT***
+
+before the lines to insert and a (also not to be copied over)
+
+***//### END OF OF INSERT***
+
+line after the lines to insert. The same is true for lines to be deleted, using 
+
+***//### BEGING OF OF DELETE***
+
+***//### END OF OF DELETE***
 
 
 ```javascript
@@ -631,16 +643,20 @@ using { managed } from '@sap/cds/common';
     timeline     : String;
     risks        : Association to many Risks on risks.miti = $self;
   }
-  ```
-  ```diff
-+ // using an external service from S/4
-+ using {  API_BUSINESS_PARTNER as external } from '../srv/external/API_BUSINESS_PARTNER.csn';
-+
-+ entity BusinessPartners as projection on external.A_BusinessPartner {
-+    key BusinessPartner,
-+    LastName,
-+    FirstName
-+  }
+
+//### BEGIN OF INSERT
+
+// using an external service from S/4
+ using {  API_BUSINESS_PARTNER as external } from '../srv/external/API_BUSINESS_PARTNER.csn';
+
+ entity BusinessPartners as projection on external.A_BusinessPartner {
+    key BusinessPartner,
+    LastName,
+    FirstName
+  }
+
+//### END OF OF INSERT
+
 ```
 
   With this code, you create a so-called projection for your new service. Of the many entities and properties in these entities, that are defined in the ```API_BUSINESS_PARTNER``` service, you just look at one of the entities (```A_BusinessPartner```) and just three of its properties: ```BusinessPartner```, ```LastName```, and ```FirstName```, so your projection is using a subset of everything the original service has to offer.
@@ -657,10 +673,12 @@ service RiskService {
     annotate Risks with @odata.draft.enabled;
   entity Mitigations as projection on my.Mitigations;
     annotate Mitigations with @odata.draft.enabled;
-```
-```diff
--  //entity BusinessPartners as projection on my.BusinessPartners;
-+  entity BusinessPartners as projection on my.BusinessPartners;
+//### BEGIN OF DELETE
+  //entity BusinessPartners as projection on my.BusinessPartners;
+//### END OF DELETE
+//### BEGIN OF INSERT
+  entity BusinessPartners as projection on my.BusinessPartners;
+  //### END OF INSERT
 }
 ```
 
@@ -706,15 +724,13 @@ module.exports = async (srv) => {
             }
         });
     });
-```
-```diff
-+
-+    const BupaService = await cds.connect.to('API_BUSINESS_PARTNER');
-+    srv.on('READ', srv.entities.BusinessPartners, async (req) => {
-+        return await BupaService.tx(req).run(req.query);
-+    });
-```
-```javascript
+//### BEGIN OF INSERT
+
+    const BupaService = await cds.connect.to('API_BUSINESS_PARTNER');
+    srv.on('READ', srv.entities.BusinessPartners, async (req) => {
+        return await BupaService.tx(req).run(req.query);
+    });
+//### END OF INSERT
 }
 ```
 
@@ -752,12 +768,12 @@ using { managed } from '@sap/cds/common';
     descr       : String;
     miti        : Association to Mitigations;
     impact      : Integer;
-  ```
-  ```diff
-  - //bp          @title: 'Business Partner';   
-  + bp          @title: 'Business Partner';  
-  ```
-  ```javascript
+//### BEGIN OF DELETE
+   //bp          @title: 'Business Partner';   
+//### END OF DELETE
+//### BEGIN OF INSERT
+   bp          @title: 'Business Partner';  
+//### END OF INSERT
     criticality : Integer;
   }
   entity Mitigations : managed {
@@ -812,12 +828,12 @@ All this happens in the cds file that has all the UI annotations.
 
 	annotate RiskService.Risks with {
 		...
-```
-```diff
--     //bp          @title: 'Business Partner';
-+     bp          @title: 'Business Partner';
-```
-```javascript
+//### BEGIN OF DELETE
+     //bp          @title: 'Business Partner';
+//### END OF DELETE
+//### BEGIN OF INSERT
+     bp          @title: 'Business Partner';
+//### END OF INSERT
       ...
 	}
 
@@ -827,24 +843,25 @@ All this happens in the cds file that has all the UI annotations.
 			...
 			LineItem: [
 				...
-```
-```diff
--       //{Value: bp_BusinessPartner},
-+				{Value: bp_BusinessPartner},
-```
-```javascript
+//### BEGIN OF DELETE
+       //{Value: bp_BusinessPartner},
+//### END OF DELETE
+//### BEGIN OF INSERT
+				{Value: bp_BusinessPartner},
+//### END OF INSERT
 				...
 			],
 			...
 			FieldGroup#Main: {
 				Data: [
 					...
-```
-```diff
-+         //{Value: bp_BusinessPartner},
--					{Value: bp_BusinessPartner},
-```
-```javascript
+
+//### BEGIN OF DELETE
+         //{Value: bp_BusinessPartner},
+//### END OF DELETE
+//### BEGIN OF INSERT
+					{Value: bp_BusinessPartner},
+//### END OF INSERT
 					...
 				]
 			}
@@ -875,11 +892,9 @@ annotate RiskService.Risks with {
 		},
 		UI.MultiLineText: IsActiveEntity
 	);
-```
-```diff
--  /*
-```
-```js
+//### BEGIN OF DELETE
+  /*
+//### END OF DELETE
 	bp @(	
 		Common: {
 			Text: bp.LastName  , TextArrangement: #TextOnly,
@@ -901,13 +916,11 @@ annotate RiskService.Risks with {
 			}
 		}
 	)	
-```
-```diff
--  */
--
--/*
-```
-```js
+//### BEGIN OF DELETE
+  */
+
+/*
+//### END OF DELETE
 annotate RiskService.BusinessPartners with {
 	BusinessPartner @(
 		UI.Hidden,
@@ -918,11 +931,9 @@ annotate RiskService.BusinessPartners with {
 	LastName    @title: 'Last Name';  
 	FirstName   @title: 'First Name';   
 }
-```
-```diff
+//### BEGIN OF DELETE
 -*/
-````
-```js
+//### END OF DELETE
 }
 ```
 
@@ -952,43 +963,41 @@ module.exports = async (srv) => {
     srv.on('READ', srv.entities.BusinessPartners, async (req) => {
         return await BupaService.tx(req).run(req.query);
     });
-```
-```diff
-+
-+    srv.on('READ', 'Risks', async (req, next) => {
-+        /*
-+        Check whether the request want an "expand" of the business partner
-+        As this is not possible, the risk entity and the business partner entity are in different systems (Cloud Platform and S/4 HANA Cloud),
-+        if there is such an expand, remove it
-+        */
-+        const expandIndex = req.query.SELECT.columns.findIndex(({ expand, ref }) => expand && ref[0] === 'bp');
-+        console.log(req.query.SELECT.columns)
-+        if (expandIndex < 0) return next();
-+
-+        req.query.SELECT.columns.splice(expandIndex, 1);
-+        if (!req.query.SELECT.columns.find( column => column.ref.find( ref => ref == "bp_BusinessPartner" ))) {
-+            req.query.SELECT.columns.push({ ref: ["bp_BusinessPartner"] });
-+        }
-+        
-+        /*
-+        Instead of carrying out the expand, issue a separate request for each business partner
-+        This code could be optimized, instead of having n requests for n business partners, just on bulk request could be created
-+        */
-+        const res = await next();
-+        await Promise.all( 
-+            res.map( async risk => {
-+                const bp = await BupaService
-+                    .tx(req)
-+                    .run(SELECT.one(srv.entities.BusinessPartners).where({ BusinessPartner: risk.bp_BusinessPartner })
-+                    .columns([ "BusinessPartner", "LastName", "FirstName" ]));
-+                risk.bp = bp;
-+                console.dir(risk.bp)
-+            }
-+        ));
-+        return res;
-+    });
-```
-```js
+//### BEGIN OF INSERT
+
+    srv.on('READ', 'Risks', async (req, next) => {
+        /*
+        Check whether the request want an "expand" of the business partner
+        As this is not possible, the risk entity and the business partner entity are in different systems (Cloud Platform and S/4 HANA Cloud),
+        if there is such an expand, remove it
+        */
+        const expandIndex = req.query.SELECT.columns.findIndex(({ expand, ref }) => expand && ref[0] === 'bp');
+        console.log(req.query.SELECT.columns)
+        if (expandIndex < 0) return next();
+
+        req.query.SELECT.columns.splice(expandIndex, 1);
+        if (!req.query.SELECT.columns.find( column => column.ref.find( ref => ref == "bp_BusinessPartner" ))) {
+            req.query.SELECT.columns.push({ ref: ["bp_BusinessPartner"] });
+        }
+        
+        /*
+        Instead of carrying out the expand, issue a separate request for each business partner
+        This code could be optimized, instead of having n requests for n business partners, just on bulk request could be created
+        */
+        const res = await next();
+        await Promise.all( 
+            res.map( async risk => {
+                const bp = await BupaService
+                    .tx(req)
+                    .run(SELECT.one(srv.entities.BusinessPartners).where({ BusinessPartner: risk.bp_BusinessPartner })
+                    .columns([ "BusinessPartner", "LastName", "FirstName" ]));
+                risk.bp = bp;
+                console.dir(risk.bp)
+            }
+        ));
+        return res;
+    });
+//### END OF INSERT
 }
 ```
 
@@ -1039,37 +1048,37 @@ Here we add the authorizations to the ```Risks``` service
 using { sap.ui.riskmanagement as my } from '../db/schema';
 @path: 'service/risk'
 service RiskService {
-```
-```diff
--  entity Risks as projection on my.Risks;
-+  entity Risks @(restrict : [
-+            {
-+                grant : [ 'READ' ],
-+                to : [ 'RiskViewer' ]
-+            },
-+            {
-+                grant : [ '*' ],
-+                to : [ 'RiskManager' ]
-+            }
-+        ]) as projection on my.Risks;
-```
-```js
+//### BEGIN OF DELETE
+  entity Risks as projection on my.Risks;
+//### END OF DELETE
+//### BEGIN OF INSERT
+  entity Risks @(restrict : [
+            {
+                grant : [ 'READ' ],
+                to : [ 'RiskViewer' ]
+            },
+            {
+                grant : [ '*' ],
+                to : [ 'RiskManager' ]
+            }
+        ]) as projection on my.Risks;
+//### END OF INSERT
     annotate Risks with @odata.draft.enabled;
-```
-```diff
--  entity Mitigations as projection on my.Mitigations;
-+  entity Mitigations @(restrict : [
-+            {
-+                grant : [ 'READ' ],
-+                to : [ 'RiskViewer' ]
-+            },
-+            {
-+                grant : [ '*' ],
-+                to : [ 'RiskManager' ]
-+            }
-+        ]) as projection on my.Mitigations;
-```
-```js
+//### BEGIN OF DELETE
+  entity Mitigations as projection on my.Mitigations;
+//### END OF DELETE
+//### BEGIN OF INSERT
+  entity Mitigations @(restrict : [
+            {
+                grant : [ 'READ' ],
+                to : [ 'RiskViewer' ]
+            },
+            {
+                grant : [ '*' ],
+                to : [ 'RiskManager' ]
+            }
+        ]) as projection on my.Mitigations;
+//### END OF INSERT
     annotate Mitigations with @odata.draft.enabled;
   entity BusinessPartners as projection on my.BusinessPartners;
 }
@@ -1175,13 +1184,11 @@ npm install hdb --save
   ...
   "cds": {
     "requires": {
-```
-```diff
-+      "db": {
-+        "kind": "sql"
-+      },
-```
-```json
+//### BEGIN OF INSERT
+      "db": {
+        "kind": "sql"
+      },
+//### BEGIN OF INSERT
       "API_BUSINESS_PARTNER": {
         "kind": "odata",
         "model": "srv/external/API_BUSINESS_PARTNER",
@@ -1189,15 +1196,15 @@ npm install hdb --save
           "destination": "cap-api098"
         }
       }
-```
-```diff
--    }
-+    },
-+    "hana": {
-+      "deploy-format": "hdbtable"
-+    }
-```
-```json
+//### BEGIN OF DELETE
+    }
+//### END OF DELETE
+//### BEGIN OF INSERT
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+//### END OF INSERT
   }
 }
 ```
