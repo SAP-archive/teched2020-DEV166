@@ -222,25 +222,29 @@ An Fiori elements (FE) app is an application that leverages SAPUI5, its controls
 
 The application is now generated and after a couple of seconds you can see it in the ```app``` folder of your project. It contains a ```risks``` and a ```webapp``` folder with a ```Component.js``` file, which is characteristic for a UI5 app. However, the code there’s minimal and it basically inherits its logic from the ```sap/fe/core/AppComponent```.
 
-
-### Modify the UI with OData Annotations
-
-1. If it's not still running from the previous chapter, execute ```cds watch``` in a terminal and press on the **Open in New Tab** button in the right lower corner. If it is still running from the last chapter it is enough to refresh the brower page were it is running.
+9. If it's not still running from the previous chapter, execute ```cds watch``` in a terminal and press on the **Open in New Tab** button in the right lower corner. If it is still running from the last chapter it is enough to refresh the brower page were it is running.
 
     You can now see that ```cds watch``` has discovered an HTML page in your app folder:
 
     ![Feapp](../ex1/images/01_02_0070.png)
 
-    Unfortunately, clicking on the link doesn't get a result yet, as we miss an essential part of a Fiori elements application it needs to run properly in spite of it already being bound to our CAP-based OData service, it is missing UI annotations. 
+10. Click on this link. On the launch page that now comes up, click on the **Risks** tile.
 
+	You can now see the list page, it looks like this:
 
-2. To add the OData annotations, in the project, go to folder **srv**, representing the service, in the context menu select **New File**.
+    ![EmptyLR](../ex1/images/01_02_0075.png)
 
-3. Enter **risks-service-ui.cds** as a name
+    Unfortunately, the app looks rather empty, for example, the list has no columns yet. This is becase we miss an essential part of a Fiori elements application that tells it about columns, form fields and a lot of other things: It is missing UI annotations. 
 
-4. Click on the new file in the explorer, an editor opens
+### Modify the UI with OData Annotations
 
-5. Enter the following lines into the editor
+1. To add the OData annotations, in the project, go to folder **srv**, representing the service, in the context menu select **New File**.
+
+2. Enter **risks-service-ui.cds** as a name
+
+3. Click on the new file in the explorer, an editor opens
+
+4. Enter the following lines into the editor
 
 ```javascript
 using RiskService from './risk-service';
@@ -375,11 +379,11 @@ annotate RiskService.BusinessPartners with {
 */
 ```
 
-7. Save the file
+5. Save the file
 
 	As in the steps before, ```cds watch``` has noticed the new file and compiled the service again, so now it contains the additional annotations.
 
-4. In the browser, reload the test page which shows the service and the index page. Click on the index page link `/risks/webapp/index.html`. On the launch page that now comes up, click on the **Risks** tile. Click **Go**. It now shows a work list with some columns and the data from the service.
+6. In the browser, reload the test page which shows the service and the index page. Click on the index page link `/risks/webapp/index.html`. On the launch page that now comes up, click on the **Risks** tile. Click **Go**. It now shows a work list with some columns and the data from the service.
 
     ![Feapp2](../ex1/images/01_02_0080.png)
 
