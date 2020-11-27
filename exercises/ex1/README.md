@@ -39,6 +39,8 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
     ![project view](../ex1/images/01_01_0060.png)
     `cds watch` tells you that there’s no model yet that it can serve. You add one in the next steps.
 
+	In general you can keep `cds watch` running in a terminal for the whole exercise. There is no need to restart it or try to add a second instance of it (in fact, if you do this, you get an error, described [here](#cdswatcherror)). In the follow up chapters you will open a new browser tab to see the results of `cds watch`. You can just keep this open and refresh it each time there is a change. `cds watch` notices any file change and makes sure you get the new results after a refresh in the browser.
+ 
 ### Add a Data Model to the Project
 
 In this part we create a data model using the Core Data Services (CDS) format from CAP.
@@ -1213,4 +1215,33 @@ npm install hdb --save
 
 
 Continue to - [Exercise 2](../ex2/README.md)
+
+
+
+## Troubleshooting
+
+### I get an "[ERROR] listen EADDRINUSE: address already in use :::4004" when invoking cds watch <a name="cdswatcherror"></a>
+
+You have probably still got `cds watch` running in one terminal and have started a new `cds watch` in another one. CAP allows only one instance to run, this is why you get the error. You can resolve the issue by pressing ***CTRL + C*** in one of the terminal. This will stop the current instance, the other one still continues running.
+Normally closing the terminal in which the current instance runs, will also terminate the `cds watch` process there. In some rare cases, the process still runs but is not visible anymore. In order to stopp such a process, once again open a terminal and type
+
+```
+ps a
+```
+
+in the output you then get you will find a line like this, indicationg the `cds watch` instance:
+
+```
+    PID TTY      STAT   TIME COMMAND
+   7897 pts/1    S+     0:00 node-10/node /home/user/.node_modules_global/bin/cds watch 
+```
+
+Copy the number under ***PID** (in the above case 7897) and in the terminal carry out 
+
+```
+kill <PID Number>
+```
+
+(in the example `kill 7897`). Now you can start `cds watch` again.
+
 
