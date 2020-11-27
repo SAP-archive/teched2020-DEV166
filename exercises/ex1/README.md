@@ -934,7 +934,7 @@ annotate RiskService.BusinessPartners with {
 	FirstName   @title: 'First Name';   
 }
 //### BEGIN OF DELETE
--*/
+*/
 //### END OF DELETE
 }
 ```
