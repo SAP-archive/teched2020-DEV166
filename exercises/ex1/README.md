@@ -218,9 +218,7 @@ An Fiori elements (FE) app is an application that leverages SAPUI5, its controls
 
     ![Feapp](../ex1/images/01_02_0060.png)
 
-7. Check whether the "Your app will be generated in this folder" path points to the ```app``` folder within your project.   TODO
-
-8. Generate the application.  TODO
+8. Generate the application.  (If you get a pop up that says "A project has been generated. What would you like to do with it?", you can ignore it and just close the pop up)
 
 The application is now generated and after a couple of seconds you can see it in the ```app``` folder of your project. It contains a ```risks``` and a ```webapp``` folder with a ```Component.js``` file, which is characteristic for a UI5 app. However, the code there’s minimal and it basically inherits its logic from the ```sap/fe/core/AppComponent```.
 
