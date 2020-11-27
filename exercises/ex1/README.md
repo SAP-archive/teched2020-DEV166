@@ -1229,7 +1229,7 @@ Normally closing the terminal in which the current instance runs, will also term
 ps a
 ```
 
-in the output you then get you will find a line like this, indicationg the `cds watch` instance:
+in the output you then get you will find a line like this, indicating the `cds watch` instance:
 
 ```
     PID TTY      STAT   TIME COMMAND
