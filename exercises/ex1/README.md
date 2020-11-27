@@ -21,9 +21,9 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
 5. The new workspace will open and it will show the generated 'RiskManagement' project like this:
 ![project view](../ex1/images/01_01_0050.png)
 
-6. In VS Code choose **Terminal -> New Terminal** from its menu.
+6. In Business Application Studio choose **Terminal -> New Terminal** from its menu.
 
-    A new terminal opens in the lower right part of the VS Code screen.
+    A new terminal opens in the lower right part of the Business Application Studio screen.
 
 7. In the terminal, install the dependencies for the project
     ```
