@@ -25,7 +25,11 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
 
     A new terminal opens in the lower right part of the VS Code screen.
 
-7. In the terminal, start a CAP server by typing:
+7. In the terminal, install the dependencies for the project
+    ```
+	npm i 
+    ```
+8. In the terminal, start a CAP server by typing:
     ```
     cds watch
     ```
