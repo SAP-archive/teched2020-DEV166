@@ -1158,8 +1158,9 @@ You can now access the Risks application.
 Unfortunately, there’s no logout functionality. However, you can use the "Clear Browser Cache" function or simply close all browser windows to get rid of the basic auth login data in the browser.
 
 
+This is it! You have mastered all the steps to locally run the entire application!
 
-Continue to - [Exercise 2](../ex2/README.md)
+Continue to - [Exercise 2](../ex2/README.md) in order to prepare everything that is needed to deploy the application to the Cloud Platform.
 
 
 

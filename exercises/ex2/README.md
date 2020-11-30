@@ -27,13 +27,11 @@ npm install hdb --save
   ...
   "cds": {
     "requires": {
-```
-```diff
-+      "db": {
-+        "kind": "sql"
-+      },
-```
-```json
+//### BEGIN OF INSERT
+      "db": {
+        "kind": "sql"
+      },
+//### END OF INSERT
       "API_BUSINESS_PARTNER": {
         "kind": "odata",
         "model": "srv/external/API_BUSINESS_PARTNER",
@@ -41,15 +39,15 @@ npm install hdb --save
           "destination": "cap-api098"
         }
       }
-```
-```diff
--    }
-+    },
-+    "hana": {
-+      "deploy-format": "hdbtable"
-+    }
-```
-```json
+//### BEGIN OF DELETE
+    }
+//### END OF DELETE
+//### BEGIN OF INSERT
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+//### END OF INSERT
   }
 }
 ```
@@ -82,14 +80,12 @@ We need to tell CAP that the security component XSUAA (XS User Authentiation and
       "db": {
         "kind": "sql"
       },
-```
-```diff
-+      "uaa": {
-+        "kind": "xsuaa",
-+        "credentials": {}
-+      },
-```
-```json
+//### BEGIN OF INSERT
+      "uaa": {
+        "kind": "xsuaa",
+        "credentials": {}
+      },
+//### END OF INSERT
       "API_BUSINESS_PARTNER": {
         "kind": "odata",
         "model": "srv/external/API_BUSINESS_PARTNER",
@@ -227,12 +223,12 @@ The resources are Cloud Foundry service instances, that are automatically create
 # ------------------------------------------------------------
    type: com.sap.xs.hdi-container
    parameters:
-```
-```diff
--     service: hana  # or 'hanatrial' on trial landscapes
-+     service: hanatrial  
-```
-```yaml
+//### BEGIN OF DELETE
+     service: hana  # or 'hanatrial' on trial landscapes
+//### END OF DELETE
+//### BEGIN OF INSERT
+     service: hanatrial  
+//### END OF INSERT
      service-plan: hdi-shared
    properties:
      hdi-service-name: ${service-name}
@@ -261,26 +257,26 @@ resources:
     parameters:
       service: xsuaa
       service-plan: application
-```
-```diff
-+      path: ./xs-security.json
-```
-```yaml
+//### BEGIN OF INSERT
+      path: ./xs-security.json
+//### END OF INSERT
       config:
-```
-```diff
--       xsappname: -${space}    #  name + space dependency
--       tenant-mode: dedicated
-+       xsappname: 'RiskManagement-${space}'
-+       role-collections:
-+         - name: 'RiskManager-${space}'
-+           description: Manage Risks
-+           role-template-references:
-+             - $XSAPPNAME.RiskManager
-+         - name: 'RiskViewer-${space}'
-+           description: View Risks
-+           role-template-references:
-+             - $XSAPPNAME.RiskViewer
+//### BEGIN OF DELETE
+       xsappname: -${space}    #  name + space dependency
+       tenant-mode: dedicated
+//### END OF DELETE
+//### BEGIN OF INSERT
+       xsappname: 'RiskManagement-${space}'
+       role-collections:
+         - name: 'RiskManager-${space}'
+           description: Manage Risks
+           role-template-references:
+             - $XSAPPNAME.RiskManager
+         - name: 'RiskViewer-${space}'
+           description: View Risks
+           role-template-references:
+             - $XSAPPNAME.RiskViewer
+//### END OF INSERT
 ```
 
 The configuration for XSUAA is read from the `xs-security.json` file that was created in the step before.
@@ -347,26 +343,28 @@ All of this is provided by another application (`module` in the MTA context). Th
   "name": "approuter",
   ...
   "scripts": {
-```
-```diff
--    "test": "echo \"Error: no test specified\" && exit 1"
-+    "start": "node node_modules/@sap/approuter/approuter.js"
-```
-```json
+//### BEGIN OF DELETE
+    "test": "echo \"Error: no test specified\" && exit 1"
+//### END OF DELETE
+//### BEGIN OF INSERT
+    "start": "node node_modules/@sap/approuter/approuter.js"
+//### BEGIN OF INSERT
   },
   ...
   "dependencies": {
     "@sap/approuter": "^8.5.5"
-```
-```diff
--  }
-+  },
-+  "engines": {
-+    "node": "^12.0.0"
-+  },
-+  "scripts": {
-+    "start": "node node_modules/@sap/approuter/approuter.js"
-+  }
+//### BEGIN OF DELETE
+  }
+//### END OF DELETE
+//### BEGIN OF INSERT
+  },
+  "engines": {
+    "node": "^12.0.0"
+  },
+  "scripts": {
+    "start": "node node_modules/@sap/approuter/approuter.js"
+  }
+//### BEGIN OF INSERT
 ```
 ```json
 }
@@ -431,35 +429,35 @@ The AppRouter of the previous chapter is also and application, like our CAP serv
     # 'hana' and 'xsuaa' resources extracted from CAP configuration
     - name: cpapp-db
     - name: cpapp-uaa
-```
-```diff
-+  # --------------------  APPROUTER -----------------------------
-+ - name: RiskManagement-approuter
-+  # ------------------------------------------------------------
-+   type: nodejs
-+   path: approuter
-+   requires:
-+     - name: RiskManagement-uaa
-+     - name: srv-api
-+       group: destinations
-+       properties:
-+         forwardAuthToken: true
-+         strictSSL: true
-+         name: srv-binding
-+         url: '~{srv-url}'
-+   build-parameters:
-+     requires:
-+       - name: RiskManagement-app
-+         artifacts:
-+           - ./*
-+         target-path: resources
-+  # --------------------  APPROUTER -----------------------------
-+ - name: RiskManagement-app
-+  # ------------------------------------------------------------
-+   type: html5
-+   path: app
-+   build-parameters:
-+     supported-platforms: []
+//### BEGIN OF INSERT
+  # --------------------  APPROUTER -----------------------------
+ - name: RiskManagement-approuter
+  # ------------------------------------------------------------
+   type: nodejs
+   path: approuter
+   requires:
+     - name: RiskManagement-uaa
+     - name: srv-api
+       group: destinations
+       properties:
+         forwardAuthToken: true
+         strictSSL: true
+         name: srv-binding
+         url: '~{srv-url}'
+   build-parameters:
+     requires:
+       - name: RiskManagement-app
+         artifacts:
+           - ./*
+         target-path: resources
+  # --------------------  APPROUTER -----------------------------
+ - name: RiskManagement-app
+  # ------------------------------------------------------------
+   type: html5
+   path: app
+   build-parameters:
+     supported-platforms: []
+//### END OF INSERT
 ```
 
 The AppRouter takes the UI resources of the `RiskManagement-app` and puts it in the `resources` directory. This is where the `xs-app.json` looks for the files requested for `/app/...`.
