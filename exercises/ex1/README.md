@@ -1030,7 +1030,7 @@ In this exercise we will add authorizations to the CAP service, so that only use
 
 The enable authentication support in CAP, a `node.js` module called `passport`  needs to be installed.
 
-1. Navigate to your ```RiskManagement``` folder in a terminal in the Business Application Studio. With your ***cds watch** still running in one terminal, it is the easiest to open another second terminal next to it, by invoking **Terminal** and the **New Terminal** in the menu. Alternatively, you can also suspend **cds watch** in your existing terminal by pressing **CTRL+C**. In both cases you should already be in the ```Riskmanagement```folder
+1. Navigate to your ```RiskManagement``` folder in a terminal in the Business Application Studio. With your **cds watch** still running in one terminal, it is the easiest to open another second terminal next to it, by invoking **Terminal** and the **New Terminal** in the menu. Alternatively, you can also suspend **cds watch** in your existing terminal by pressing **CTRL+C**. In both cases you should already be in the ```Riskmanagement```folder
 
 2. Install the ```passport``` module. (the --save part makes sure it’s also added as a dependency to your project's ```package.json```)
 
