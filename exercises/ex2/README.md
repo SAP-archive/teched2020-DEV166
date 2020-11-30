@@ -133,8 +133,8 @@ And created scopes and roles for both in the `xs-security.json` file in your pro
 
 ```json
 {
-  "xsappname": "cpapp",
-  ...
+  "xsappname": "RiskManagement",
+  "tenant-mode": "dedicated",
   "scopes": [
     {
       "name": "$XSAPPNAME.RiskViewer",
