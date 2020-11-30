@@ -1157,61 +1157,6 @@ You can now access the Risks application.
 
 Unfortunately, there’s no logout functionality. However, you can use the "Clear Browser Cache" function or simply close all browser windows to get rid of the basic auth login data in the browser.
 
-## ###############################################################
-
-## Exercise 1.7  Prepare for Cloud Platform Deployment
-
-Up to this point, the whole application, its data model, its service and its UI application was running locally in your Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on your laptop / PC with extensions for Microsoft's Visual Code. 
-
-From this point on, we will prepare the application for a deployment to the SAP Cloud Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
-
-### Prepare for SAP HANA deployment
-
-While the locally running application uses an in memory SQLite data base, the deployed version will use SAP HANA. CAP helps you with the creation of the database and the deployment of the test data. At runtime it knows which data base to connect to.
-
-In order for this to work, please perform these steps:
-
-1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
-2. In the terminal, run the following command, to install the hdb module and automatically add it as a dependency into the `package.json` file of your project:
-
-```
-npm install hdb --save
-```
-
-3. In your project, open the `package.json` file and add the following lines:
-
-```json
-{
-  "name": "cpapp",
- ...
-  "cds": {
-    "requires": {
-//### BEGIN OF INSERT
-      "db": {
-        "kind": "sql"
-      },
-//### BEGIN OF INSERT
-      "API_BUSINESS_PARTNER": {
-        "kind": "odata",
-        "model": "srv/external/API_BUSINESS_PARTNER",
-        "credentials": {
-          "destination": "cap-api098"
-        }
-      }
-//### BEGIN OF DELETE
-    }
-//### END OF DELETE
-//### BEGIN OF INSERT
-    },
-    "hana": {
-      "deploy-format": "hdbtable"
-    }
-//### END OF INSERT
-  }
-}
-```
-
-
 
 
 Continue to - [Exercise 2](../ex2/README.md)

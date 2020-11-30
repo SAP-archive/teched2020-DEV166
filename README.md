@@ -26,7 +26,6 @@ Provide the exercise content here directly in README.md using [markdown](https:/
     - [Exercise 1.4 - Add the Consumption of an External Service Exposed by SAP API](exercises/ex1#exercise-14-add-the-consumption-of-an-external-service-exposed-by-sap-api-business-hub-to-your-service)
     - [Exercise 1.5 - Consume the External Service in Your UI Application](exercises/ex1#exercise-15-consume-the-external-service-in-your-ui-application)
     - [Exercise 1.6 - Roles and Authorization Checks In CAP](exercises/ex1#exercise-16--roles-and-authorization-checks-in-cap)
-    - [Exercise 1.7 - Prepare for Cloud Platform Deployment](exercises/ex1#exercise-17--prepare-for-cloud-platform-deployment)
 - [Exercise 2 - Prepare for Cloud Platform Deployment](exercises/ex2/)
     - [Exercise 2.1 - Prepare for SAP HANA deployment](exercises/ex2#exercise-21-prepare-for-sap-hana-deployment)
     - [Exercise 2.2 - Prepare User Authentication and Authorization (XSUAA) Setup](exercises/ex2#exercise-22-prepare-user-authentication-and-authorization-xsuaa-setup)
