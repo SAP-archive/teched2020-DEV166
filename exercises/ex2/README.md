@@ -348,7 +348,7 @@ All of this is provided by another application (`module` in the MTA context). Th
 //### END OF DELETE
 //### BEGIN OF INSERT
     "start": "node node_modules/@sap/approuter/approuter.js"
-//### BEGIN OF INSERT
+//### END OF INSERT
   },
   ...
   "dependencies": {
@@ -360,13 +360,8 @@ All of this is provided by another application (`module` in the MTA context). Th
   },
   "engines": {
     "node": "^12.0.0"
-  },
-  "scripts": {
-    "start": "node node_modules/@sap/approuter/approuter.js"
   }
-//### BEGIN OF INSERT
-```
-```json
+//### END OF INSERT
 }
 ```
 
