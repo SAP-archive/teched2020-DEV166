@@ -1183,9 +1183,7 @@ npm install hdb --save
 ```json
 {
   "name": "cpapp",
- /*
  ...
- */
   "cds": {
     "requires": {
 //### BEGIN OF INSERT
