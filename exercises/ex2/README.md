@@ -445,7 +445,7 @@ The AppRouter of the previous chapter is also and application, like our CAP serv
          artifacts:
            - ./*
          target-path: resources
-  # --------------------  APPROUTER -----------------------------
+  # --------------------  UI -----------------------------------
  - name: RiskManagement-app
   # ------------------------------------------------------------
    type: html5
