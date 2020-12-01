@@ -31,7 +31,7 @@ To create a personal access token, which you can use instead of a password, foll
 
 After completing these steps, you will have added your CAP project sources to your GitHub repository.
 
-1. Click on the Quick Tool Access icon **SAP Business Application Studio**.
+1. If you have Business Application Studio still open from the former exercises, return to ot. If you haven't, open your [SAP Cloud Platform Trial](https://cockpit.hanatrial.ondemand.com/) and click on the Quick Tool Access icon **SAP Business Application Studio**.
 
 ![Welcome SCP Trial](../ex0/images/00_00_0020.png)
 
@@ -71,7 +71,7 @@ After completing these steps, you will have added your CAP project sources to yo
 After completing these steps, you will have subscribed to SAP Cloud Platform Continuous Integration and Delivery and assigned the *Administrator* role to your user.
 
 
-1. In your SAP Cloud Platform trial account, navigate to the **Subscriptions** tab.
+1. Enter your [SAP Cloud Platform trial account](https://cockpit.hanatrial.ondemand.com/), press **Enter your trial account**, press on the **trial** tile and navigate to the **Subscriptions** tab.
 Here, you can find the Continuous Integration & Delivery service:
 ![Service Tile](./images/CICD_ServiceTile.png)
 
@@ -170,7 +170,7 @@ Whenever you create the first job for a GitHub repository, the **Webhook Creatio
 
 After completing these steps, you will have configured the stages of your pipeline in SAP Cloud Platform Continuous Integration and Delivery.
 
-1. In the GitHub repository of your project, create a folder named `.pipeline`, which contains a file named `config.yml`. In the `config.yml` file, add the following initial configuration:
+1. In the GitHub repository of your project (or in your still open Business Application Studio), create a folder named `.pipeline`, which contains a file named `config.yml`. In the `config.yml` file, add the following initial configuration:
 
 ```PipelineConfiguration
 # Project configuration
@@ -196,8 +196,13 @@ You can get the values for `<YOUR ORG NAME>`, `<YOUR SPACE NAME>`, and `<YOUR CL
 
 
 
-3. Commit your changes to GitHub.
+3. Commit your changes to GitHub. If you have added the new folder and file in the Businss Application Studio, you can do so by opening a new terminal and then by
 
+```
+git add -A
+git commit -m "new pipeline"
+git push
+```
 
 ## Exercise 3.8 Verify the Success of Your Build
 
