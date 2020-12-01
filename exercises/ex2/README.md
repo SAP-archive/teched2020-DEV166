@@ -469,6 +469,7 @@ destinations='[{ "name": "srv-biding", "forwardAuthToken": true, "strictSSL": tr
 The URL is taken from the `RiskManagement-srv` module that needs to be enhanced to export this information.
 
 
+
 You have now finished all the preparations to deploy the application to the Cloud Plaform!
 
 Continue to - [Exercise 3](../ex3/README.md) where a CI/CD service will deploy the application.
