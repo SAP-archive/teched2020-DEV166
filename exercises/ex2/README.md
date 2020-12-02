@@ -371,7 +371,7 @@ Configure the AppRouter by creating a file `xs-app.json` in the `approuter` fold
 
 ```json 
 {
-    "welcomeFile": "/app/launchpage.html",
+    "welcomeFile": "/app/risks/webapp/index.html",
     "authenticationMethod": "route",
     "sessionTimeout": 30,
     "logout": {
