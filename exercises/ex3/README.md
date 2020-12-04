@@ -237,7 +237,7 @@ Now you are ready to access the application!
 
 4. Select your space.
 
-5. Verify that the *RiskManagment* application has been deployed and that the `Riskmanagement-approuter` is running (might have a **blue** or something similar in the name as well like in the picture).
+5. Verify that the *RiskManagment* application has been deployed and that the `Riskmanagement-approuter` is running (might have a `blue` or something similar in the name as well like in the picture).
 ![RiskManagment App](./images/RiskManagment_running.png)
 
 6. Choose the `Riskmanagement-approuter`.

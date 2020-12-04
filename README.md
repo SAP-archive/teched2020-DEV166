@@ -42,7 +42,7 @@ Provide the exercise content here directly in README.md using [markdown](https:/
     - [Exercise 3.6 - Configure a CI/CD Job](exercises/ex3#exercise-36-configure-a-cicd-job)
     - [Exercise 3.7 - Configure the Stages of Your CI/CD Pipeline](exercises/ex3#exercise-37-configure-the-stages-of-your-cicd-pipeline)
     - [Exercise 3.8 - Verify the Success of Your Build](exercises/ex3#exercise-38-verify-the-success-of-your-build)
-    - [Exercise 3.9 - Access the Deployed Application](exercises/ex3#exercise-39-access-the-deployed-application)
+    - [Exercise 3.9 - Access the Deployed Application](exercises/ex3#exercise-39-assign-role-collections-and-access-the-deployed-application)
 
 
 ## How to obtain support
