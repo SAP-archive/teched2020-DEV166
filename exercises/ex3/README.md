@@ -217,25 +217,40 @@ After completing these steps, you will have monitored the outcome of your job in
 ![Successful Build](./images/CICD_successful_build.png)
 
 
-## Exercise 3.9 Access the Deployed Application
+## Exercise 3.9 Assign Role Collections and Access the Deployed Application
 
 After completing these steps, you will have accessed your deployed application trough the SAP Cloud Platform cockpit.
 
-1. In your trial account in the SAP Cloud Platform cockpit, navigate to the **Cloud Foundry** tab and choose **Spaces**.
+As we set it up this way, the deployed service can only be accessed when your user has a corresponing role collection assiged. If you tried to open the application without this authorization you would get a **Forbidden** pop up. So, you need to assign the role collection to your user:
+
+1. In your trial account in the SAP Cloud Platform cockpit, navigate to the **Security** tab and choose **Trust Configuration**. Click on the **Default Entity Provider** link.
+
+![CP Trust](./images/RiskManagement-Trust.png)
+
+2. Enter the email address for your Cloud Platform account (the one you used to log on) and press the **Show Assignments** button. The press the **Assign Role Collection** button and choose **RiskManager-dev** in the dropdown box. Press the **Assign Role Collection** button
+![CP RoleCollection](./images/RiskManagement-RoleCollection.png)
+
+Now you are ready to access the application!
+
+3. In the left pane of your trial accoun, navigate to the **Cloud Foundry** tab and choose **Spaces**.
 ![CP Spaces](./images/CP_cloudfoundry.png)
 
-2. Select your space.
+4. Select your space.
 
-3. Verify that the *RiskManagment* application has been deployed and that the `cpapp-approuter` is running.
+5. Verify that the *RiskManagment* application has been deployed and that the `Riskmanagement-approuter` is running (might have a **blue** or something similar in the name as well like in the picture).
 ![RiskManagment App](./images/RiskManagment_running.png)
 
-4. Choose the `cpapp-approuter`.
+6. Choose the `Riskmanagement-approuter`.
 
-5. Choose the link under **Application Routes**.
+7. Choose the link under **Application Routes**.
 ![RiskManagment App](./images/RiskManagment_cpapp_running.png)
 
-6. Verify that the deployed application is running and showing its home screen.
+8. Verify that the deployed application is running and showing its home screen.
 ![RiskManagment Home](./images/RiskMngmt_home.png)
+
+9. Press the **Risks** tile and then in the application the **Go** button and you should see the final deployed application with the data:
+
+![RiskManagment Final](./images/RiskManagment_final.png)
 
 ## Summary
 
