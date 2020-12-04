@@ -33,6 +33,7 @@ Provide the exercise content here directly in README.md using [markdown](https:/
     - [Exercise 2.4 - Add Authorization and Trust Management Service (XSUAA)](exercises/ex2#exercise-24--add-authorization-and-trust-management-service-xsuaa)
     - [Exercise 2.5 - Add an Application Router](exercises/ex2#exercise-25--add-an-application-router)
     - [Exercise 2.6 - Add UI and AppRouter Module to mta.yaml](exercises/ex2#exercise-26-add-ui-and-approuter-module-to-mtayaml)
+    - [Exercise 2.7 - Remove access for S/4 system](exercises/ex2#exercise-27-remove-access-for-s4-system)
 - [Exercise 3 - Connect Your Project to SAP Cloud Platform Continuous Integration and Delivery](exercises/ex3/)
     - [Exercise 3.1 - Create a GitHub Repository](exercises/ex3#exercise-31-create-a-github-repository)
     - [Exercise 3.2 - Create a Personal Access Token for GitHub](exercises/ex3#exercise-32-create-a-personal-access-token-for-github)
