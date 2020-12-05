@@ -14,15 +14,13 @@ This workshop will guide you step-by-step through the process of
 - creating a List Report Object Page application based on Fiori elements (FE) using the new service
 - configuring and running a predefined continuous integration and delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
 
-Please note that the inclusion of a service exposed on the SAP API Business Hub originates from an S/4 HANA Cloud system. **While large parts of the tutorial are directed to consuming the service from a real S/4 HANA Cloud system, the service will eventually not be consumed from a real system but from a local copy on SAP Cloud Platform**. This is because within the SAP Cloud Platform trial account no real S/4 HANA Cloud system can be configured.
+Please note that the inclusion of a service exposed on the SAP API Business Hub originates from an S/4 HANA Cloud system. While large parts of the tutorial are directed to consuming the service from a real S/4 HANA Cloud system, the service will eventually not be consumed from a real system but from a local copy on SAP Cloud Platform. This is because within the SAP Cloud Platform trial account no real S/4 HANA Cloud system can be configured.
 
 ## Requirements
 
 The requirements to follow the exercises in this repository are:
 - Get a free trial account on SAP Cloud Platform; see this [tutorial](https://developers.sap.com/tutorials/hcp-create-trial-account.html). Choose Europe (Frankfurt) - AWS or US East (VA) - AWS regions. Alternatively, you can also watch this [video](https://www.youtube.com/watch?v=n5luSQKYvQQ&feature=youtu.be) to set up your trial account.
 - Set up SAP Business Application Studio for development; see this [tutorial](https://developers.sap.com/tutorials/appstudio-onboarding.html).
-
-https://www.youtube.com/watch?v=n5luSQKYvQQ&feature=youtu.be
 
 ## Exercises
 
