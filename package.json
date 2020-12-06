@@ -1,0 +1,37 @@
+{
+  "name": "RiskManagement",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^4",
+    "@sap/xsenv": "^3.1.0",
+    "@sap/xssec": "^3.0.10",
+    "express": "^4",
+    "hdb": "^0.18.2",
+    "passport": "^0.4.1"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.78.13",
+    "sqlite3": "^5"
+  },
+  "scripts": {
+    "start": "npx cds run"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sql"
+      },
+      "uaa": {
+        "kind": "xsuaa",
+        "credentials": {}
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+  }
+}

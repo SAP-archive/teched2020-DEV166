@@ -1,0 +1,22 @@
+{
+    "welcomeFile": "/app/risks/webapp/index.html",
+    "authenticationMethod": "route",
+    "sessionTimeout": 30,
+    "logout": {
+        "logoutEndpoint": "/do/logout",
+        "logoutPage": "/"
+    },
+    "routes": [
+        {
+            "source": "^/app/(.*)$",
+            "target": "$1",
+            "localDir": "resources",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^/service/(.*)$",
+            "destination": "srv-binding",
+            "authenticationType": "xsuaa"
+        }
+     ]
+}
