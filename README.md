@@ -1,5 +1,7 @@
 # DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/teched2020-DEV166)](https://api.reuse.software/info/github.com/SAP-samples/teched2020-DEV166)
+
 ## Description
 
 This repository contains the material for the SAP TechEd 2020 session called DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite.  
