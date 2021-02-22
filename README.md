@@ -12,7 +12,7 @@ This session introduces attendees to an end-to-end flow to build an extension us
 
 This workshop will guide you step-by-step through the process of 
 - creating new data models and a service using the Cloud Application Programming Model (CAP)
-- integrates a service exposed on the SAP API Business Hub
+- integrating a service exposed on the SAP API Business Hub
 - creating a List Report Object Page application based on Fiori elements (FE) using the new service
 - configuring and running a predefined continuous integration and delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
 
