@@ -59,7 +59,6 @@ The requirements to follow the exercises in this repository are:
     - [Exercise 3.8 - Verify the Success of Your Build](exercises/ex3#exercise-38-verify-the-success-of-your-build)
     - [Exercise 3.9 -  Assign Role Collections and Access the Deployed Application](exercises/ex3#exercise-39-assign-role-collections-and-access-the-deployed-application)
 
-
 ## How to obtain support
 
 Support for the content in this repository is available during the actual time of the online session for which this content has been designed. Otherwise, you may request support via the [Issues](../../issues) tab.
