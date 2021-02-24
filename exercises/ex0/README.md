@@ -20,7 +20,7 @@ This will start the set up of your account.
 ![Trial Setup](../ex0/images/00_00_0010.png)
 
 Your subaccount, org and space are created automatically, along with the necessary role configurations and subscriptions.\
-3. When this is done, the subaccount overview page is shown.
+When this is done, the subaccount overview page is shown.
 
 ### Existing Trial Users
 
