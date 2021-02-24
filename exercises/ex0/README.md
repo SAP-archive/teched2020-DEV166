@@ -4,7 +4,7 @@ Welcome to the workshop 'Extend SAP S/4HANA with SAP Cloud Platform Extension Su
 This workshop will guide you step-by-step through the process of 
 - creating new data models and a service using the Cloud Application Programming Model (CAP)
 - integrating a service from the [SAP API Business Hub](https://api.sap.com/)
-- creating a List Report Object Page application based on Fiori elements (FE) using the new service
+- creating a List Report Object Page application based on Fiori Elements (FE) using the new service
 - configuring and running a predefined continuous integration and delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
 
 ## Set up Business Application Studio in an SAP Cloud Platform Trial Account
