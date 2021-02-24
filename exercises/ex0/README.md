@@ -24,9 +24,9 @@ When this is done, the subaccount overview page is shown.
 
 ### Existing Trial Users
 
-1. In your subaccount, choose **Subscriptions** in the left-hand navigation.\
+1. In your subaccount, choose **Subscriptions** in the left-hand navigation.
 2. Choose **SAP Business Application Studio** in the list of available subscriptions.\
-Choose **Subscribe**.\
+Choose **Subscribe**.
 3. Navigate back to your subaccount overview page.
 
 ### Access SAP Business Application Studio
