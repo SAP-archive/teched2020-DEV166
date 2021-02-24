@@ -4,7 +4,7 @@
 
 ## Description
 
-This repository contains the material for the SAP TechEd 2020 session called DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite.  
+This repository contains the material for the SAP TechEd 2020 session DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite.  
 
 ## Overview
 
@@ -29,8 +29,6 @@ The requirements to follow the exercises in this repository are:
 - Set up SAP Business Application Studio for development; see this [tutorial](https://developers.sap.com/tutorials/appstudio-onboarding.html).
 
 ## Exercises
-
-Provide the exercise content here directly in README.md using [markdown](https://guides.github.com/features/mastering-markdown/) and linking to the specific exercise pages, below is an example.
 
 - [Getting Started](exercises/ex0/)
 - [Exercise 1 - Create a Cloud Application Programming Model service and a Fiori Elements application](exercises/ex1/)
