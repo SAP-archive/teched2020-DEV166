@@ -1,4 +1,4 @@
-# Getting Started - Setting up your development environment
+# Getting Started - Setting up your Development Environment
 
 Welcome to the workshop 'Extend SAP S/4HANA with SAP Cloud Platform Extension Suite'.\
 This workshop will guide you step-by-step through the process of 
