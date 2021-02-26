@@ -140,7 +140,7 @@ This exposes the data for the Risks entity. As there is no data yet, you only se
 
 Don't close the window, you will need it again.
 
-### Add Data for the service
+### Add Data for the Service
  
 In this part we add data to the service. It is local data that is stored in a local data base called SQLite that CAP invokes behind the scences. CAP makes it easy to add such test data to a service, all it needs is a Comma Separated Values file which contains the entities' elements as column headers.
 
@@ -177,7 +177,7 @@ Looking at the contents of the file **sap.ui.riskmanagement-Risks.csv**, the fir
 
 As always `cds watch` has noticed the change.
 
-12. Return to the browser window where the service is stil shown and press **refresh** in the browser. It will now show values for **Risks**
+12. Return to the browser window where the service is still shown and press **refresh** in the browser. It will now show values for **Risks**
 
 ![risksdata](../ex1/images/01_01_0100.png)
 
@@ -190,11 +190,11 @@ You’ve now got a full blown OData service, which complies to the OData standar
 
 ## Exercise 1.2 Create an SAP Fiori Elements-Based Application
 
-An Fiori elements (FE) app is an application that leverages SAPUI5, its controls, and its model view controller (MVC) concepts. As opposed to a plain UI5 or freestyle UI5 app, where one has all the views and controllers as part of one's projects, most of the code of an FE app is outside of the project, managed centrally be the FE team. The code inside one's project only references these central components, which take care of creating the UI according to the latest SAP Fiori design guidelines and cover all the controller logic for you out of the box. The UI can be influenced by OData annotations. They determine, for example, which properties of an OData service make up the columns of a table, which displays the content of the service.
+An Fiori elements (FE) app is an application that leverages SAPUI5, its controls, and its model view controller (MVC) concepts. As opposed to a plain UI5 or freestyle UI5 app, where one has all the views and controllers as part of one's projects, most of the code of an FE app is outside of the project, managed centrally be the FE team. The code inside one's project only references these central components, which take care of creating the UI according to the latest SAP Fiori design guidelines and covers all the controller logic for you out of the box. The UI can be influenced by OData annotations. They determine, for example, which properties of an OData service make up the columns of a table which displays the content of the service.
 
 ### Generate the UI with an SAP Fiori Elements Template
 
-1. In Bussines Application Studio, invoke the Command Pallete (```View -> Command Palette``` or ```Cmd+Shift+P```) and choose ```Fiori: Open Application Generator```.
+1. In Bussines Application Studio, invoke the Command Pallete (```View -> Find Command``` or ```Cmd+Shift+P```) and choose ```Fiori: Open Application Generator```.
 
   	![appgen](../ex1/images/01_02_0010.png)
 
@@ -236,7 +236,7 @@ The application is now generated and after a couple of seconds you can see it in
 
     ![EmptyLR](../ex1/images/01_02_0075.png)
 
-    Unfortunately, the app looks rather empty, for example, the list has no columns yet. This is becase we miss an essential part of a Fiori elements application that tells it about columns, form fields and a lot of other things: It is missing UI annotations. 
+    Unfortunately, the app looks rather empty, for example, the list has no columns yet. This is because we miss an essential part of a Fiori elements application that tells it about columns, form fields and a lot of other things: It is missing UI annotations. 
 
 ### Modify the UI with OData Annotations
 
@@ -583,7 +583,7 @@ You can find more about the possible values of the ```Criticality``` annotation 
 ## Exercise 1.4 Add the Consumption of an External Service Exposed by SAP API Business Hub to Your Service
 
 
-In this chapter, you extend your CAP service with the consumption of an external Business Partner service. You get its definition from SAP's SAP API Business Hub. First, work with local data and later on get the data directly from the external SAP S/4HANA system.  TODO
+In this chapter, you extend your CAP service with the consumption of an external Business Partner service. You get its definition from SAP's SAP API Business Hub. First, work with local data and later on get the data directly from the external SAP S/4HANA system. What you have to do is:
 
 ### Get the Business Partner EDMX File
 
@@ -595,7 +595,7 @@ In this chapter, you extend your CAP service with the consumption of an external
 
     ![API Details](../ex1/images/01_03_0030.png)
 
-6. Choose the ```Download Specification``` button.
+6. Choose the ```Download API Specification``` button.
 7. Choose the ```EDMX``` option from the list (if you’re asked to log on, log on, it works automatically).
 
     If you’re using Chrome as a browser, you now see the downloaded file in the footer bar:
@@ -757,7 +757,7 @@ It is invoked when your ```BusinessPartner``` service is called for a read, so w
 
 In this chapter, you incorporate the external service into the UI application.
 
-1. Open the ```db/schema.cds``` file.
+1. Open the ```db/data/schema.cds``` file.
 2. Uncomment the ```bp``` property.
 
 ```javascript
