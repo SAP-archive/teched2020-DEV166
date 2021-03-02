@@ -10,13 +10,13 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
 
 ### Create and Initialize the Project
 
-1. In the Business Application Studio click on **Create project from template**
+1. In the Business Application Studio click on **Start from template**
 ![new project](../ex1/images/01_01_0010.png)
-2. Select **CAP Project** and press **Next**
+2. Select **CAP Project** and press **Start**
 ![cap project](../ex1/images/01_01_0020.png)
 3. Enter 'RiskManagement' as a project name. Don't tick any of the checkboxes below.
 ![new name](../ex1/images/01_01_0030.png)
-4. After the project has been generated, click on **Open in New Workspace** on the pop up in the lower right corner
+4. After the project has been generated, click on **Finish** and **Open in New Workspace** on the pop up in the lower right corner
 ![new wrokspace](../ex1/images/01_01_0040.png)
 5. The new workspace will open and it will show the generated 'RiskManagement' project like this:
 ![project view](../ex1/images/01_01_0050.png)
@@ -33,7 +33,7 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
     ```
     cds watch
     ```
-    The CAP server serves all the CAP sources from your project. It also "watches" all the files in your projects and conveniently restarts the server whenever you save a file. Changes you've made, will immediately be served without you having to do anything.
+    The CAP server serves all the CAP sources from your project. It also "watches" all the files in your projects and conveniently restarts the server whenever you save a file. Changes you've made will immediately be served without you having to do anything.
 
     The screen now looks like this:
     ![project view](../ex1/images/01_01_0060.png)
@@ -45,8 +45,8 @@ In this part, you create a new CAP-based service, which exposes the OData V4 pro
 
 In this part we create a data model using the Core Data Services (CDS) format from CAP.
 
-1. In the project, go to folder **db**, representing the data model on the data base. In the context menu, select **New File**.
-2. Enter **schema.cds** as a name.
+1. In the project, go to folder **db**, representing the data model on the data base. In the context menu, select **New File**
+2. Enter **schema.cds** as a name
 3. Click on the new file in the explorer, an editor opens
 4. Enter the following lines into the editor
 
@@ -92,8 +92,8 @@ Notice how `cds watch` reacted to dropping the file. It now tells you that it ha
 
 In this part we create a new service with 2 entities, both are projections of the data models that we created in the chapter before.
 
-1. In the project, go to folder **srv**, representing the service. In the context menu, select **New File**.
-2. Enter **risk-service.cds** as a name.
+1. In the project, go to folder **srv**, representing the service. In the context menu, select **New File**
+2. Enter **risk-service.cds** as a name
 3. Click on the new file in the explorer, an editor opens
 4. Enter the following lines into the editor
 
@@ -112,7 +112,7 @@ service RiskService {
 
   This creates a new service **RiskService** in the namespace **sap.ui.riskmanagement**. This service exposes 2 entities (again just neglect the commented part for the business partner), **Risks** and **Mitigations**, which are both just exposing the entities of the data base schema you’ve created in the step before.
 
-  If you again look at the terminal, you see that cds watch has noticed the new file and now tells us that it serves something:
+  If you again look at the terminal, you see that `cds watch` has noticed the new file and now tells us that it serves something:
 
 ![service](../ex1/images/01_01_0080.png)
 
@@ -144,10 +144,10 @@ Don't close the window, you will need it again.
  
 In this part we add data to the service. It is local data that is stored in a local data base called SQLite that CAP invokes behind the scences. CAP makes it easy to add such test data to a service, all it needs is a Comma Separated Values file which contains the entities' elements as column headers.
 
-1. In the project, go to folder **db**.  In the context menu, select **New Folder**. 
-2. Enter **data** as a name.
-3. On the **data** folder, in the context menu, select **New File**.
-2. Enter **sap.ui.riskmanagement-Risks.csv** as a name.
+1. In the project, go to folder **db**.  In the context menu, select **New Folder**
+2. Enter **data** as a name
+3. On the **data** folder, in the context menu, select **New File**
+2. Enter **sap.ui.riskmanagement-Risks.csv** as a name
 5. Click on the new file in the explorer, an editor opens
 6. Enter the following lines into the editor
 
@@ -158,8 +158,8 @@ ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact
 20466922-7d57-4e76-b14c-e53fd97dcb13;2019-10-24;tim.back@sap.com;Shipment violating export control;Herbert Hunter;1;Violation of export and trade control with unauthorized downloads;20466921-7d57-4e76-b14c-e53fd97dcb13;200000
 ```
 7. Save the file
-8. On the **data** folder, in the context menu, select **New File**.
-9. Enter **sap.ui.riskmanagement-Mitigations.csv** as a name.
+8. On the **data** folder, in the context menu, select **New File**
+9. Enter **sap.ui.riskmanagement-Mitigations.csv** as a name
 10. Click on the new file in the explorer, an editor opens
 11. Enter the following lines into the editor
 
@@ -173,7 +173,7 @@ ID;createdAt;createdBy;description;owner;timeline
 12. Save the file
 
 The files have the name of the namespace of the entities in the data model (e.g. **sap.ui.riskmanagement**), followed by a '-' and the name of the entity (e.g. **Risks**). When adhering to this naming convention CAP recognizes the file as data for the data model and automatically adds it to the built in SQLite data base.
-Looking at the contents of the file **sap.ui.riskmanagement-Risks.csv**, the first line contains all the properties from your **Risks** entity. While the other ones are straight forward, consider the **miti_id** property. In your entity, you only have a **miti** property, so where does this come from? **miti** is an association to **Mitigations**, as **Mitigations** could have several key properties, the association on the data base needs to point to all of these, therefore CAP creates a property **<AssocuiationProperty>_<AssociatedEntityKey>** for each key.
+Looking at the contents of the file **sap.ui.riskmanagement-Risks.csv**, the first line contains all the properties from your **Risks** entity. While the other ones are straightforward, consider the **miti_id** property. In your entity, you only have a **miti** property, so where does this come from? **miti** is an association to **Mitigations**, as **Mitigations** could have several key properties, the association on the data base needs to point to all of these, therefore CAP creates a property **<AssocuiationProperty>_<AssociatedEntityKey>** for each key.
 
 As always `cds watch` has noticed the change.
 
@@ -190,7 +190,7 @@ You’ve now got a full blown OData service, which complies to the OData standar
 
 ## Exercise 1.2 Create an SAP Fiori Elements-Based Application
 
-An Fiori elements (FE) app is an application that leverages SAPUI5, its controls, and its model view controller (MVC) concepts. As opposed to a plain UI5 or freestyle UI5 app, where one has all the views and controllers as part of one's projects, most of the code of an FE app is outside of the project, managed centrally be the FE team. The code inside one's project only references these central components, which take care of creating the UI according to the latest SAP Fiori design guidelines and covers all the controller logic for you out of the box. The UI can be influenced by OData annotations. They determine, for example, which properties of an OData service make up the columns of a table which displays the content of the service.
+An Fiori elements (FE) app is an application that leverages SAPUI5, its controls and its model view controller (MVC) concepts. As opposed to a plain UI5 or freestyle UI5 app, where one has all the views and controllers as part of one's projects, most of the code of an FE app is outside of the project, managed centrally be the FE team. The code inside one's project only references these central components, which take care of creating the UI according to the latest SAP Fiori design guidelines and covers all the controller logic for you out of the box. The UI can be influenced by OData annotations. They determine, for example, which properties of an OData service make up the columns of a table which displays the content of the service.
 
 ### Generate the UI with an SAP Fiori Elements Template
 
@@ -240,7 +240,7 @@ The application is now generated and after a couple of seconds you can see it in
 
 ### Modify the UI with OData Annotations
 
-1. To add the OData annotations, in the project, go to folder **srv**, representing the service, in the context menu select **New File**.
+1. To add the OData annotations, in the project, go to folder **srv** representing the service and select **New File** in the context menu
 
 2. Enter **risks-service-ui.cds** as a name
 
@@ -518,8 +518,8 @@ In this chapter, you add some custom code to the CAP service, that changes, depe
 
 ### Add Custom Code
 
-1. In the project, go to folder **srv**, representing the service, in the context menu select **New File**.
-2. Enter **risk-service.js** as a name.
+1. In the project, go to folder **srv** representing the service and select **New File** in the context menu
+2. Enter **risk-service.js** as a name
 3. Click on the new file in the explorer, an editor opens
 4. Enter the following lines into the editor
 
@@ -542,7 +542,7 @@ module.exports = async (srv) => {
 ```
 
 5. Save the file
-6. In the browser, reload the page of the Fiori Elements app.
+6. In the browser, reload the page of the Fiori Elements app
 
 	It now shows our work list with the columns ```Priority``` and ```Impact``` with color and an icon, depending on the amount in ```impact```.
 
