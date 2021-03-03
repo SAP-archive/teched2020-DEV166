@@ -48,7 +48,7 @@ npm install hdb --save
   }
 }
 ```
-
+4. Save the file
 ## ###############################################################
 
 ## Exercise 2.2 Prepare User Authentication and Authorization (XSUAA) Setup
@@ -66,7 +66,8 @@ npm i --save  @sap/xssec  @sap/xsenv
 
 ### Add UAA service
 
-We need to tell CAP that the security component XSUAA (XS User Authentiation and Authorization service) is used. For this open the `package.json` folder in your project and add the following lines:
+We need to tell CAP that the security component XSUAA (XS User Authentiation and Authorization service) is used. Please perfom these steps:
+1. Open the `package.json` folder in your project and add the following lines:
 
 ```json 
 {
@@ -92,11 +93,13 @@ We need to tell CAP that the security component XSUAA (XS User Authentiation and
 }
 ```
 
+2. Save the file
+
 ### Roles and Scopes
 
-In the context of Cloud Foundry within the Cloud Platform a single authorization is called scope, for example there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, there could a role "Editor" consisting of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
+In the context of Cloud Foundry within the Cloud Platform a single authorization is called scope, for example, there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, the role "Editor" could consist of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
 
-However, CAP recommends to use roles only and do a one to one mapping. In [Exercise 1.6 - Roles and Authorization Checks In CAP](../ex1#exercise-16--roles-and-authorization-checks-in-cap) we defined two roles.
+However, CAP recommends to use roles only and do a one-to-one mapping. In [Exercise 1.6 - Roles and Authorization Checks In CAP](../ex1#exercise-16--roles-and-authorization-checks-in-cap) we defined two roles.
 
 ### XSUAA Security Configuration
 
@@ -106,7 +109,7 @@ Create the file `xs-security.json` in your `RiskManagement` project by executing
 cds compile srv --to xsuaa >xs-security.json
 ```
 
-The generated file then contains the configuration of the XSUAA. Behind the scenes, CAP has taken the authorization parts ```@(restrict ... )``` from our service definiton form [here](../ex1#exercise-16--roles-and-authorization-checks-in-cap) and created scopes and role templates from it.
+The generated file then contains the configuration of the XSUAA. Behind the scenes, CAP has taken the authorization parts ```@(restrict ... )``` from our service definition form [here](../ex1#exercise-16--roles-and-authorization-checks-in-cap) and created scopes and role templates from it.
 
 For example, it finds the roles `RiskViewer` and `RiskManager` in the `srv/risk-service.cds` file:
 
@@ -170,13 +173,13 @@ And created scopes and roles for both in the `xs-security.json` file in your pro
 
 ## ###############################################################
 
-## Exercise 2.3 Create a "Multi Target Application" (MTA) file for deployment
+## Exercise 2.3 Create a "Multi Target Application" (MTA) File for Deployment
 
-In this section we will create a "Multi Target Application" (MTA) file for deplyment. (See also the [documentation](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/latest/en-US/ebb42efc880c4276a5f2294063fae0c3.html)). MTA is a way to create deployments consisting of multiple modules that can be implemented in different technologies. Advantages of this technology are that it comes with a build tool, automatically creates service instances, service keys and destinations, deploys content (HTML5, workflow, ...), and supports [blue-green deployment](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/7c83810c31d842938cbc39c135a2d99f.html).
+In this section we will create a "Multi Target Application" (MTA) file for deplyment. (See also the [documentation](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/latest/en-US/ebb42efc880c4276a5f2294063fae0c3.html)). MTA is a way to create deployments consisting of multiple modules that can be implemented in different technologies. Advantages of this technology are that it comes with a build tool, automatically creates service instances, service keys and destinations, deploys content (HTML5, workflow, ...) and supports [blue-green deployment](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/7c83810c31d842938cbc39c135a2d99f.html).
 
 ### Generate MTA Deployment Descriptor (`mta.yaml`)
 
-The MTA deployment is described in the MTA Deployment Descriptor, a file called  `mta.yaml`.
+The MTA deployment is described in the [MTA Deployment Descriptor](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/2.0.03/en-US/33548a721e6548688605049792d55295.html), a file called  `mta.yaml`.
 As the first step, let CAP generate an initial `mta.yaml` file.
 
 1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
@@ -227,6 +230,8 @@ The resources are Cloud Foundry service instances, that are automatically create
    properties:
      hdi-service-name: ${service-name}
 ```
+
+5. Save the file
 
 As the application will run on a HANA trial instance, the corresponding HANA service needs to be used.
 
