@@ -409,9 +409,9 @@ Further, the AppRouter will automatically redirect to the `/app/launchpage.html`
 The automatic creation of the `mta.yaml` file added everything that is needed from the CAP side to the `mta.yaml` file: the service, the database deployer and also the dependency to the XSUAA and HANA service. 
 Our Fiori elements based UI application, however, is still missing, we need to manually add this module as unfortunately, there is no automation support for this purpose.
 
-The AppRouter of the previous chapter is also and application, like our CAP service and the UI. Like these two, the AppRouter also needs to be deployed, for this we need to add a configuration to the MTA file that we created before. 
+The AppRouter of the previous chapter is also an application, like our CAP service and the UI. Like these two, the AppRouter also needs to be deployed, for this we need to add a configuration to the MTA file that we created before. 
 
-1. Add the `RiskManagement-approuter` and the `RiskManagement-app` module for the AppRouter to the `mta.yaml`:
+1. Add the `RiskManagement-approuter` and the `RiskManagement-app` module for the AppRouter to the `mta.yaml` file:
 
 ```yaml 
  # -------------------- SIDECAR MODULE ------------------------
@@ -456,6 +456,8 @@ The AppRouter of the previous chapter is also and application, like our CAP serv
 //### END OF INSERT
 ```
 
+2. Save the file
+
 The AppRouter takes the UI resources of the `RiskManagement-app` and puts it in the `resources` directory. This is where the `xs-app.json` looks for the files requested for `/app/...`.
 
 The `RiskManagement-uaa` binding adds our already existing XSUAA service instance to the AppRouter, which makes login and logout possible. By this the AppRouter forwards requests with the authentication token (`Authorization: Bearer <jwt-token>`) to the CAP service. The CAP service then uses it for authentication and authorization checks.
@@ -471,11 +473,11 @@ The URL is taken from the `RiskManagement-srv` module that needs to be enhanced 
 
 ## Exercise 2.7 Remove access for S/4 system
 
-The steps until now have shown how to integrate an S/4 service into your application, how to run it locally with sample data and what you have to do to get the application including its access to the S/4 system deployed. However, for these exercises we don't have a real S/4 system at hand as mentioned in the [overview](../../../..#overview) for this tutorial! If you want to carry out the steps of this tutorial in your own SAP Cloud Platform account and connect it to your own S/4 HANA Cloud system, you can skip the changes of this chapater and instead follow an additional tutorial that shows how to set up the connection between your Cloud Platform account and your S/4 HANA Cloud system using the Cloud Extension Factory. It will eventually create a so-called destination on you Cloud Platform account which you need to add to the `API_BUSINESS_PARTNER` section of the `package.json` file. We will not cover this in this tutorial though, you might want to watch this [series of videos](https://www.youtube.com/watch?v=YI4IZbzoXO8&list=PLkzo92owKnVxiagp35AcwoxOlX0J4hLyY&index=1) to learn about the set up.
+The previous steps have shown how to integrate a S/4 service into your application, how to run it locally with sample data and what you have to do to get the application including its access to the S/4 system deployed. However, for these exercises we don't have a real S/4 system at hand as mentioned in the [overview](../../../..#overview) of this tutorial! If you want to carry out the steps of this tutorial in your own SAP Cloud Platform account and connect it to your own S/4 HANA Cloud system, you can skip the changes of this chapater and instead follow an additional tutorial that shows how to set up the connection between your Cloud Platform account and your S/4 HANA Cloud system using the Cloud Extension Factory. It will eventually create a so-called destination on you Cloud Platform account which you need to add to the `API_BUSINESS_PARTNER` section of the `package.json` file. We will not cover this in this tutorial though, you might want to watch this [series of videos](https://www.youtube.com/watch?v=YI4IZbzoXO8&list=PLkzo92owKnVxiagp35AcwoxOlX0J4hLyY&index=1) to learn about the set up.
 
-If we deployed the application like it is up to now, the code would of course try to access a systen which does not exist. Therefore, we remove the code that is necessary in a real scenario and we hope it helps you there, but for this tutorial we remove / change some parts to prevent the S/4 call. We will instead create another local service with sample data for the business partner as we have done before for risks and mitigations.
+If we deployed the application like it is up to now, the code would of course try to access a system which does not exist. Therefore, we remove the code that is necessary in a real scenario and we hope it helps you there, but for this tutorial we remove / change some parts to prevent the S/4 call. We will instead create another local service with sample data for the business partner as we have done before for risks and mitigations.
 
-1. In your project enter the `package.json` file and remove the folloing part which was generated by CAP when you imported the API definiton from API Hub. 
+1. In your project enter the `package.json` file and remove the following part which was generated by CAP when you imported the API definiton from API Hub. 
 
 ```JSON
   "cds": {
@@ -494,8 +496,8 @@ If we deployed the application like it is up to now, the code would of course tr
 //### END OF DELETE
       }
 ```
-
-2. In your `db` folder, open the `schema.cds` file again. Here the reference to the external service was created before. We leave this reference here, but change the name of the entity to `BusinessPartnersS4`. At the same time we add a new entity with the original name `BusinessPartners`, this is the one that is used by our service. So, you are replacing the original entity that pointed to S/4 with a local copy. 
+2. Save the file
+3. In your `db` folder, open the `schema.cds` file again. Here the reference to the external service was created before. We leave this reference here, but change the name of the entity to `BusinessPartnersS4`. At the same time we add a new entity with the original name `BusinessPartners`, this is the one that is used by our service. So, you are replacing the original entity that pointed to S/4 with a local copy. 
 
 ```JS
 namespace sap.ui.riskmanagement;
@@ -545,9 +547,9 @@ using { managed } from '@sap/cds/common';
 //### END OF INSERT
 ```
 
-3. The last part that is missing is the bp data. Copy the `API_BUSINESS_PARTNER-A_BusinessPartner.csv` file in your `srv/external/data` folder and paste it into the `db/data` folder, next to the data files of risks and mitigations. Rename the copied file to `sap.ui.riskmanagement-BusinessPartners.csv`, reflecting the new local entity, so CAP can automatically assign this data to the entity.
+4. The last part that is missing is the bp data. Copy the `API_BUSINESS_PARTNER-A_BusinessPartner.csv` file in your `srv/external/data` folder and paste it into the `db/data` folder, next to the data files of risks and mitigations. Rename the copied file to `sap.ui.riskmanagement-BusinessPartners.csv`, reflecting the new local entity, so CAP can automatically assign this data to the entity.
 
-4. Make sure that the application still runs locally. If not `cds watch` is still running from prior chapters, start it in a terminal and check the application.
+5. Make sure that the application still runs locally. If not `cds watch` is still running from prior chapters, start it in a terminal and check the application.
 
 You have now finished all the preparations to deploy the application to the Cloud Plaform!
 
