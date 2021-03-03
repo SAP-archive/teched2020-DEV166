@@ -1024,7 +1024,7 @@ However, there is an issue with this: The ```Risk``` entity is from the Cloud Pl
 
 ## Exercise 1.6  Roles and Authorization Checks In CAP
 
-In this exercise we will add authorizations to the CAP service, so that only users with the right authorization can view the data or even edit and create data. We will also add a mock user locally to test the funcitonality
+In this exercise we will add authorizations to the CAP service, so that only users with the right authorization can view the data or even edit and create data. We will also add a mock user locally to test the funcitonality.
 
 ### Enable Authentication Support
 
@@ -1085,6 +1085,7 @@ service RiskService {
   entity BusinessPartners as projection on my.BusinessPartners;
 }
 ```
+3. Save the file
 
 With this change users that have the role `RiskViewer` assigned can view ("read") risks and mitigations, and a user with role `RiskManager` can view and change risks and mitigations, they are granted all the authorizations ("*").
 
@@ -1137,7 +1138,7 @@ CAP offers a possibility to add local users for testing as part of the `cds` con
     The file defines two users `riskviewer` and `riskmanager`. Let's look at the `riskmanager` example.
 
 
-    The user is defined by an `ID`, which can be any identifier for a user. The user has an `email`, a `password` parameter, and a `roles` parameter. To log on, the `ID`
+    The user is defined by an `ID`, which can be any identifier for a user. The user has an `email`, a `password` parameter, and a `roles` parameter. 
 
 ### Access the Risk Application with a User and Password
 
