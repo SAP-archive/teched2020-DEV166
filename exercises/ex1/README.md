@@ -1,4 +1,4 @@
-# Exercise 1 - Create a Cloud Application Programming Model service and a Fiori Elements application
+# Exercise 1 - Create a Cloud Application Programming Model Service and a Fiori Elements Application
 
 In this exercise, we will create an application based on a data model and service created using the Cloud Application Programming Model (CAP) and a UI based on Fiori elements (FE) which in turn is based on UI5.
 
