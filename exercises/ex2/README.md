@@ -239,7 +239,7 @@ As the application will run on a HANA trial instance, the corresponding HANA ser
 
 ## Exercise 2.4  Add Authorization and Trust Management Service (XSUAA)
 
-The next step is to add the Authorization and Trust Management service to the `mta.yaml` to allow user login, authorization and authentication checks.
+The next step is to add the Authorization and Trust Management Service to the `mta.yaml` to allow user login, authorization and authentication checks.
 
 1. In your `mta.yaml` file change the following:
 
@@ -277,6 +277,7 @@ resources:
              - $XSAPPNAME.RiskViewer
 //### END OF INSERT
 ```
+2. Save the file
 
 The configuration for XSUAA is read from the `xs-security.json` file that was created in the step before.
 
@@ -284,11 +285,11 @@ But in the `config` element, values can be added and overwritten.
 
 The value `xsappname` gets overwritten with a Cloud Foundry space-dependent value. The name has to be unique within a Cloud Platform subaccount.
 
-This allows multiple deployments of this tutorial in different spaces of the same subaccount. For example, different people of a team that want to try it out and don't want to create a new subaccount for each team member.
+This allows multiple deployments of this tutorial in different spaces of the same subaccount. For example, if different people of a team want to try it out and don't want to create a new subaccount for each team member.
 
 For a productive application, the `xsappname` should be explicitly set to the desired value.
 
-Further, you can add role collections using the `xs-security.json` file. Since role collections need to be unique in a Subaccount like the `xsappname`, you can add it here and use the `${space}` variable to make them unique like for the `xsappname`.
+Further, you can add role collections using the `xs-security.json` file. Since role collections need to be unique in a subaccount like the `xsappname`, you can add it here and use the `${space}` variable to make them unique like for the `xsappname`.
 
 Alternatively, role collections can be manually added in the SAP Cloud Platform Cockpit.
 
@@ -308,9 +309,9 @@ All of this is provided by another application (`module` in the MTA context). Th
     cd approuter
     ```
 
-(This of course could have also be done in BAS' file explorer instead of the terminal, but since there is a command line interface in the folder needed in the next step, we chose the terminal for creating the folder)
+(This of course could have also be done in the BAS' file explorer instead of the terminal, but since there is a command line interface in the folder needed in the next step, we chose the terminal for creating the folder)
 
-2. Initialize `npm` in this folder and install the latest version of AppRouter NPM module:
+2. In the terminal of the new `approuter` folder, initialize `npm` and install the latest version of AppRouter NPM module:
 
     ```bash
     npm init --yes
@@ -321,7 +322,7 @@ All of this is provided by another application (`module` in the MTA context). Th
 
 2. Check the required Node.js version for AppRouter
 
-    This is declared in the `package.json` file the AppRouter. You can check it for example with this script:
+    This is declared in the `package.json` file of the AppRouter. You can check it for example with this script:
 
     ```bash
     cat node_modules/@sap/approuter/package.json | grep '"node"'
@@ -335,7 +336,7 @@ All of this is provided by another application (`module` in the MTA context). Th
 
     In this example AppRouter supports Node.js 10.x.x and 12.x.x versions.
 
-3. Add required Node.js version in `approuter/package.json` file. This depends on the supported versions of the AppRouter, like ^12.0.0 in this example. Also add the start script for the AppRouter.
+3. Add the required Node.js version to the `approuter/package.json` file. This depends on the supported versions of the AppRouter, like ^12.0.0 in this example. Also add the start script for the AppRouter.
 
 ```json 
 {
@@ -363,6 +364,7 @@ All of this is provided by another application (`module` in the MTA context). Th
 //### END OF INSERT
 }
 ```
+4. Save the file
 
 ### AppRouter Configuration
 
@@ -404,8 +406,8 @@ Further, the AppRouter will automatically redirect to the `/app/launchpage.html`
 
 ## Exercise 2.6 Add UI and AppRouter Module to `mta.yaml`
 
-The automatic creation of the mta.yaml file added everthing that is needed from CAP side to the mta file, so the service, the database deployer, but also the dependency to the xsuaa and hana service. 
-Our Fiori elements based UI application, however, is still missing, we need to manually add this module as unfortunately, there is no automation support for this 
+The automatic creation of the `mta.yaml` file added everything that is needed from the CAP side to the `mta.yaml` file: the service, the database deployer and also the dependency to the XSUAA and HANA service. 
+Our Fiori elements based UI application, however, is still missing, we need to manually add this module as unfortunately, there is no automation support for this purpose.
 
 The AppRouter of the previous chapter is also and application, like our CAP service and the UI. Like these two, the AppRouter also needs to be deployed, for this we need to add a configuration to the MTA file that we created before. 
 
