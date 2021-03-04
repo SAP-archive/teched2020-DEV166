@@ -6,7 +6,7 @@ In this exercise, we will prepare the application for a deployment to the SAP Cl
 
 ## ###############################################################
 
-## Exercise 2.1 Prepare for SAP HANA deployment
+## Exercise 2.1 Prepare for SAP HANA Deployment
 
 While the locally running application uses an in memory SQLite data base, the deployed version will use SAP HANA. CAP helps you with the creation of the database and the deployment of the test data. At runtime it knows which data base to connect to.
 
@@ -64,7 +64,7 @@ To enable authentication support in CAP for SAP Cloud Platform, the `xssec` and 
 npm i --save  @sap/xssec  @sap/xsenv
 ```
 
-### Add UAA service
+### Add UAA Service
 
 We need to tell CAP that the security component XSUAA (XS User Authentiation and Authorization service) is used. Please perfom these steps:
 1. Open the `package.json` folder in your project and add the following lines:
@@ -471,7 +471,7 @@ destinations='[{ "name": "srv-biding", "forwardAuthToken": true, "strictSSL": tr
 
 The URL is taken from the `RiskManagement-srv` module that needs to be enhanced to export this information.
 
-## Exercise 2.7 Remove access for S/4 system
+## Exercise 2.7 Remove Access for S/4 System
 
 The previous steps have shown how to integrate a S/4 service into your application, how to run it locally with sample data and what you have to do to get the application including its access to the S/4 system deployed. However, for these exercises we don't have a real S/4 system at hand as mentioned in the [overview](../../../..#overview) of this tutorial! If you want to carry out the steps of this tutorial in your own SAP Cloud Platform account and connect it to your own S/4 HANA Cloud system, you can skip the changes of this chapater and instead follow an additional tutorial that shows how to set up the connection between your Cloud Platform account and your S/4 HANA Cloud system using the Cloud Extension Factory. It will eventually create a so-called destination on you Cloud Platform account which you need to add to the `API_BUSINESS_PARTNER` section of the `package.json` file. We will not cover this in this tutorial though, you might want to watch this [series of videos](https://www.youtube.com/watch?v=YI4IZbzoXO8&list=PLkzo92owKnVxiagp35AcwoxOlX0J4hLyY&index=1) to learn about the set up.
 
