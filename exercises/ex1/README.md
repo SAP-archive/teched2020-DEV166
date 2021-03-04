@@ -771,10 +771,10 @@ using { managed } from '@sap/cds/common';
     miti        : Association to Mitigations;
     impact      : Integer;
 //### BEGIN OF DELETE
-   //bp          @title: 'Business Partner';   
+   //bp          : Association to BusinessPartners;   
 //### END OF DELETE
 //### BEGIN OF INSERT
-   bp          @title: 'Business Partner';  
+   bp          : Association to BusinessPartners;  
 //### END OF INSERT
     criticality : Integer;
   }
@@ -1005,7 +1005,7 @@ module.exports = async (srv) => {
 
 Again you have now added a custom handler, this one is called ```on``` a ```READ``` of the ```Risks``` service. It checks whether the request includes a so-called expand for business partners. This is a request that is issued by the UI when the list should be filled. While it mostly contains columns that directly belong to the ```Risks``` entity, it also contains the business partner. As we have seen in the annotation file, instead of showing the id of the business partner, the last name of the business partner will be shown. This data is in the business partner and not in the risks entity. Therefore, the UI wants to exand, i.e. for each risk the corresponing business partner is also read.
 
-However, there is an issue with this: The ```Risk``` entity is from the Cloud Platform, the busines partner however, is potentially from a remote S/4 HANA Cloud system, in such a case the expand cannot be carried out. Because of this, we need to remove the expand from the request. Instead the code issues separate requests for each business parnter directly to the business partner service. As the code stands, for each risk there is a separate request for a business partner. This is not optimal, it would be better if all the business partners were fetched in a bulk request. You can make this change on your own if you like!
+However, there is an issue with this: The ```Risk``` entity is from the Cloud Platform, the busines partner however, is potentially from a remote S/4 HANA Cloud system, in such a case the expand cannot be carried out. Because of this, we need to remove the expand from the request. Instead the code issues separate requests for each business partner directly to the business partner service. As the code stands, for each risk there is a separate request for a business partner. This is not optimal, it would be better if all the business partners were fetched in a bulk request. You can make this change on your own if you like!
 
 6. Save the file
 7. In your tab with the application, go back to the **index.html** page and press refresh 
