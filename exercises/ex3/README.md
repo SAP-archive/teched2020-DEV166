@@ -217,7 +217,7 @@ git push
 
 After completing these steps, you will have monitored the outcome of your job in SAP Cloud Platform Continuous Integration and Delivery.
 
-1. In the **Jobs** tab in SAP Cloud Platform Continuous Integration and Delivery, select your job and verify that a new tile appears in the **Builds** view. This tile should be marked as running.
+1. In the **Jobs** tab in SAP Continuous Integration and Delivery, select your job and verify that a new tile appears in the **Builds** view. This tile should be marked as running.
 ![Job](./images/CICD_running_job.png)
 **Note:** If no new tile appears, trigger the job manually by choosing the *Trigger Build* button.
 ![Trigger Job](./images/CICD_trigger_job.png)
