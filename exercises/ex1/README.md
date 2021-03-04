@@ -459,7 +459,7 @@ This defines the content of the work list page and the object page, which one na
 
 The ```SelectionFields``` section defines which of the properties are exposed as search fields in the header bar above the list, in this case ```prio``` is the only explicit search field.
 
-From the ```LineItem``` section all the columns and their order of the work list are derived. While in most cases the columns are defined by ```Value:``` followed by the property name of the entity, in the case of ```prio```and ```impact``` there’s also ```Criticality```, which for now you can neglect but keep in mind in case you go to the later modules. It currently adds a diamond icon ( &#x20df; ) right left of the fields. You can just ignore it.
+From the ```LineItem``` section all the columns and their order of the work list are derived. While in most cases the columns are defined by ```Value:``` followed by the property name of the entity, in the case of ```prio```and ```impact``` there’s also ```Criticality```, which for now you can neglect, but keep it in mind in case you go to the later modules. It currently adds a diamond icon ( &#x20df; ) right left of the fields. You can just ignore it.
 
 Next up the ```Facets``` section. In this case, it defines the content of the object page. It contains only a single facet, a ```ReferenceFacet```, of the field group ```FieldGroup#Main```. This field group just shows up as a form. The properties of the ```Data``` array within ```FieldGroup#Main``` determine the fields in the form:
 
@@ -498,7 +498,7 @@ Without these lines, we would see the id of the mitigations from the ```miti``` 
 ![mitinoanno2](../ex1/images/01_02_0110.png)
 
 By introducing the annotations for the ```miti``` property, instead of just displaying the original value of ```miti```, i.e. the id, the UI shows its ```description``` property.
-The subsequent part ```ValueList``` introduces a value help for ```miti``` that you can see on the object page in its edit mode. the value help takes the id as an input parameter and again displays the ```description``` parameter
+The subsequent part ```ValueList``` introduces a value help for ```miti``` that you can see on the object page in its edit mode. The value help takes the id as an input parameter and again displays the ```description``` parameter.
 
 ![mitianno](../ex1/images/01_02_0120.png)
 
@@ -509,11 +509,11 @@ The subsequent part ```ValueList``` introduces a value help for ```miti``` that 
 
 ## Exercise 1.3 Add Business Logic to Your Application
 
-In this chapter, you add some custom code to the CAP service, that changes, depending on the value of the property ```impact```, the value of the property ```criticality```, which in turn is used in OData annotations to control the color of some of the cells in the table of our work list page.
+In this chapter, you add custom code to the CAP service, that changes depending on the value of the property ```impact``` and the value of the property ```criticality```, which in turn is used in OData annotations to control the color of some of the cells in the table of our work list page.
 
 ### Add Custom Code
 
-1. In the project, go to folder **srv** representing the service and select **New File** in the context menu
+1. In the project, go to folder **srv**, representing the service, and select **New File** in the context menu
 2. Enter **risk-service.js** as a name
 3. Click on the new file in the explorer, an editor opens
 4. Enter the following lines into the editor
@@ -545,11 +545,11 @@ module.exports = async (srv) => {
 
 ### Explanation of the Custom Code
 
-Because your file is called ```risks-service.js``` and therefore has the same name as your service definition file ```risks-service.cds```, CAP automatically treats it as a handler file for the service defined in there. CAP exposes several [events](https://github.wdf.sap.corp/pages/cap/node.js/api#cds-event-handlers) and you can easily write handlers like the above.
+Because your file is called ```risks-service.js``` and therefore has the same name as your service definition file ```risks-service.cds```, CAP automatically treats it as a handler file for the service defined in there. CAP exposes several [events](https://github.wdf.sap.corp/pages/cap/node.js/api#cds-event-handlers) and you can easily write handlers as the one above.
 
-In this case, the event ```after``` is triggered after a `READ` was carried out for our ```Risks``` entity. In your custom handler you get all the data, in this case all the risks that were read according to the query. You can loop over each of them and if needed adjust the data of the response. In this case, you change the value of the ```criticality``` when the ```impact``` is bigger than 100000. The new values for ```criticality``` are then part of the response to the read request.
+In this case, the event ```after``` is triggered after a `READ` was carried out for our ```Risks``` entity. In your custom handler you get all the data, in this case all the risks that were read according to the query. You can loop over each of them and, if needed, adjust the data of the response. In this case, you change the value of the ```criticality``` when the ```impact``` is bigger than 100000. The new values for ```criticality``` are then part of the response to the read request.
 
-So, this affects the service's response, but how does this translate into a changed UI? For this, you have to go back to the annotations you created in chapter 3 where you find your ```srv/risks-service-ui.cds``` file. There you had the two columns ```prio``` and ```impact``` annotated with an additional ```Criticality``` annotation. This annotation points to the ```criticality``` property of your service (*Note:* `Criticality` with an upper case `C` is the annotation, while the property name `criticality` could also be called different opposed to the annotation). As you now set different values in your custom handler for ```criticality```, the Fiori Elements application translates these into icons and colors, which you can see in the UI.
+So, this affects the service's response, but how does this translate into a changed UI? In order to do this, you have to go back to the annotations you created in chapter 3, where you find your ```srv/risks-service-ui.cds``` file. There you had the two columns ```prio``` and ```impact``` annotated with an additional ```Criticality``` annotation. This annotation points to the ```criticality``` property of your service (*Note:* `Criticality` with an upper case `C` is the annotation, while the property name `criticality` could also be called different opposed to the annotation). As you now set different values in your custom handler for ```criticality```, the Fiori Elements application translates these into icons and colors, which you can see in the UI.
 
 ```javascript
 annotate RiskService.Risks with @(
@@ -570,7 +570,7 @@ annotate RiskService.Risks with @(
 		],
 ```
 
-You can find more about the possible values of the ```Criticality``` annotation [here](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md#CriticalityType). This however is just one of the many sections of the OData Annotation vocabularies for [UI](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md) and [Common](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/Common.md) usage.
+You can find out more about the possible values of the ```Criticality``` annotation [here](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md#CriticalityType). This, however, is just one of the many sections of the OData Annotation vocabularies for [UI](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md) and [Common](https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/Common.md) usage.
 
 
 ## ###############################################################
@@ -578,20 +578,20 @@ You can find more about the possible values of the ```Criticality``` annotation 
 ## Exercise 1.4 Add the Consumption of an External Service Exposed by SAP API Business Hub to Your Service
 
 
-In this chapter, you extend your CAP service with the consumption of an external Business Partner service. You get its definition from SAP's SAP API Business Hub. First, work with local data and later on get the data directly from the external SAP S/4HANA system. What you have to do is:
+In this chapter, you extend your CAP service with the consumption of an external Business Partner service. You get its definition from SAP's API Business Hub. Firstly, work with local data and later on get the data directly from the external SAP S/4HANA system. What you have to do is:
 
 ### Get the Business Partner EDMX File
 
-1. Open the [SAP API Business Hub](https://api.sap.com/) page in your browser.
-2. Type "business partner" into the page's search field and carry out the search.
-3. On the left side, expand ```Products``` and mark ```SAP S/4 HANA Cloud```.
-4. In the result list, choose on ```Business Partner (A2X)```.
-5. Choose the ```Details``` tab.
+1. Open the [SAP API Business Hub](https://api.sap.com/) page in your browser
+2. Type "business partner" into the page's search field and carry out the search
+3. On the left side, expand ```Products``` and mark ```SAP S/4 HANA Cloud```
+4. In the result list, choose ```Business Partner (A2X)```
+5. Choose the ```Details``` tab
 
     ![API Details](../ex1/images/01_03_0030.png)
 
-6. Choose the ```Download API Specification``` button.
-7. Choose the ```EDMX``` option from the list (if you’re asked to log on, log on, it works automatically).
+6. Click the ```Download API Specification``` button
+7. Choose the ```EDMX``` option from the list (if you’re asked to log on, log on, it works automatically)
 
     If you’re using Chrome as a browser, you now see the downloaded file in the footer bar:
     ![API EDMX](../ex1/images/01_03_0040.png)
@@ -599,21 +599,23 @@ In this chapter, you extend your CAP service with the consumption of an external
 
 ### Add the EDMX File to the Project and Add Local Data
 
-1. Make sure in your terminal ```cds watch``` is still running.
-2. Drag the ```API_BUSINESS_PARTNER.edmx``` file from your browser's download area/folder onto your Business Application Studio workplace and drop it into the ```srv``` folder of your ```cpapp``` app.
+1. Make sure in your terminal ```cds watch``` is still running
+2. Drag the ```API_BUSINESS_PARTNER.edmx``` file from your browser's download area/folder onto your Business Application Studio workplace and drop it into the ```srv``` folder of your ```cpapp``` app
 
     CAP has noticed the new file and automatically created a new ```external``` folder under ```srv``` and in it added a new ```API_BUSINESS_PARTNER.csn``` file. ([CSN](https://github.wdf.sap.corp/pages/cap/cds/csn) being a compact representation of CDS)
 
 
-3. In your project, open the ```db/schema.cds``` file again and change the parts of the file as indicated below. From now on the exercises will mark code blocks that need to be inserted with a (not to be copied) line
+3. In your project, open the ```db/schema.cds``` file again and change the parts of the file as indicated below. 
+
+From now on the exercises will mark code blocks that need to be inserted inbetween the following lines (which are not to be copied):
 
 ***//### BEGIN OF INSERT***
 
-before the lines to insert and a (also not to be copied over)
+before the lines of code that have to be inserted and 
 
 ***//### END OF OF INSERT***
 
-line after the lines to insert. The same is true for lines to be deleted, using 
+after the lines to be inserted. The same is true for lines to be deleted:
 
 ***//### BEGING OF OF DELETE***
 
@@ -656,11 +658,11 @@ using { managed } from '@sap/cds/common';
 
 ```
 
-  With this code, you create a so-called projection for your new service. Of the many entities and properties in these entities, that are defined in the ```API_BUSINESS_PARTNER``` service, you just look at one of the entities (```A_BusinessPartner```) and just three of its properties: ```BusinessPartner```, ```LastName```, and ```FirstName```, so your projection is using a subset of everything the original service has to offer.
+  With this code you create a so-called projection for your new service. Of the many entities and properties in these entities, that are defined in the ```API_BUSINESS_PARTNER``` service, you just look at one of the entities (```A_BusinessPartner```) and just three of its properties: ```BusinessPartner```, ```LastName```, and ```FirstName```, so your projection is using a subset of everything the original service has to offer.
 
-4. Open the ```srv/risk-service.cds``` file.
+4. Open the ```srv/risk-service.cds``` file
 
-5. Uncomment the ```entity BusinessPartner``` line.
+5. Uncomment the ```entity BusinessPartner``` line
 
 ```javascript
 using { sap.ui.riskmanagement as my } from '../db/schema';
@@ -679,18 +681,18 @@ service RiskService {
 }
 ```
 
-6. In your browser where the Fiori elements app is still running from the last chapter press on the SAP icon on the left upper corner. With this you navigate back to the index page. Press refresh in your browser. Now press on the **Risks** tile and in the application press **Go**
+6. In your browser, where the Fiori elements app is still running from the last chapter, press on the SAP icon on the left upper corner. This way you navigate back to the index page. Press refresh in your browser. Now press on the **Risks** tile and in the application press **Go**
 
     The browser now shows a ```BusinessPartner```service next to the ```Mitigations``` and ```Risks```
 
     ![BPService](../ex1/images/01_03_0050.png)
 
-    At this point, you have a new service exposed with a definition based on the original ```edmx``` file. However, it doesn't have any connectivity to a backend and thus, there’s no data yet. Like with your own entities ```risks``` and ```mitigations``` you create some local data.
+    At this point, you have a new service exposed with a definition based on the original ```edmx``` file. However, it doesn't have any connectivity to a backend and thus, there’s no data yet. Such as with your own entities ```risks``` and ```mitigations```, you create new local data.
 
-7. In the project, go to folder **srv/external**, in the context menu, select **New Folder**
-8. Enter **data** as a name.
-9. On the **data** folder, in the context menu, select **New File** 
-10. Enter **API_BUSINESS_PARTNER-A_BusinessPartner.csv** as a name.
+7. In the project, go to the folder **srv/external** and select **New Folder** from the context menu
+8. Enter **data** as a name
+9. In the **data** folder, select **New File** from the context menu
+10. Enter **API_BUSINESS_PARTNER-A_BusinessPartner.csv** as a name
 11. Click on the new file in the explorer, an editor opens
 12. Enter the following lines into the editor
 
@@ -703,7 +705,7 @@ BusinessPartner;LastName;FirstName
 
 13. Save the file
 
-14. Open the ```srv/risk-service.js``` file.
+14. Open the ```srv/risk-service.js``` file
 
 15. Add the following lines at the end of the file:
 
@@ -737,11 +739,11 @@ It is invoked when your ```BusinessPartner``` service is called for a read, so w
 
 16. Save the file
 
-17. In your browser, open the ```BusinessPartners``` link to see the data.
+17. In your browser, open the ```BusinessPartners``` link to see the data
 
     ![API EDMX](../ex1/images/01_03_0020.png)
 
-    In the next step, you change the code, so the data is fetched from the actual service in an SAP S/4HANA Cloud system.
+    In the next step, you change the code, so that the data is fetched from the actual service in an SAP S/4HANA Cloud system.
 
 
 
@@ -752,8 +754,8 @@ It is invoked when your ```BusinessPartner``` service is called for a read, so w
 
 In this chapter, you incorporate the external service into the UI application.
 
-1. Open the ```db/data/schema.cds``` file.
-2. Uncomment the ```bp``` property.
+1. Open the ```db/data/schema.cds``` file
+2. Uncomment the ```bp``` property
 
 ```javascript
 namespace sap.ui.riskmanagement;
@@ -792,7 +794,7 @@ using { managed } from '@sap/cds/common';
 As you got a new property in your entity, you need to add data for this property in the local data file that you've created before for the ```risk``` entity.
 
 
-3. Open the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder.
+3. Open the file `sap.ui.riskmanagement-Risks.csv` in your `db/data` folder
 4. Replace the content with the new content below which additionally includes the BP data
 
 ```csv
@@ -811,13 +813,13 @@ ID;createdAt;createdBy;title;owner;prio;descr;miti_id;impact;bp_BusinessPartner
 
 Now, you also introduce the business partner field in the UI. For this you need to perform the following steps:
 
-- You add a label for the columns in the result list table as well as in the object page by adding a title annotation.
-- You add the business partner as a line item to include it as a column in the result list.
-- You add the business partner as a field to a field group, which makes it appear in a form on the object page.
+- Add a label for the columns in the result list table as well as in the object page by adding a title annotation
+- Add the business partner as a line item to include it as a column in the result list
+- Add the business partner as a field to a field group, which makes it appear in a form on the object page
 
 All this happens in the cds file that has all the UI annotations.
 
-1. Open the ```srv/risks-service-ui.cds``` file.
+1. Open the ```srv/risks-service-ui.cds``` file
 2. Uncomment the following parts:
 
 ```javascript 
@@ -940,7 +942,7 @@ The larger part of new annotations activates the same qualitites for the ```bp``
 
 
 3. Save the file
-4. Open the ```srv/risk-service.js``` file.
+4. Open the ```srv/risk-service.js``` file
 5. Add the following lines to the file:
 
 ```js
@@ -998,16 +1000,16 @@ module.exports = async (srv) => {
 }
 ```
 
-Again you have now added a custom handler, this one is called ```on``` a ```READ``` of the ```Risks``` service. It checks whether the request includes a so-called expand for business partners. This is a request that is issued by the UI when the list should be filled. While it mostly contains columns that directly belong to the ```Risks``` entity, it also contains the business partner. As we have seen in the annotation file, instead of showing the id of the business partner, the last name of the business partner will be shown. This data is in the business partner and not in the risks entity. Therefore, the UI wants to exand, i.e. for each risk the corresponing business partner is also read.
+Again you have now added a custom handler, this one is called ```on``` a ```READ``` of the ```Risks``` service. It checks whether the request includes a so-called expand for business partners. This is a request that is issued by the UI when the list should be filled. While it mostly contains columns that directly belong to the ```Risks``` entity, it also contains the business partner. As we have seen in the annotation file, instead of showing the id of the business partner, the last name of the business partner will be shown. This data is in the business partner and not in the risks entity. Therefore, the UI wants to expand, i.e. for each risk the corresponing business partner is also read.
 
-However, there is an issue with this: The ```Risk``` entity is from the Cloud Platform, the busines partner however, is potentially from a remote S/4 HANA Cloud system, in such a case the expand cannot be carried out. Because of this, we need to remove the expand from the request. Instead the code issues separate requests for each business partner directly to the business partner service. As the code stands, for each risk there is a separate request for a business partner. This is not optimal, it would be better if all the business partners were fetched in a bulk request. You can make this change on your own if you like!
+However, there is an issue with this: The ```Risk``` entity is from the Cloud Platform, the busines partner, however, is potentially from a remote S/4 HANA Cloud system. In such a case the expand cannot be carried out. Because of this, we need to remove the expand from the request. Instead the code issues separate requests for each business partner directly to the business partner service. As the code stands, for each risk there is a separate request for a business partner. This is not optimal, it would be better if all the business partners were fetched in a bulk request. You can make this change on your own if you like!
 
 6. Save the file
 7. In your tab with the application, go back to the **index.html** page and press refresh 
 
-8. On the launch page that now comes up, choose the **Risks** tile and then Click Go.
+8. On the launch page that now comes up, choose the **Risks** tile and then click **Go**
 
-	You now see the ```Risks``` application with the business partner in both the result list and the object page, which is loaded when you choose on one of the rows in the table:
+	You now see the ```Risks``` application with the business partner data in both the result list and the object page, which is loaded when you click on one of the rows in the table:
 
 	![Business Partner Data](../ex1/images/01_04_0010.png "Business Partner Data")
 
@@ -1019,13 +1021,13 @@ However, there is an issue with this: The ```Risk``` entity is from the Cloud Pl
 
 ## Exercise 1.6  Roles and Authorization Checks In CAP
 
-In this exercise we will add authorizations to the CAP service, so that only users with the right authorization can view the data or even edit and create data. We will also add a mock user locally to test the funcitonality.
+In this exercise we will add authorizations to the CAP service, so that only users with the right authorization can view the data or even edit and create data. We will also add a mock user locally to test the functionality.
 
 ### Enable Authentication Support
 
 The enable authentication support in CAP, a `node.js` module called `passport`  needs to be installed.
 
-1. Navigate to your ```RiskManagement``` folder in a terminal in the Business Application Studio. With your **cds watch** still running in one terminal, it is the easiest to open another second terminal next to it, by invoking **Terminal** and the **New Terminal** in the menu. Alternatively, you can also suspend **cds watch** in your existing terminal by pressing **CTRL+C**. In both cases you should already be in the ```Riskmanagement``` folder
+1. Navigate to your ```RiskManagement``` folder in a terminal in the Business Application Studio. With your `cds watch` still running in one terminal, it is the easiest to open another second terminal next to it, by invoking **Terminal** and the **New Terminal** in the menu. Alternatively, you can also suspend `cds watch` in your existing terminal by pressing **CTRL+C**. In both cases you should already be in the ```Riskmanagement``` folder
 
 2. Install the ```passport``` module. (the --save part makes sure it’s also added as a dependency to your project's ```package.json```)
 
@@ -1035,11 +1037,11 @@ The enable authentication support in CAP, a `node.js` module called `passport`  
 
 ### Adding Cap Role Restrictions to Entities
 
-Here we add the authorizations to the ```Risks``` service
+In this step we add the authorizations to the ```Risks``` service.
 
-1. Open the file ```srv/risk-service.cds```.
+1. Open the file ```srv/risk-service.cds```
 
-2. Change the code in the following way and by this add the  restrictions (`@(...)`) block to your `Risks` and `Mitigations` entities.
+2. Change the code in the following way and, by this, add the  restrictions (`@(...)`) block to your `Risks` and `Mitigations` entities
 
 ```js
 using { sap.ui.riskmanagement as my } from '../db/schema';
@@ -1082,7 +1084,7 @@ service RiskService {
 ```
 3. Save the file
 
-With this change users that have the role `RiskViewer` assigned can view ("read") risks and mitigations, and a user with role `RiskManager` can view and change risks and mitigations, they are granted all the authorizations ("*").
+With this change users that have the role `RiskViewer` assigned can view ("read") risks and mitigations, and a user with role `RiskManager` can view and change risks and mitigations. They are granted all the authorizations ("*").
 
 ### Add Users for Local Testing
 
@@ -1137,21 +1139,21 @@ CAP offers a possibility to add local users for testing as part of the `cds` con
 
 ### Access the Risk Application with a User and Password
 
-When accessing the `Risks` or the `Mitigations` service in the browser, you get a basic authorisation popup now, asking for your user and password. You can use the two users to log in and see that it works.
+When accessing the `Risks` or the `Mitigations` service in the browser, you get a basic authorisation pop-up, asking for your user and password. You can use two users to log in and see that it works.
 
-1. In the tab with the running application, navigate back to the launchpage, press refresh in the browser. 
+1. In the tab with the running application, navigate back to the launchpage, press refresh in the browser
 
-2. Choose the **Risks** tile and in the app press **Go**.
+2. Choose the **Risks** tile and in the app press **Go**
 
-3. In the pop up, enter *Username*: `riskmanager`.
+3. In the pop-up, enter the *Username*: `riskmanager`
 
-4. Enter *Password*: `initial`.
+4. Enter the *Password*: `initial`
 
 ![Authorizations](../ex1/images/01_06_0010.png)
 
-You can now access the Risks application.
+5. You can now access the **Risks** application
 
-Unfortunately, there’s no logout functionality. However, you can use the "Clear Browser Cache" function or simply close all browser windows to get rid of the basic auth login data in the browser.
+Unfortunately, there’s no logout functionality. However, you can use the "Clear Browser Cache" function or simply close all browser windows to get rid of the basic authentication login data in the browser.
 
 
 This is it! You have mastered all the steps to locally run the entire application!
@@ -1164,26 +1166,26 @@ Continue to - [Exercise 2](../ex2/README.md) in order to prepare everything that
 
 ### I get an "[ERROR] listen EADDRINUSE: address already in use :::4004" when invoking cds watch <a name="cdswatcherror"></a>
 
-You have probably still got `cds watch` running in one terminal and have started a new `cds watch` in another one. CAP allows only one instance to run, this is why you get the error. You can resolve the issue by pressing ***CTRL + C*** in one of the terminal. This will stop the current instance, the other one still continues running.
-Normally closing the terminal in which the current instance runs, will also terminate the `cds watch` process there. In some rare cases, the process still runs but is not visible anymore. In order to stopp such a process, once again open a terminal and type
+You have probably still got `cds watch` running in one terminal and have started a new `cds watch` in another one. CAP allows only one instance to run, this is why you get the error. You can resolve the issue by pressing ***CTRL + C*** in one of the terminal. This will stop the current instance while the other one still continues running.
+Normally closing the terminal in which the current instance runs will also terminate the `cds watch` process there. In some rare cases, the process still runs but is not visible anymore. In order to stopp such a process, once again open a terminal and type:
 
 ```
 ps a
 ```
 
-in the output you then get you will find a line like this, indicating the `cds watch` instance:
+In the output you will find a line like this, indicating the `cds watch` instance:
 
 ```
     PID TTY      STAT   TIME COMMAND
    7897 pts/1    S+     0:00 node-10/node /home/user/.node_modules_global/bin/cds watch 
 ```
 
-Copy the number under ***PID** (in the above case 7897) and in the terminal carry out 
+Copy the number under ***PID** (in the above case 7897) and carry out 
 
 ```
 kill <PID Number>
 ```
 
-(in the example `kill 7897`). Now you can start `cds watch` again.
+in the terminal (in this example `kill 7897`). Now you can start `cds watch` again.
 
 
