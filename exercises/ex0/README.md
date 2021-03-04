@@ -60,8 +60,8 @@ You should now see such a screen:
 ## Summary
 
 With the setup procedure done, you now have completed:
-- Setting up the SAP Cloud Platform trial account
-- Accessing to the SAP Business Application Studio (SBAS)
+- Setting up the SAP BTP Trial Account
+- Accessing to the SAP Business Application Studio 
 - Creation of your dev space
 
 Continue to - [Exercise 1](../ex1/README.md)
