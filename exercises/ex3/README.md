@@ -71,7 +71,7 @@ After completing these steps, you will have added your CAP project sources to yo
 After completing these steps, you will have subscribed to SAP Continuous Integration and Delivery and assigned the *Administrator* role to your user.
 
 
-1. Enter your [SAP BTP trial account](https://cockpit.hanatrial.ondemand.com/), press **Enter Your Trial Account**, press on the **trial** tile and navigate to the **Subscriptions** tab. Press **Go to Service Marketplace**.
+1. Enter your [SAP BTP trial account](https://cockpit.hanatrial.ondemand.com/), press **Enter Your Trial Account**, press on the **trial** tile and navigate to the **Subscriptions** tab. Go to **Service Marketplace**.
 
 2. Type **Continuous Integration & Delivery** in the search box and click on the service tile:
 ![Service Tile](./images/CICD_ServiceTile.png)
@@ -148,6 +148,7 @@ After completing these steps, you will have configured a job in SAP Continuous I
 
 6. Click **Create**.
 ![CAP Job](./images/CICD_CAP_job.png)
+
 If the **Webhook Creation** pop-up, which provides you with the data needed to define a webhook in GitHub, doesn't appear automatically, you can open the detailed view of an existing job in the **Jobs** tab and under **General Information**, click on **Risk Management**.
 ![Webhook](./images/CICD_webhook1.png)
 
