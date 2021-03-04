@@ -194,43 +194,38 @@ An Fiori elements (FE) app is an application that leverages SAPUI5, its controls
 
 ### Generate the UI with an SAP Fiori Elements Template
 
-1. In Bussines Application Studio, invoke the Command Pallete (```View -> Find Command``` or ```Cmd+Shift+P```) and choose ```Fiori: Open Application Generator```.
+1. In Business Application Studio, invoke the Command Palette (```View -> Find Command``` or ```Cmd+Shift+P```) and choose ```Fiori: Open Application Generator```.
 
   	![appgen](../ex1/images/01_02_0010.png)
 
-2. Choose `SAP Fiori Elements Application` and press **Next**
-
-  	![Feapp](../ex1/images/01_02_0020.png)
-
-
-3. Choose `List Report Object Page` and press **Next**
+2. Choose `SAP Fiori Elements Application` and `List Report Object Page` and press **Next**
 
    	![Feapp](../ex1/images/01_02_0030.png)
 
 
-4. In the next dialog, choose **Use a local CAP Project** and point to the folder of your current ```RiskManagement``` project. Select the ``RiskService`` as the OData service and click **Next**
+3. In the next dialog, choose **Use a local CAP Project** and point to the folder of your current ```RiskManagement``` project. Select the ``RiskService`` as the OData service and click **Next**
 
    	![Feapp](../ex1/images/01_02_0040.png)
 
-5.	Choose ```Risks``` as the main entity and click **Next**
+4.	Choose ```Risks``` as the main entity and click **Next**
 
    	![Feapp](../ex1/images/01_02_0050.png)
 
-6. Enter "risks" as the module name. Enter "Risks" as the application title and the description for the application, as well as "ns" as the namespace. Press **Next**
+5. Enter "risks" as the module name. Enter "Risks" as the application title and the description for the application, as well as "ns" as the namespace. Choose "No" in the checkboxes and press **Finish**
 
     ![Feapp](../ex1/images/01_02_0060.png)
 
-8. Generate the application.  (If you get a pop up that says "A project has been generated. What would you like to do with it?", you can ignore it and just close the pop up)
+(If you get a pop up that says "A project has been generated. What would you like to do with it?", you can ignore it and just close the pop up)
 
 The application is now generated and after a couple of seconds you can see it in the ```app``` folder of your project. It contains a ```risks``` and a ```webapp``` folder with a ```Component.js``` file, which is characteristic for a UI5 app. However, the code there’s minimal and it basically inherits its logic from the ```sap/fe/core/AppComponent```.
 
-9. If it's not still running from the previous chapter, execute ```cds watch``` in a terminal and press on the **Open in New Tab** button in the right lower corner. If it is still running from the last chapter it is enough to refresh the brower page were it is running.
+6. If ```cds watch``` isn't still running from the previous chapter, execute it in a terminal and press on the **Open in New Tab** button in the right lower corner. If it is still running from the last chapter, it is enough to refresh the brower page were it is running.
 
     You can now see that ```cds watch``` has discovered an HTML page in your app folder:
 
     ![Feapp](../ex1/images/01_02_0070.png)
 
-10. Click on this link. On the launch page that now comes up, click on the **Risks** tile.
+7. Click on this link. On the launch page that now comes up, click on the **Risks** tile.
 
 	You can now see the list page, it looks like this:
 
