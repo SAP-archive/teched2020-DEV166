@@ -1,22 +1,22 @@
-# DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite
+# DEV166 - Extend SAP S/4HANA with SAP Extension Suite
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/teched2020-DEV166)](https://api.reuse.software/info/github.com/SAP-samples/teched2020-DEV166)
 
 ## Description
 
-This repository contains the material for the SAP TechEd 2020 session called DEV166 - Extend SAP S/4HANA with SAP Cloud Platform Extension Suite.  
+This repository contains the material for the SAP TechEd 2020 session called DEV166 - Extend SAP S/4HANA with SAP Extension Suite.  
 
 ## Overview
 
-This session introduces attendees to an end-to-end flow to build an extension using best practices from SAP Cloud Platform Extension Suite.
+This session introduces attendees to an end-to-end flow to build an extension using best practices from SAP Extension Suite.
 
 This workshop will guide you step-by-step through the process of 
-- creating new data models and a service using the Cloud Application Programming Model (CAP)
+- creating new data models and a service using the SAP Cloud Application Programming Model (CAP)
 - integrating a service exposed on the SAP API Business Hub
 - creating a List Report Object Page application based on Fiori elements (FE) using the new service
-- configuring and running a predefined continuous integration and delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
+- configuring and running a predefined Continuous Integration and Delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
 
-Please note that the inclusion of a service exposed on the SAP API Business Hub originates from a S/4 HANA Cloud system. While large parts of the tutorial are directed to consume the service from a real S/4 HANA Cloud system, the service will eventually not be consumed from a real system but from a local copy on the SAP Cloud Platform. This is because within this tutorial and using a SAP Cloud Platform trial account no real S/4 HANA Cloud system can be provided and configured.
+Please note that the inclusion of a service displayed in the SAP API Business Hub originates from a S/4 HANA Cloud system. While large parts of the tutorial are directed to consume the service from a real S/4 HANA Cloud system, the service will eventually not be consumed from a real system but from its local copy on the SAP Cloud Platform. This is because within this tutorial and using a SAP Cloud Platform trial account, no real S/4HANA Cloud system can be provided and configured.
 
 This is what the final application will look like:
 
