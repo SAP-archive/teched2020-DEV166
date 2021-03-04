@@ -423,8 +423,8 @@ The AppRouter of the previous chapter is also an application, like our CAP servi
      buildpack: nodejs_buildpack
    requires:
     # 'hana' and 'xsuaa' resources extracted from CAP configuration
-    - name: cpapp-db
-    - name: cpapp-uaa
+    - name: RiskManagement-db
+    - name: RiskManagement-uaa
 //### BEGIN OF INSERT
   # --------------------  APPROUTER -----------------------------
  - name: RiskManagement-approuter
@@ -549,7 +549,7 @@ using { managed } from '@sap/cds/common';
 
 4. The last part that is missing is the bp data. Copy the `API_BUSINESS_PARTNER-A_BusinessPartner.csv` file in your `srv/external/data` folder and paste it into the `db/data` folder, next to the data files of risks and mitigations. Rename the copied file to `sap.ui.riskmanagement-BusinessPartners.csv`, reflecting the new local entity, so CAP can automatically assign this data to the entity.
 
-5. Make sure that the application still runs locally. If not `cds watch` is still running from prior chapters, start it in a terminal and check the application.
+5. Make sure that the application still runs locally. If `cds watch` isn't running from prior chapters, start it in a new terminal and check the application.
 
 You have now finished all the preparations to deploy the application to the Cloud Plaform!
 
