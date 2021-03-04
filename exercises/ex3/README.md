@@ -199,6 +199,7 @@ You can get the values for `<YOUR ORG NAME>`, `<YOUR SPACE NAME>`, and `<YOUR CL
 3. Commit your changes to GitHub. If you have added the new folder and file in the Businss Application Studio, you can do so by opening a new terminal and then by
 
 ```
+cd .pipeline
 git add -A
 git commit -m "new pipeline"
 git push
