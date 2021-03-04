@@ -1,15 +1,15 @@
 # Getting Started - Setting up your Development Environment
 
-Welcome to the workshop 'Extend SAP S/4HANA with SAP Cloud Platform Extension Suite'.\
+Welcome to the workshop 'Extend SAP S/4HANA with SAP Extension Suite'.\
 This workshop will guide you step-by-step through the process of 
 - creating new data models and a service using the Cloud Application Programming Model (CAP)
 - integrating a service from the [SAP API Business Hub](https://api.sap.com/)
-- creating a List Report Object Page application based on Fiori Elements (FE) using the new service
-- configuring and running a predefined continuous integration and delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
+- creating a List Report Object Page application based on Fiori elements (FE) using the new service
+- configuring and running a predefined Continuous Integration and Delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
 
-## Set up Business Application Studio in an SAP Cloud Platform Trial Account
+## Set up Business Application Studio in a SAP BTP Trial Account
 
-If you don't have an SAP Cloud Platform account already, you can create your own [here](https://www.sap.com/products/cloud-platform/get-started.html).
+If you don't have an SAP BTP account already, you can create your own [here](https://www.sap.com/products/cloud-platform/get-started.html).
 
 ### New Trial Users
 
