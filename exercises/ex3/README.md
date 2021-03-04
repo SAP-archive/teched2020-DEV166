@@ -147,6 +147,7 @@ After completing these steps, you will have configured a job in SAP Continuous I
 5. As **Pipeline**, choose **SAP Cloud Application Programming Model**.
 
 6. Click **Create**.
+
 ![CAP Job](./images/CICD_CAP_job.png)
 
 If the **Webhook Creation** pop-up, which provides you with the data needed to define a webhook in GitHub, doesn't appear automatically, you can open the detailed view of an existing job in the **Jobs** tab and under **General Information**, click on **Risk Management**.
