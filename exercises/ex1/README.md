@@ -198,12 +198,12 @@ An Fiori elements (FE) app is an application that leverages SAPUI5, its controls
 
   	![appgen](../ex1/images/01_02_0010.png)
 
-2. Choose `SAP Fiori Elements Application` and `List Report Object Page` and press **Next**
+2. Choose `SAP Fiori Elements` and `List Report Object Page` and press **Next**
 
    	![Feapp](../ex1/images/01_02_0030.png)
 
 
-3. In the next dialog, choose **Use a local CAP Project** and point to the folder of your current ```RiskManagement``` project. Select the ``RiskService`` as the OData service and click **Next**
+3. In the next dialog, choose **Use a Local CAP Node.js Project** and point to the folder of your current ```RiskManagement``` project. Select the ``RiskService`` as the OData service and click **Next**
 
    	![Feapp](../ex1/images/01_02_0040.png)
 
