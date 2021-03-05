@@ -215,7 +215,7 @@ git push
 
 ## Exercise 3.8 Verify the Success of Your Build
 
-After completing these steps, you will have monitored the outcome of your job in SAP Cloud Platform Continuous Integration and Delivery.
+After completing these steps, you will have monitored the outcome of your job in SAP Continuous Integration and Delivery.
 
 1. In the **Jobs** tab in SAP Continuous Integration and Delivery, select your job and verify that a new tile appears in the **Builds** view. This tile should be marked as running.
 ![Job](./images/CICD_running_job.png)
@@ -228,15 +228,15 @@ After completing these steps, you will have monitored the outcome of your job in
 
 ## Exercise 3.9 Assign Role Collections and Access the Deployed Application
 
-After completing these steps, you will have accessed your deployed application trough the SAP Cloud Platform cockpit.
+After completing these steps, you will have accessed your deployed application trough the SAP BTP cockpit.
 
-As we set it up this way, the deployed service can only be accessed when your user has a corresponing role collection assiged. If you tried to open the application without this authorization you would get a **Forbidden** pop up. So, you need to assign the role collection to your user:
+As we set it up this way, the deployed service can only be accessed when your user has a corresponing role collection assiged. If you tried to open the application without this authorization you would get a **Forbidden** pop-up. So, you need to assign the role collection to your user:
 
-1. In your trial account in the SAP Cloud Platform cockpit, navigate to the **Security** tab and choose **Trust Configuration**. Click on the **Default Entity Provider** link.
+1. In your trial account in the SAP BTP cockpit, navigate to the **Security** tab and choose **Trust Configuration**. Click on the **Default Entity Provider** link.
 
 ![CP Trust](./images/RiskManagement-Trust.png)
 
-2. Enter the email address for your Cloud Platform account (the one you used to log on) and press the **Show Assignments** button. The press the **Assign Role Collection** button and choose **RiskManager-dev** in the dropdown box. Press the **Assign Role Collection** button
+2. Enter the email address for your SAP BTP account (the one you used to log on) and press the **Show Assignments** button. Then press the **Assign Role Collection** button and choose **RiskManager-dev** in the dropdown box. Press the **Assign Role Collection** button
 ![CP RoleCollection](./images/RiskManagement-RoleCollection.png)
 
 Now you are ready to access the application!
