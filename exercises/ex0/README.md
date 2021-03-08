@@ -13,7 +13,7 @@ If you don't have an SAP BTP account already, you can create your own [here](htt
 
 ### New Trial Users
 
-1. After having registered your new user, start your trial via [this link](https://account.hanatrial.ondemand.com/register)
+1. After having registered your new user, start your trial via [this link](https://account.hanatrial.ondemand.com/register).
 2. Logging in for the first time, you'll be asked to select your preferred region. To be able to perform all exercises in this tutorial, select either Europe (Frankfurt) - AWS or US East (VA) - AWS.
 This will start the set up of your account.
 
