@@ -617,7 +617,7 @@ before the lines of code that have to be inserted and
 
 after the lines to be inserted. The same is true for lines to be deleted:
 
-***//### BEGING OF OF DELETE***
+***//### BEGIN OF OF DELETE***
 
 ***//### END OF OF DELETE***
 
@@ -632,7 +632,7 @@ using { managed } from '@sap/cds/common';
     descr       : String;
     miti        : Association to Mitigations;
     impact      : Integer;
-    //bp          @title: 'Business Partner';   
+    //bp        : Association to BusinessPartners;  
     criticality : Integer;
   }
   entity Mitigations : managed {
