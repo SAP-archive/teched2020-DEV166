@@ -14,9 +14,9 @@ This workshop will guide you step-by-step through the process of
 - creating new data models and a service using the SAP Cloud Application Programming Model (CAP)
 - integrating a service exposed on the SAP API Business Hub
 - creating a List Report Object Page application based on Fiori elements (FE) using the new service
-- configuring and running a predefined Continuous Integration and Delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
+- configuring and running a predefined Continuous Integration and Delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Business Technology Platform (BTP)
 
-Please note that the inclusion of a service displayed in the SAP API Business Hub originates from a S/4 HANA Cloud system. While large parts of the tutorial are directed to consume the service from a real S/4 HANA Cloud system, the service will eventually not be consumed from a real system but from its local copy on the SAP Cloud Platform. This is because within this tutorial and using a SAP BTP trial account, no real S/4HANA Cloud system can be provided and configured.
+Please note that the inclusion of a service displayed in the SAP API Business Hub originates from a S/4 HANA Cloud system. While large parts of the tutorial are directed to consume the service from a real S/4 HANA Cloud system, the service will eventually not be consumed from a real system but from its local copy on the SAP BTP. This is because within this tutorial and using a SAP BTP trial account, no real S/4HANA Cloud system can be provided and configured.
 
 This is what the final application will look like:
 
