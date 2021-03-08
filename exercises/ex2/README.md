@@ -1,8 +1,8 @@
-# Exercise 2  Prepare for Cloud Platform Deployment
+# Exercise 2  Prepare for Business Technology Platform Deployment
 
 Up to this point, the whole application, its data model, its service and its UI application was running locally in your Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on your laptop / PC with extensions for Microsoft's Visual Code. 
 
-In this exercise, we will prepare the application for a deployment to the SAP Cloud Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
+In this exercise, we will prepare the application for a deployment to the SAP Business Technology Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
 
 ## ###############################################################
 
@@ -55,7 +55,7 @@ npm install hdb --save
 
 ### Enable Authentication Support
 
-To enable authentication support in CAP for SAP Cloud Platform, the `xssec` and `xsenv` modules need to be installed. 
+To enable authentication support in CAP for SAP Business Technology Platform, the `xssec` and `xsenv` modules need to be installed. 
 
 1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
 2. In the terminal, run the following command to install the hdb module and automatically add it as a dependency into the `package.json` file of your project:
@@ -97,7 +97,7 @@ We need to tell CAP that the security component XSUAA (XS User Authentiation and
 
 ### Roles and Scopes
 
-In the context of Cloud Foundry within the Cloud Platform a single authorization is called scope, for example, there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, the role "Editor" could consist of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
+In the context of Cloud Foundry within the Business Technology Platform a single authorization is called scope, for example, there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, the role "Editor" could consist of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
 
 However, CAP recommends to use roles only and do a one-to-one mapping. In [Exercise 1.6 - Roles and Authorization Checks In CAP](../ex1#exercise-16--roles-and-authorization-checks-in-cap) we defined two roles.
 
@@ -283,7 +283,7 @@ The configuration for XSUAA is read from the `xs-security.json` file that was cr
 
 However in the `config` element, values can be added and overwritten.
 
-The value `xsappname` gets overwritten with a Cloud Foundry space-dependent value. The name has to be unique within a Cloud Platform subaccount.
+The value `xsappname` gets overwritten with a Cloud Foundry space-dependent value. The name has to be unique within a Business Technology Platform subaccount.
 
 This allows multiple deployments of this tutorial in different spaces of the same subaccount. For example, if different people of a team want to try it out and don't want to create a new subaccount for each team member.
 
