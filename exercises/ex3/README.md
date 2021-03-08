@@ -76,12 +76,12 @@ After completing these steps, you will have subscribed to SAP Continuous Integra
 2. Type **Continuous Integration & Delivery** in the search box and click on the service tile:
 ![Service Tile](./images/CICD_ServiceTile.png)
 
-3. Click **Create**.
+3. Choose **Create**.
 ![Service Tile](./images/CICD_subscribe_service.png)
 
 4. In your SAP BTP subaccount, choose **Security** → **Trust Configuration**.
 
-5. Click on the name of your identity provider (For example, 'Default identity provider' in this case).
+5. Choose the name of your identity provider (For example, 'Default identity provider' in this case).
 
 6. Enter your email address.
 
@@ -125,9 +125,9 @@ After completing these steps, you will have configured credentials for connectin
 
 7. As **Type**, select **Basic Authentication**.
 
-8. For **Username**, enter your username of your SAP BTP cockpit.
+8. For **Username**, enter your username for the SAP BTP cockpit.
 
-9. For **Password**, use your password of your SAP BTP cockpit.
+9. For **Password**, use your password for the SAP BTP cockpit.
 ![Credentials GitHub](./images/CICD_credentials_cfdeploy.png)
 
 
@@ -140,20 +140,20 @@ After completing these steps, you will have configured a job in SAP Continuous I
 
 2. For **Job Name**, enter a freely chosen name for your job, which is unique in your SAP BTP subaccount. In this example, the name of the job is *RiskManagment*.
 
-3. For **Repository**, click on **Repository** and enter a name and the URL of your GitHub repository.
+3. For **Repository**, choose **Repository** and enter a name and the URL of your GitHub repository.
 
 4. For **Branch**, enter the GitHub branch from which you want to receive push events.  In this example, the name of the branch is *main*.
 
 5. As **Pipeline**, choose **SAP Cloud Application Programming Model**.
 
-6. Click **Create**.
+6. Choose **Create**.
 
 ![CAP Job](./images/CICD_CAP_job.png)
 
-If the **Webhook Creation** pop-up, which provides you with the data needed to define a webhook in GitHub, doesn't appear automatically, you can open the detailed view of an existing job in the **Jobs** tab and under **General Information**, click on **Risk Management**.
+If the **Webhook Creation** pop-up, which provides you with the data needed to define a webhook in GitHub, doesn't appear automatically, you can open the detailed view of an existing job in the **Jobs** tab and under **General Information**, choose **Risk Management**.
 ![Webhook](./images/CICD_webhook1.png)
 
-Then click on **Webhook Data**.
+Then choose **Webhook Data**.
 
 ![Webhook](./images/CICD_webhook2.png)
 
