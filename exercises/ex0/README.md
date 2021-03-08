@@ -5,7 +5,7 @@ This workshop will guide you step-by-step through the process of
 - creating new data models and a service using the Cloud Application Programming Model (CAP)
 - integrating a service from the [SAP API Business Hub](https://api.sap.com/)
 - creating a List Report Object Page application based on Fiori elements (FE) using the new service
-- configuring and running a predefined Continuous Integration and Delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Cloud Platform
+- configuring and running a predefined Continuous Integration and Delivery (CI/CD) pipeline that automatically tests, builds, and deploys your code changes to the SAP Business Technology Platform
 
 ## Set up Business Application Studio in a SAP BTP Trial Account
 
