@@ -31,7 +31,7 @@ To create a personal access token, which you can use instead of a password, foll
 
 After completing these steps, you will have added your CAP project sources to your GitHub repository.
 
-1. If you have Business Application Studio still open from the former exercises, return to it. If you haven't, open your [SAP BTP Trial](https://cockpit.hanatrial.ondemand.com/) and click on the Quick Tool Access icon **SAP Business Application Studio**.
+1. If you have Business Application Studio still open from the former exercises, return to it. If you haven't, open your [SAP BTP Trial](https://cockpit.hanatrial.ondemand.com/) and choose the Quick Tool Access icon **SAP Business Application Studio**.
 
 ![Welcome SCP Trial](../ex0/images/00_00_0020.png)
 
@@ -73,7 +73,7 @@ After completing these steps, you will have subscribed to SAP Continuous Integra
 
 1. Enter your [SAP BTP trial account](https://cockpit.hanatrial.ondemand.com/), press **Enter Your Trial Account**, press on the **trial** tile and navigate to the **Subscriptions** tab. Go to **Service Marketplace**.
 
-2. Type **Continuous Integration & Delivery** in the search box and click on the service tile:
+2. Type **Continuous Integration & Delivery** in the search box and choose the service tile:
 ![Service Tile](./images/CICD_ServiceTile.png)
 
 3. Choose **Create**.
@@ -99,7 +99,7 @@ After completing these steps, you will have configured credentials for connectin
 
 1. In your SAP BTP subaccount navigate to **Services** and then to **Instances and Subscriptions**.
 
-2. Click on the **Go to Application** icon located next to the **Continuous Integration & Delivery** subscription.
+2. Choose the **Go to Application** icon located next to the **Continuous Integration & Delivery** subscription.
 
 ![CICD](./images/CICD_access.png)
 
@@ -232,7 +232,7 @@ After completing these steps, you will have accessed your deployed application t
 
 As we set it up this way, the deployed service can only be accessed when your user has a corresponing role collection assiged. If you tried to open the application without this authorization you would get a **Forbidden** pop-up. So, you need to assign the role collection to your user:
 
-1. In your trial account in the SAP BTP cockpit, navigate to the **Security** tab and choose **Trust Configuration**. Click on the **Default Entity Provider** link.
+1. In your trial account in the SAP BTP cockpit, navigate to the **Security** tab and choose **Trust Configuration**. Choose the **Default Entity Provider** link.
 
 ![CP Trust](./images/RiskManagement-Trust.png)
 
