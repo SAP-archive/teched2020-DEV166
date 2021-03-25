@@ -1,14 +1,14 @@
-# Exercise 2  Prepare for Cloud Platform Deployment
+# Exercise 2  Prepare for Business Technology Platform Deployment
 
 Up to this point, the whole application, its data model, its service and its UI application was running locally in your Business Application Studio workspace. Even though we don't cover it in this tutorial, the same would have been possible on your laptop / PC with extensions for Microsoft's Visual Code. 
 
-In this exercise, we will prepare the application for a deployment to the SAP Cloud Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
+In this exercise, we will prepare the application for a deployment to the SAP Business Technology Platform. In [Exercise 3](../ex3/README.md) a Continuous Integration / Continuous Delivery (CI/CD) Service is introduced that takes care of the deployment every time there is a change in the source code.
 
 ## ###############################################################
 
-## Exercise 2.1 Prepare for SAP HANA deployment
+## Exercise 2.1 Prepare for SAP HANA Deployment
 
-While the locally running application uses an in memory SQLite data base, the deployed version will use SAP HANA. CAP helps you with the creation of the database and the deployment of the test data. At runtime it knows which data base to connect to.
+While the locally running application uses an in-memory SQLite database, the deployed version will use SAP HANA. CAP helps you with the creation of the database and the deployment of the test data. At runtime it knows which database to connect to.
 
 In order for this to work, please perform these steps:
 
@@ -48,14 +48,14 @@ npm install hdb --save
   }
 }
 ```
-
+4. Save the file
 ## ###############################################################
 
 ## Exercise 2.2 Prepare User Authentication and Authorization (XSUAA) Setup
 
 ### Enable Authentication Support
 
-To enable authentication support in CAP for SAP Cloud Platform, the `xssec` and `xsenv` modules need to be installed. 
+To enable authentication support in CAP for SAP Business Technology Platform, the `xssec` and `xsenv` modules need to be installed. 
 
 1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
 2. In the terminal, run the following command to install the hdb module and automatically add it as a dependency into the `package.json` file of your project:
@@ -64,9 +64,10 @@ To enable authentication support in CAP for SAP Cloud Platform, the `xssec` and 
 npm i --save  @sap/xssec  @sap/xsenv
 ```
 
-### Add UAA service
+### Add UAA Service
 
-We need to tell CAP that the security component XSUAA (XS User Authentiation and Authorization service) is used. For this open the `package.json` folder in your project and add the following lines:
+We need to tell CAP that the security component XSUAA (XS User Authentiation and Authorization service) is used. Please perfom these steps:
+1. Open the `package.json` folder in your project and add the following lines:
 
 ```json 
 {
@@ -92,11 +93,13 @@ We need to tell CAP that the security component XSUAA (XS User Authentiation and
 }
 ```
 
+2. Save the file
+
 ### Roles and Scopes
 
-In the context of Cloud Foundry within the Cloud Platform a single authorization is called scope, for example there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, there could a role "Editor" consisting of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
+In the context of Cloud Foundry within the Business Technology Platform a single authorization is called scope, for example, there could be a scope "Read" and a scope "Write", that allows a user to read or write a certain business object. Scopes cannot be assigned to users directly. They are packaged into roles. For example, the role "Editor" could consist of the "Read" and "Write" scopes, while the role "Viewer" consists only of the "Read" scope.
 
-However, CAP recommends to use roles only and do a one to one mapping. In [Exercise 1.6 - Roles and Authorization Checks In CAP](../ex1#exercise-16--roles-and-authorization-checks-in-cap) we defined two roles.
+However, CAP recommends to use roles only and do a one-to-one mapping. In [Exercise 1.6 - Roles and Authorization Checks In CAP](../ex1#exercise-16--roles-and-authorization-checks-in-cap) we defined two roles.
 
 ### XSUAA Security Configuration
 
@@ -106,7 +109,7 @@ Create the file `xs-security.json` in your `RiskManagement` project by executing
 cds compile srv --to xsuaa >xs-security.json
 ```
 
-The generated file then contains the configuration of the XSUAA. Behind the scenes, CAP has taken the authorization parts ```@(restrict ... )``` from our service definiton form [here](../ex1#exercise-16--roles-and-authorization-checks-in-cap) and created scopes and role templates from it.
+The generated file then contains the configuration of the XSUAA. Behind the scenes, CAP has taken the authorization parts ```@(restrict ... )``` from our service definition from [here](../ex1#exercise-16--roles-and-authorization-checks-in-cap) and created scopes and role templates from it.
 
 For example, it finds the roles `RiskViewer` and `RiskManager` in the `srv/risk-service.cds` file:
 
@@ -123,7 +126,7 @@ For example, it finds the roles `RiskViewer` and `RiskManager` in the `srv/risk-
       ]) as projection on my.Risks;
 ```
 
-And created scopes and roles for both in the `xs-security.json` file in your project:
+And creats scopes and roles for both in the `xs-security.json` file in your project:
 
 ```json
 {
@@ -170,14 +173,14 @@ And created scopes and roles for both in the `xs-security.json` file in your pro
 
 ## ###############################################################
 
-## Exercise 2.3 Create a "Multi Target Application" (MTA) file for deployment
+## Exercise 2.3 Create a "Multi Target Application" (MTA) File for Deployment
 
-In this section we will create a "Multi Target Application" (MTA) file for deplyment. (See also the [documentation](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/latest/en-US/ebb42efc880c4276a5f2294063fae0c3.html)). MTA is a way to create deployments consisting of multiple modules that can be implemented in different technologies. Advantages of this technology are that it comes with a build tool, automatically creates service instances, service keys and destinations, deploys content (HTML5, workflow, ...), and supports [blue-green deployment](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/7c83810c31d842938cbc39c135a2d99f.html).
+In this section we will create a "Multi Target Application" (MTA) file for deployment. (See the [description](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/latest/en-US/ebb42efc880c4276a5f2294063fae0c3.html)). MTA is a way to create deployments consisting of multiple modules that can be implemented in different technologies. Advantages of this technology are that it comes with a build tool, automatically creates service instances, service keys and destinations, deploys content (HTML5, workflow, ...) and supports [blue-green deployment](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/7c83810c31d842938cbc39c135a2d99f.html).
 
 ### Generate MTA Deployment Descriptor (`mta.yaml`)
 
-The MTA deployment is described in the MTA Deployment Descriptor, a file called  `mta.yaml`.
-As the first step, let CAP generate an initial `mta.yaml` file.
+The MTA deployment is described in the [MTA Deployment Descriptor](https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/2.0.03/en-US/33548a721e6548688605049792d55295.html), a file called  `mta.yaml`.
+In the first step, let CAP generate an initial `mta.yaml` file.
 
 1. Open a new terminal in BAS (**Terminal**->**New Terminal**)
 2. In the terminal, run the following:
@@ -228,13 +231,15 @@ The resources are Cloud Foundry service instances, that are automatically create
      hdi-service-name: ${service-name}
 ```
 
+5. Save the file
+
 As the application will run on a HANA trial instance, the corresponding HANA service needs to be used.
 
 ## ###############################################################
 
 ## Exercise 2.4  Add Authorization and Trust Management Service (XSUAA)
 
-The next step is to add the Authorization and Trust Management service to the `mta.yaml` to allow user login, authorization and authentication checks.
+The next step is to add the Authorization and Trust Management Service to the `mta.yaml` to allow user login, authorization and authentication checks.
 
 1. In your `mta.yaml` file change the following:
 
@@ -272,20 +277,21 @@ resources:
              - $XSAPPNAME.RiskViewer
 //### END OF INSERT
 ```
+2. Save the file
 
-The configuration for XSUAA is read from the `xs-security.json` file that was created in the step before.
+The configuration for XSUAA is read from the `xs-security.json` file that was created in the previous step.
 
-But in the `config` element, values can be added and overwritten.
+However in the `config` element, values can be added and overwritten.
 
-The value `xsappname` gets overwritten with a Cloud Foundry space-dependent value. The name has to be unique within a Cloud Platform subaccount.
+The value `xsappname` gets overwritten with a Cloud Foundry space-dependent value. The name has to be unique within a Business Technology Platform subaccount.
 
-This allows multiple deployments of this tutorial in different spaces of the same subaccount. For example, different people of a team that want to try it out and don't want to create a new subaccount for each team member.
+This allows multiple deployments of this tutorial in different spaces of the same subaccount. For example, if different people of a team want to try it out and don't want to create a new subaccount for each team member.
 
 For a productive application, the `xsappname` should be explicitly set to the desired value.
 
-Further, you can add role collections using the `xs-security.json` file. Since role collections need to be unique in a Subaccount like the `xsappname`, you can add it here and use the `${space}` variable to make them unique like for the `xsappname`.
+Further, you can add role collections using the `xs-security.json` file. Since role collections need to be unique in a subaccount like the `xsappname`, you can add it here and use the `${space}` variable to make them unique like for the `xsappname`.
 
-Alternatively, role collections can be manually added in the SAP Cloud Platform Cockpit.
+Alternatively, role collections can be manually added in the SAP BTP cockpit.
 
 ## ###############################################################
 
@@ -303,9 +309,9 @@ All of this is provided by another application (`module` in the MTA context). Th
     cd approuter
     ```
 
-(This of course could have also be done in BAS' file explorer instead of the terminal, but since there is a command line interface in the folder needed in the next step, we chose the terminal for creating the folder)
+(This of course could have also be done in the BAS' file explorer instead of the terminal, but since there is a command line interface in the folder needed in the next step, we chose the terminal for creating the folder)
 
-2. Initialize `npm` in this folder and install the latest version of AppRouter NPM module:
+2. In the terminal of the new `approuter` folder, initialize `npm` and install the latest version of AppRouter NPM module:
 
     ```bash
     npm init --yes
@@ -316,7 +322,7 @@ All of this is provided by another application (`module` in the MTA context). Th
 
 2. Check the required Node.js version for AppRouter
 
-    This is declared in the `package.json` file the AppRouter. You can check it for example with this script:
+    This is declared in the `package.json` file of the AppRouter. You can check it with this script:
 
     ```bash
     cat node_modules/@sap/approuter/package.json | grep '"node"'
@@ -330,7 +336,7 @@ All of this is provided by another application (`module` in the MTA context). Th
 
     In this example AppRouter supports Node.js 10.x.x and 12.x.x versions.
 
-3. Add required Node.js version in `approuter/package.json` file. This depends on the supported versions of the AppRouter, like ^12.0.0 in this example. Also add the start script for the AppRouter.
+3. Add the required Node.js version to the `approuter/package.json` file. This depends on the supported versions of the AppRouter, ^12.0.0 in this example. Also add the start script for the AppRouter.
 
 ```json 
 {
@@ -358,6 +364,7 @@ All of this is provided by another application (`module` in the MTA context). Th
 //### END OF INSERT
 }
 ```
+4. Save the file
 
 ### AppRouter Configuration
 
@@ -399,12 +406,12 @@ Further, the AppRouter will automatically redirect to the `/app/launchpage.html`
 
 ## Exercise 2.6 Add UI and AppRouter Module to `mta.yaml`
 
-The automatic creation of the mta.yaml file added everthing that is needed from CAP side to the mta file, so the service, the database deployer, but also the dependency to the xsuaa and hana service. 
-Our Fiori elements based UI application, however, is still missing, we need to manually add this module as unfortunately, there is no automation support for this 
+The automatic creation of the `mta.yaml` file added everything that is needed from the CAP side to the `mta.yaml` file: the service, the database deployer and also the dependency to the XSUAA and HANA service. 
+Our Fiori elements based UI application, however, is still missing, we need to manually add this module as, unfortunately, there is no automation support for this purpose.
 
-The AppRouter of the previous chapter is also and application, like our CAP service and the UI. Like these two, the AppRouter also needs to be deployed, for this we need to add a configuration to the MTA file that we created before. 
+The AppRouter of the previous chapter is also an application, just as our CAP service and the UI. As these two, the AppRouter also needs to be deployed, for this we need to add a configuration to the MTA file that we created before. 
 
-1. Add the `RiskManagement-approuter` and the `RiskManagement-app` module for the AppRouter to the `mta.yaml`:
+1. Add the `RiskManagement-approuter` and the `RiskManagement-app` module for the AppRouter to the `mta.yaml` file:
 
 ```yaml 
  # -------------------- SIDECAR MODULE ------------------------
@@ -416,8 +423,8 @@ The AppRouter of the previous chapter is also and application, like our CAP serv
      buildpack: nodejs_buildpack
    requires:
     # 'hana' and 'xsuaa' resources extracted from CAP configuration
-    - name: cpapp-db
-    - name: cpapp-uaa
+    - name: RiskManagement-db
+    - name: RiskManagement-uaa
 //### BEGIN OF INSERT
   # --------------------  APPROUTER -----------------------------
  - name: RiskManagement-approuter
@@ -449,9 +456,11 @@ The AppRouter of the previous chapter is also and application, like our CAP serv
 //### END OF INSERT
 ```
 
+2. Save the file
+
 The AppRouter takes the UI resources of the `RiskManagement-app` and puts it in the `resources` directory. This is where the `xs-app.json` looks for the files requested for `/app/...`.
 
-The `RiskManagement-uaa` binding adds our already existing XSUAA service instance to the AppRouter, which makes login and logout possible. By this the AppRouter forwards requests with the authentication token (`Authorization: Bearer <jwt-token>`) to the CAP service. The CAP service then uses it for authentication and authorization checks.
+The `RiskManagement-uaa` binding adds our already existing XSUAA service instance to the AppRouter, which makes login and logout possible. Hereby the AppRouter forwards requests with the authentication token (`Authorization: Bearer <jwt-token>`) to the CAP service. The CAP service then uses it for authentication and authorization checks.
 
 The `srv-binding` creates an environment variable `destinations` that contains a JSON array with one object containing the **destination** to the CAP service. This is required to forward requests to the CAP service.
 
@@ -462,13 +471,13 @@ destinations='[{ "name": "srv-biding", "forwardAuthToken": true, "strictSSL": tr
 
 The URL is taken from the `RiskManagement-srv` module that needs to be enhanced to export this information.
 
-## Exercise 2.7 Remove access for S/4 system
+## Exercise 2.7 Remove Access for S/4 System
 
-The steps until now have shown how to integrate an S/4 service into your application, how to run it locally with sample data and what you have to do to get the application including its access to the S/4 system deployed. However, for these exercises we don't have a real S/4 system at hand as mentioned in the [overview](../../../..#overview) for this tutorial! If you want to carry out the steps of this tutorial in your own SAP Cloud Platform account and connect it to your own S/4 HANA Cloud system, you can skip the changes of this chapater and instead follow an additional tutorial that shows how to set up the connection between your Cloud Platform account and your S/4 HANA Cloud system using the Cloud Extension Factory. It will eventually create a so-called destination on you Cloud Platform account which you need to add to the `API_BUSINESS_PARTNER` section of the `package.json` file. We will not cover this in this tutorial though, you might want to watch this [series of videos](https://www.youtube.com/watch?v=YI4IZbzoXO8&list=PLkzo92owKnVxiagp35AcwoxOlX0J4hLyY&index=1) to learn about the set up.
+The previous steps have shown how to integrate a S/4 service into your application, how to run it locally with sample data and what you have to do to get the application including its access to the S/4 system deployed. However, for these exercises we don't have a real S/4 system at hand as mentioned in the [overview](../../../..#overview) of this tutorial! If you want to carry out the steps of this tutorial in your own SAP BTP account and connect it to your own S/4 HANA Cloud system, you can skip the changes of this chapater and instead follow an additional tutorial that shows how to set up the connection between your  SAP BTP account and your S/4 HANA Cloud system using the Cloud Extension Factory. It will eventually create a so-called destination on your  SAP BTP account which you need to add to the `API_BUSINESS_PARTNER` section of the `package.json` file. We will not cover this in this tutorial though, you might want to watch this [series of videos](https://www.youtube.com/watch?v=YI4IZbzoXO8&list=PLkzo92owKnVxiagp35AcwoxOlX0J4hLyY&index=1) to learn about the set up.
 
-If we deployed the application like it is up to now, the code would of course try to access a systen which does not exist. Therefore, we remove the code that is necessary in a real scenario and we hope it helps you there, but for this tutorial we remove / change some parts to prevent the S/4 call. We will instead create another local service with sample data for the business partner as we have done before for risks and mitigations.
+If we deployed the application as it is now, the code would of course try to access a system which does not exist. Therefore, we remove the code that is necessary in a real scenario and we hope it helps you there, however in this tutorial we remove/ change some parts of the code to prevent the S/4 call. We will instead create another local service with sample data for the business partner as we have done before for risks and mitigations.
 
-1. In your project enter the `package.json` file and remove the folloing part which was generated by CAP when you imported the API definiton from API Hub. 
+1. In your project enter the `package.json` file and remove the following part which was generated by CAP when you imported the API definiton from API Hub. 
 
 ```JSON
   "cds": {
@@ -487,8 +496,8 @@ If we deployed the application like it is up to now, the code would of course tr
 //### END OF DELETE
       }
 ```
-
-2. In your `db` folder, open the `schema.cds` file again. Here the reference to the external service was created before. We leave this reference here, but change the name of the entity to `BusinessPartnersS4`. At the same time we add a new entity with the original name `BusinessPartners`, this is the one that is used by our service. So, you are replacing the original entity that pointed to S/4 with a local copy. 
+2. Save the file
+3. In your `db` folder, open the `schema.cds` file again. Here the reference to the external service was created before. We leave this reference here, but change the name of the entity to `BusinessPartnersS4`. At the same time we add a new entity with the original name `BusinessPartners`, this is the one that is used by our service. So, you are replacing the original entity that pointed to S/4 with a local copy. 
 
 ```JS
 namespace sap.ui.riskmanagement;
@@ -538,11 +547,11 @@ using { managed } from '@sap/cds/common';
 //### END OF INSERT
 ```
 
-3. The last part that is missing is the bp data. Copy the `API_BUSINESS_PARTNER-A_BusinessPartner.csv` file in your `srv/external/data` folder and paste it into the `db/data` folder, next to the data files of risks and mitigations. Rename the copied file to `sap.ui.riskmanagement-BusinessPartners.csv`, reflecting the new local entity, so CAP can automatically assign this data to the entity.
+4. The last part that is missing is the bp data. Copy the `API_BUSINESS_PARTNER-A_BusinessPartner.csv` file in your `srv/external/data` folder and paste it into the `db/data` folder, next to the data files of risks and mitigations. Rename the copied file to `sap.ui.riskmanagement-BusinessPartners.csv`, reflecting the new local entity, so CAP can automatically assign this data to the entity.
 
-4. Make sure that the application still runs locally. If not `cds watch` is still running from prior chapters, start it in a terminal and check the application.
+5. Make sure that the application still runs locally. If `cds watch` isn't running from prior chapters, start it in a new terminal and check the application.
 
-You have now finished all the preparations to deploy the application to the Cloud Plaform!
+You have now finished all the preparations to deploy the application to the SAP BTP!
 
 Continue to - [Exercise 3](../ex3/README.md) where a CI/CD service will deploy the application.
 
